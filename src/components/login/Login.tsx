@@ -1,11 +1,12 @@
-import React, { Component } from 'react'
+import React, { FC } from 'react'
 
-export default class Login extends Component {
-    render() {
+const Login: FC = () => {
+    
         return (
             <div>
                 <button>click me</button>
             </div>
         )
-    }
 }
+
+export default Login;
