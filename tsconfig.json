@@ -20,7 +20,11 @@
     "jsx": "react",
     "noImplicitAny": false
   },
+  "exclude": [
+    "src/server"
+  ],
   "include": [
-    "src"
+    "src",
+    "node_modules/server"
   ]
 }
