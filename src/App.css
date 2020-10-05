@@ -1,3 +1,29 @@
+
 .App {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border: 1px solid black;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100%;
+  width: 80%;
+  align-content: center;
+  align-items: center;
+}
+
+.login-container {
+  border: 1px solid black;
+  padding: 15px;
+  margin-top: 30%;
+  height: 300px;
+  width: 300px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-text {
+  padding: 15px 0px;
 }

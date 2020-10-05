@@ -2,12 +2,12 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 
-import weatherReducer from './reducers/weatherReducer';
-import alertReducer from './reducers/alertReducer';
+import { weatherReducer, alertReducer, accountsReducer } from './reducers';
 
 const rootReducer = combineReducers({
     weather: weatherReducer,
-    alert: alertReducer
+    alert: alertReducer, 
+    accounts: accountsReducer
 });
 
 const store = createStore(

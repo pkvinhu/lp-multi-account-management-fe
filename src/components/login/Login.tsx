@@ -3,8 +3,9 @@ import React, { FC } from 'react'
 const Login: FC = () => {
     
         return (
-            <div>
-                <button>click me</button>
+            <div className="login-container">
+                <h1 className="login-text">Welcome to the LivePerson Account Management Tool</h1>
+                <button className="login-button">Login</button>
             </div>
         )
 }

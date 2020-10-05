@@ -1,13 +1,22 @@
 import React, { FC } from 'react';
 import './App.css';
-import { Login, Search, Alert, Weather } from './components';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Login, Dashboard, Search, Alert, Weather } from './components';
+import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from './store';
 import { setAlert } from './store/actions/alertActions';
 import { setError } from './store/actions/weatherActions';
 
+const loggedIn = (): boolean => {
+  const bearer: any = localStorage.getItem("bearer");
+  console.log(bearer)
+  if(bearer) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 const App: FC = () => {
   const dispatch = useDispatch();
@@ -18,12 +27,22 @@ const App: FC = () => {
 
   return (
     <Router>
-      <div>
-        <Search title="Enter city name and press search button" />
+      <div className="App">
+        <Route exact path="/">
+          {loggedIn() ? <Redirect to="/dashboard" /> : <Login />}
+        </Route> 
+        <Route component={Login} path="/login"/>
+        {loggedIn() && (
+          <>
+          <Route path="/search" component={Search} />
+          <Route path="/dashboard" component={Dashboard} />
+          </>
+        )}
+        {/* <Search title="Enter city name and press search button" />
         {loading ? <h2> Loading ... </h2> : weatherData && <Weather data={weatherData} />}
 
         {alertMsg && <Alert message={alertMsg} onClose={() => dispatch(setAlert)}/>}
-        {error && <Alert message={error} onClose={() => dispatch(setError())} />}
+        {error && <Alert message={error} onClose={() => dispatch(setError())} />} */}
       </div>
     </Router>
   );
