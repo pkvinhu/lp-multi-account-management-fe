@@ -3,7 +3,6 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  border: 1px solid black;
   margin-left: auto;
   margin-right: auto;
   height: 100%;
@@ -13,17 +12,49 @@
 }
 
 .login-container {
-  border: 1px solid black;
   padding: 15px;
-  margin-top: 30%;
-  height: 300px;
-  width: 300px;
+  margin-top: 70%;
+  height: auto;
+  width: auto;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: column;
   align-items: center;
+  background-color: rgb(250, 250, 250);
 }
 
 .login-text {
   padding: 15px 0px;
+}
+
+.lp-svg {
+  width: 280px;
+  height: 280px;
+  object-fit: contain;
+  background-repeat: no-repeat;
+  background-image: url('./assets/lp-logo.svg');
+}
+
+.polygon {
+  z-index: -1;
+  top: 5%;
+  left: 0%;
+  position: fixed;
+  width: 100%;
+    height: 100%;
+  background-color: #fad19c;
+  background-size: cover;
+  clip-path: polygon(0% 70%, 100% 98%, 0% 2%, 100% 40%, 50% 50%, 50% 0%);
+}
+
+.polygon2 {
+  z-index: -1;
+  top: 5%;
+  left: 0%;
+  position: fixed;
+  width: 100%;
+    height: 100%;
+  background-color: #7794be;
+  background-size: cover;
+  clip-path: polygon(100% 70%, 100% 98%);
 }

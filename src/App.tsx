@@ -28,6 +28,8 @@ const App: FC = () => {
   return (
     <Router>
       <div className="App">
+        <div className="polygon"></div>
+        <div className="polygon2"></div>
         <Route exact path="/">
           {loggedIn() ? <Redirect to="/dashboard" /> : <Login />}
         </Route> 

@@ -8,6 +8,10 @@ const Dashboard: FC = () => {
     const accounts = useSelector((state: RootState) => state.accounts.accounts);
     // const [ accounts, setAccount ] = useState([])
     useEffect(() => {
+        let bearer = localStorage.getItem("bearer");
+        if(!bearer) {
+
+        }
         dispatch(getAccounts())
     }, [!accounts.length])
     return (
