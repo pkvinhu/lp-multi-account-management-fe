@@ -39,7 +39,6 @@ const Search: FC<SearchProps> = ({title}) => {
                         value={city}
                         onChange={changeHandler}
                         />
-                        <button onSubmit={submitHandler}>Click me</button>
                     </form>
                 </div>
             </div>

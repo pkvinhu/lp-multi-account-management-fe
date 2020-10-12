@@ -13,14 +13,14 @@
 
 .login-container {
   padding: 15px;
-  margin-top: 70%;
+  margin-top: 80%;
   height: auto;
   width: auto;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
   align-items: center;
-  background-color: rgb(250, 250, 250);
+  background-color: rgb(253, 253, 253);
 }
 
 .login-text {
@@ -28,8 +28,8 @@
 }
 
 .lp-svg {
-  width: 280px;
-  height: 280px;
+  width: 250px;
+  height: 250px;
   object-fit: contain;
   background-repeat: no-repeat;
   background-image: url('./assets/lp-logo.svg');
@@ -44,7 +44,7 @@
     height: 100%;
   background-color: #fad19c;
   background-size: cover;
-  clip-path: polygon(0% 70%, 100% 98%, 0% 2%, 100% 40%, 50% 50%, 50% 0%);
+  clip-path: polygon(100% 0%, 100% 98%, -50% 35%, 100% 50%, -75% -50%, 75% 200%, 95% 40%);
 }
 
 .polygon2 {

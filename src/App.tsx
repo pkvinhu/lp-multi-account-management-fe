@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import './App.css';
-import { Login, Dashboard, Search, Alert, Weather } from './components';
+import { Login, Dashboard, Alert, Weather } from './components';
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -36,7 +36,7 @@ const App: FC = () => {
         <Route component={Login} path="/login"/>
         {loggedIn() && (
           <>
-          <Route path="/search" component={Search} />
+          
           <Route path="/dashboard" component={Dashboard} />
           </>
         )}

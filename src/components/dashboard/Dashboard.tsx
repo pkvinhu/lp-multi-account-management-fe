@@ -9,8 +9,9 @@ const Dashboard: FC = () => {
     // const [ accounts, setAccount ] = useState([])
     useEffect(() => {
         let bearer = localStorage.getItem("bearer");
+        console.log(bearer)
         if(!bearer) {
-
+            window.location.href = "/";
         }
         dispatch(getAccounts())
     }, [!accounts.length])
