@@ -1,20 +1,27 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import thunk from 'redux-thunk';
+import thunkMiddleware from 'redux-thunk';
+import loggerMiddleware from './middleware/logger';
+import monitorReducerEnhancer from './enhancers/monitorReducer';
 
-import { weatherReducer, alertReducer, accountsReducer } from './reducers';
+import rootReducer from './reducers';
 
-const rootReducer = combineReducers({
-    weather: weatherReducer,
-    alert: alertReducer, 
-    accounts: accountsReducer
-});
+const configureStore = (preloadedState: any) => {
+    const middlewares = [thunkMiddleware, loggerMiddleware];
+    const middlewareEnhancer = applyMiddleware(...middlewares);
 
-const store = createStore(
-    rootReducer,
-    composeWithDevTools(applyMiddleware(thunk))
-);
+    const enhancers = [middlewareEnhancer, monitorReducerEnhancer];
+    const composedEnhancers = composeWithDevTools({});
+
+    const store = createStore(
+        rootReducer,
+        preloadedState,
+        composedEnhancers(...enhancers)
+    );
+
+    return store;
+}
 
 export type RootState = ReturnType<typeof rootReducer>;
 
-export default store;
+export default configureStore;
