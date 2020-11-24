@@ -1,4 +1,4 @@
-import { GET_ACCOUNTS, GetAccountsAction, Accounts } from "../types/accounts";
+import { GET_ACCOUNTS, GetAccountsAction, Accounts } from "./types";
 
 const initialState: Accounts = {
     accounts: []

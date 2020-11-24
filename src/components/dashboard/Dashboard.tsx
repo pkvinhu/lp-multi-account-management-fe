@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import { getAccounts } from '../../store/actions/accountActions';
+import { getAccounts } from '../../store/accounts/actions';
 
 const Dashboard: FC = () => {
     const dispatch = useDispatch();

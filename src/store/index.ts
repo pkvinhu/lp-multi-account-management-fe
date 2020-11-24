@@ -3,8 +3,16 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunkMiddleware from 'redux-thunk';
 import loggerMiddleware from './middleware/logger';
 import monitorReducerEnhancer from './enhancers/monitorReducer';
+import alertReducer from './reducers/alertReducer';
+import weatherReducer from './reducers/weatherReducer';
+import accountsReducer from './accounts/reducer';
+import { combineReducers } from 'redux';
 
-import rootReducer from './reducers';
+const rootReducer = combineReducers({
+    weather: weatherReducer,
+    alert: alertReducer, 
+    accounts: accountsReducer
+});
 
 const configureStore = (preloadedState: any) => {
     const middlewares = [thunkMiddleware, loggerMiddleware];
