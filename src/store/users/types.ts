@@ -17,6 +17,7 @@ export interface User {
 
 export interface UserPayload {
   id: string;
+  pid: string | null;
   deleted: string;
   loginName: string;
   fullName: string;
@@ -25,24 +26,27 @@ export interface UserPayload {
   isEnabled: string;
   maxChats: string;
   email: string;
-  disabledManually: boolean;
+  disabledManually: boolean | null;
   skillIds: number[] | null;
   profileIds: number[];
-  lobIds: number[];
+  lobIds: number[] | null;
   changePwdNextLogin: boolean | null;
   memberOf: MemberOf;
   managerOf: MemberOf[] | null;
-  permissionGroups: string[];
-  description: string;
-  mobileNumber: string;
-  employeeId: string;
-  maxAsyncChats: string;
-  backgndImgUri: string;
-  pnCertName: string;
+  permissionGroups: string[] | null;
+  pictureUrl: string | null;
+  pictureId: string | null;
+  description: string | null;
+  mobileNumber: string | null;
+  employeeId: string | null;
+  maxAsyncChats: string | null;
+  backgndImgUri: string | null;
+  pnCertName: string | null;
   dateUpdated: Date | null;
   lastPwdChangeDate: Date | null;
   isApiUser: boolean | null;
   userTypeId: number | null;
+  allowedAppKeys: string | null;
 }
 
 interface MemberOf {
@@ -51,8 +55,11 @@ interface MemberOf {
 }
 
 export interface UsersError {
-  cod: string;
+  fields: string[];
+  time: string;
   message: string;
+  internalCode: number;
+  responseStatus: string;
 }
 
 export interface GetUsersAction {

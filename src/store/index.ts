@@ -1,17 +1,17 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunkMiddleware from 'redux-thunk';
 import loggerMiddleware from './middleware/logger';
 import monitorReducerEnhancer from './enhancers/monitorReducer';
-import alertReducer from './reducers/alertReducer';
-import weatherReducer from './reducers/weatherReducer';
 import accountsReducer from './accounts/reducer';
+import usersReducer from './users/reducer';
+import authReducer from './auth/reducer';
 import { combineReducers } from 'redux';
 
 const rootReducer = combineReducers({
-    weather: weatherReducer,
-    alert: alertReducer, 
-    accounts: accountsReducer
+    accounts: accountsReducer,
+    users: usersReducer,
+    auth: authReducer
 });
 
 const configureStore = (preloadedState: any) => {
