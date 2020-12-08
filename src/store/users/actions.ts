@@ -1,13 +1,11 @@
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "..";
 import {
-  UserPayload,
   User,
-  UsersError,
   UserAction,
-  SET_LOADING,
+  SET_USER_LOADING,
   GET_USERS,
-  SET_ERROR
+  SET_USER_ERROR
 } from "./types";
 import axios from "axios";
 
@@ -23,7 +21,7 @@ export const getUsers = (): ThunkAction<
         "http://localhost:1337/api/users/29778756"
       );
       console.log(res);
-      let data: UserPayload[] = res.data;
+      let data: User[] = res.data;
       dispatch({
         type: GET_USERS,
         payload: data
@@ -31,15 +29,15 @@ export const getUsers = (): ThunkAction<
     } catch (error) {
       console.log(error);
       dispatch({
-        type: SET_ERROR,
-        payload: error.message
+        type: SET_USER_ERROR,
+        payload: error
       });
     }
   };
 };
 
-export const setLoading = (): UserAction => {
+export const setUserLoading = (): UserAction => {
   return {
-    type: SET_LOADING,
+    type: SET_USER_LOADING,
   }
 }

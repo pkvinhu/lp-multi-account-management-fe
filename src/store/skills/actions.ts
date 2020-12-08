@@ -5,7 +5,7 @@ import {
   SkillAction,
   SET_SKILLS_LOADING,
   GET_SKILLS,
-  GET_ERROR
+  SET_SKILLS_ERROR
 } from "./types";
 import axios from "axios";
 
@@ -29,8 +29,8 @@ export const getSkills = (): ThunkAction<
     } catch (error) {
       console.log(error);
       dispatch({
-        type: GET_ERROR,
-        payload: error.message
+        type: SET_SKILLS_ERROR,
+        payload: error
       });
     }
   };
