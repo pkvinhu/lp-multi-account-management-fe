@@ -20,7 +20,12 @@ const useStyles = makeStyles((theme) => ({
         color: "black",
         fontSize: '1.1em',
         display: 'flex',
-        justifyContent: 'space-between'
+        padding: '5px 15px',
+        justifyContent: 'space-between',
+        borderRadius: '5px',
+        "&:hover": {
+            backgroundColor: '#fad19c'
+        }
     },
     login_container: {
         padding: '15px',
@@ -32,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         alignItems: 'center',
         backgroundColor: 'rgb(253, 253, 253)',
+        cursor: "pointer"
       }
 }));
 
