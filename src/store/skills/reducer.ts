@@ -1,8 +1,8 @@
-import { SkillsState, SkillAction, GET_SKILLS, GET_ERROR, SET_SKILLS_LOADING } from './types';
+import { SkillsState, SkillAction, GET_SKILLS, SET_SKILLS_ERROR, SET_SKILLS_LOADING } from './types';
 
 const initialState: SkillsState = {
     skills: [],
-    error: "",
+    error: null,
     loading: false
 }
 
@@ -14,10 +14,10 @@ export default (state = initialState, action: SkillAction): SkillsState => {
                 skills: action.payload,
                 loading: false
             }
-        case GET_ERROR:
+        case SET_SKILLS_ERROR:
             return {
                 ...state,
-                error: action.payload.message,
+                error: action.payload,
                 loading: false
             }
         case SET_SKILLS_LOADING:

@@ -6,13 +6,17 @@ import monitorReducerEnhancer from './enhancers/monitorReducer';
 import accountsReducer from './accounts/reducer';
 import usersReducer from './users/reducer';
 import skillsReducer from './skills/reducer';
+import profilesReducer from './profiles/reducer';
 import authReducer from './auth/reducer';
+import agentGroupsReducer from './agentGroups/reducer';
 import { combineReducers } from 'redux';
 
 const rootReducer = combineReducers({
     accounts: accountsReducer,
     users: usersReducer,
     skills: skillsReducer,
+    profiles: profilesReducer,
+    agentGroups: agentGroupsReducer,
     auth: authReducer
 });
 

@@ -1,21 +1,21 @@
 export const GET_USERS = "GET_USERS";
-export const SET_LOADING = "SET_LOADING";
-export const SET_ERROR = "SET_ERROR";
+export const SET_USER_LOADING = "SET_USER_LOADING";
+export const SET_USER_ERROR = "SET_USER_ERROR";
 
 export interface UserState {
-  users: UserPayload[];
+  users: User[];
   loading: boolean;
-  error: string;
+  error: UsersError | null;
 }
 
-export interface User {
+export interface BasicUser {
   deleted: boolean;
   loginName: string;
   pid: string;
   id: number;
 }
 
-export interface UserPayload {
+export interface User {
   id: string;
   pid: string | null;
   deleted: string;
@@ -67,15 +67,15 @@ export interface UsersError {
 
 export interface GetUsersAction {
   type: typeof GET_USERS;
-  payload: UserPayload[];
+  payload: User[];
 }
 
 interface SetLoadingAction {
-  type: typeof SET_LOADING;
+  type: typeof SET_USER_LOADING;
 }
 
 interface SetErrorAction {
-  type: typeof SET_ERROR;
+  type: typeof SET_USER_ERROR;
   payload: UsersError;
 }
 
