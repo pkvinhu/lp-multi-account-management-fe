@@ -3,7 +3,7 @@ export const SET_LOADING = "SET_LOADING";
 export const SET_ERROR = "SET_ERROR";
 
 export interface UserState {
-  users: User[] | [];
+  users: UserPayload[];
   loading: boolean;
   error: string;
 }
@@ -42,11 +42,14 @@ export interface UserPayload {
   maxAsyncChats: string | null;
   backgndImgUri: string | null;
   pnCertName: string | null;
+  dateCreated: string | null;
   dateUpdated: Date | null;
   lastPwdChangeDate: Date | null;
   isApiUser: boolean | null;
   userTypeId: number | null;
   allowedAppKeys: string | null;
+  lpaCreatedUser: boolean | null;
+  resetMfaSecret: boolean | null;
 }
 
 interface MemberOf {
@@ -64,7 +67,7 @@ export interface UsersError {
 
 export interface GetUsersAction {
   type: typeof GET_USERS;
-  payload: User[];
+  payload: UserPayload[];
 }
 
 interface SetLoadingAction {
@@ -73,7 +76,7 @@ interface SetLoadingAction {
 
 interface SetErrorAction {
   type: typeof SET_ERROR;
-  payload: string;
+  payload: UsersError;
 }
 
 export type UserAction = GetUsersAction | SetLoadingAction | SetErrorAction;

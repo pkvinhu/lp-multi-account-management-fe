@@ -1,45 +1,43 @@
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "..";
 import {
-  UserPayload,
-  User,
-  UsersError,
-  UserAction,
-  SET_LOADING,
-  GET_USERS,
-  SET_ERROR
+  Skill,
+  SkillAction,
+  SET_SKILLS_LOADING,
+  GET_SKILLS,
+  GET_ERROR
 } from "./types";
 import axios from "axios";
 
-export const getUsers = (): ThunkAction<
+export const getSkills = (): ThunkAction<
   void,
   RootState,
   null,
-  UserAction | any
+  SkillAction | any
 > => {
   return async dispatch => {
     try {
       let res: any = await axios.get(
-        "http://localhost:1337/api/users/29778756"
+        "http://localhost:1337/api/skills/29778756"
       );
       console.log(res);
-      let data: UserPayload[] = res.data;
+      let data: Skill[] = res.data;
       dispatch({
-        type: GET_USERS,
+        type: GET_SKILLS,
         payload: data
       });
     } catch (error) {
       console.log(error);
       dispatch({
-        type: SET_ERROR,
+        type: GET_ERROR,
         payload: error.message
       });
     }
   };
 };
 
-export const setLoading = (): UserAction => {
-  return {
-    type: SET_LOADING,
-  }
+export const setSkillsLoading = (): SkillAction => {
+    return {
+        type: SET_SKILLS_LOADING
+    }
 }

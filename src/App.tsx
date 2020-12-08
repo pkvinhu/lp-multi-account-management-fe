@@ -18,10 +18,12 @@ const App: FC = () => {
       <div className="App">
         <div className="polygon"></div>
         <div className="polygon2"></div>
-        <Route path={"/" || "/login"}>
+        <Route exact path="/">
           {authenticated ? <Redirect to="/dashboard" /> : <Login />}
         </Route>
-        <Route component={Login} path="/login" />
+        <Route path="/login">
+          <Redirect to="/" />
+        </Route>
         <Route path="/dashboard" component={Dashboard} />
       </div>
     </Router>

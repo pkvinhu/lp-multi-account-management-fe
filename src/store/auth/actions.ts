@@ -21,8 +21,27 @@ export const checkAuth = (): ThunkAction<
     } catch (error) {
       dispatch({
         type: CHECK_AUTH,
-        payload: { loggedIn: false }
+        payload: false
       });
     }
   };
 };
+
+export const logout = (): ThunkAction<
+void,
+RootState,
+null,
+CheckAuthAction | any
+> => {
+  return async dispatch => {
+
+        const res = await axios.get(
+            "http://localhost:1337/api/login/logout"
+          );
+          dispatch({
+            type: CHECK_AUTH,
+            payload: false
+          })
+          window.location.href = "/";
+        }
+}
