@@ -1,29 +1,17 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import './App.css';
-import { Login, Dashboard, Alert, Weather } from './components';
-import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
-
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from './store';
-import { setAlert } from './store/actions/alertActions';
-import { setError } from './store/actions/weatherActions';
-
-const loggedIn = (): boolean => {
-  const bearer: any = localStorage.getItem("bearer");
-  console.log(bearer)
-  if(bearer) {
-    return true;
-  } else {
-    return false;
-  }
-}
+import { RootState } from "./store";
+import { Login, Dashboard } from './components';
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import { checkAuth } from './store/auth/actions';
 
 const App: FC = () => {
   const dispatch = useDispatch();
-  const weatherData = useSelector((state: RootState) => state.weather.data);
-  const loading = useSelector((state: RootState) => state.weather.loading);
-  const error = useSelector((state: RootState) => state.weather.error);
-  const alertMsg = useSelector((state: RootState) => state.alert.message);
+  const authenticated = useSelector((state: RootState) => state.auth.loggedIn);
+  useEffect(() => {
+    dispatch(checkAuth())
+  }, [])
 
   return (
     <Router>
@@ -31,20 +19,12 @@ const App: FC = () => {
         <div className="polygon"></div>
         <div className="polygon2"></div>
         <Route exact path="/">
-          {loggedIn() ? <Redirect to="/dashboard" /> : <Login />}
-        </Route> 
-        <Route component={Login} path="/login"/>
-        {loggedIn() && (
-          <>
-          
-          <Route path="/dashboard" component={Dashboard} />
-          </>
-        )}
-        {/* <Search title="Enter city name and press search button" />
-        {loading ? <h2> Loading ... </h2> : weatherData && <Weather data={weatherData} />}
-
-        {alertMsg && <Alert message={alertMsg} onClose={() => dispatch(setAlert)}/>}
-        {error && <Alert message={error} onClose={() => dispatch(setError())} />} */}
+          {authenticated ? <Redirect to="/dashboard" /> : <Login />}
+        </Route>
+        <Route path="/login">
+          <Redirect to="/" />
+        </Route>
+        <Route path="/dashboard" component={Dashboard} />
       </div>
     </Router>
   );
