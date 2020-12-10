@@ -42,7 +42,7 @@ export interface User {
   maxAsyncChats: string | null;
   backgndImgUri: string | null;
   pnCertName: string | null;
-  dateCreated: string | null;
+  dateCreated: Date | null;
   dateUpdated: Date | null;
   lastPwdChangeDate: Date | null;
   isApiUser: boolean | null;
