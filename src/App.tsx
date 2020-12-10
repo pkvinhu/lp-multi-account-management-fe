@@ -24,7 +24,8 @@ const App: FC = () => {
         <Route path="/login">
           <Redirect to="/" />
         </Route>
-        <Route path="/dashboard" component={Dashboard} />
+        {authenticated ? <Route path="/dashboard" component={Dashboard} /> : null}
+        <Route render={() => <Redirect to="/" />} />
       </div>
     </Router>
   );

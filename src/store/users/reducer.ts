@@ -1,9 +1,9 @@
-import { UserState, UserAction, GET_USERS, SET_ERROR, SET_LOADING } from './types';
+import { UserState, UserAction, GET_USERS, SET_USER_ERROR, SET_USER_LOADING } from './types';
 
 const initialState: UserState = {
     users: [],
     loading: false,
-    error: ""
+    error: null
 }
 
 export default (state = initialState, action: UserAction): UserState => {
@@ -14,13 +14,13 @@ export default (state = initialState, action: UserAction): UserState => {
                 users: action.payload,
                 loading: false
             }
-        case SET_ERROR:
+        case SET_USER_ERROR:
             return {
                 ...state,
-                error: action.payload.message,
+                error: action.payload,
                 loading: false
             }
-        case SET_LOADING:
+        case SET_USER_LOADING:
             return {
                 ...state,
                 loading: true
