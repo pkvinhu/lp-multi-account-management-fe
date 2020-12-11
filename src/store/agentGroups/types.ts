@@ -3,12 +3,12 @@ export const SET_AGENTGROUPS_ERROR = "SET_AGENTGROUPS_ERROR";
 export const SET_AGENTGROUPS_LOADING = "SET_AGENTGROUPS_LOADING";
 
 export interface AgentGroupsState {
-    agentGroups: AgentGroups[];
+    agentGroups: AgentGroup[];
     error: AgentGroupsError | null;
     loading: boolean;
 }
 
-export interface AgentGroups {
+export interface AgentGroup {
   deleted: boolean;
   isEnabled: boolean;
   name: string;
@@ -27,7 +27,7 @@ export interface AgentGroupsError {
 
 export interface GetAgentGroupsAction {
   type: typeof GET_AGENTGROUPS;
-  payload: AgentGroups[];
+  payload: AgentGroup[];
 }
 
 interface SetLoadingAction {

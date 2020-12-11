@@ -2,6 +2,7 @@ import React, { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import actions from '../../store/allActions';
+import EnhancedTable from '../table/tableData/tableData';
 
 const Dashboard: FC = () => {
     const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const Dashboard: FC = () => {
     }, [])
     return (
         <div>
+            <EnhancedTable />
             Some Dashboard filler
             {accounts.length ? accounts.map((e, i) => {
                 return <div key={i}>{e}</div>

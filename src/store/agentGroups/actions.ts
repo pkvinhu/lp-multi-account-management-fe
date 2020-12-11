@@ -1,13 +1,13 @@
 import { RootState } from '..';
 import { ThunkAction } from 'redux-thunk';
-import { AgentGroupsAction, AgentGroups, GET_AGENTGROUPS, SET_AGENTGROUPS_ERROR, SET_AGENTGROUPS_LOADING } from './types';
+import { AgentGroupsAction, AgentGroup, GET_AGENTGROUPS, SET_AGENTGROUPS_ERROR, SET_AGENTGROUPS_LOADING } from './types';
 import axios from 'axios';
 
 export const getAgentGroups = (): ThunkAction<void, RootState, null, AgentGroupsAction | any> => {
     return async dispatch => {
         try {
             const res: any = await axios.get("http://localhost:1337/api/agentGroups/29778756");
-            let data: AgentGroups[] = res.data;
+            let data: AgentGroup[] = res.data;
             dispatch({
                 type: GET_AGENTGROUPS,
                 payload: data
