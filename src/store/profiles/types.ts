@@ -3,7 +3,8 @@ export const SET_PROFILE_ERROR = "SET_PROFILE_ERROR";
 export const SET_PROFILE_LOADING = "SET_PROFILE_LOADING";
 
 export interface ProfileState {
-    profiles: Profile[];
+    data: Profile[];
+    map: any;
     error: ProfilesError | null;
     loading: boolean;
 }
@@ -37,7 +38,7 @@ export interface ProfilesError {
 
 export interface GetProfilesAction {
   type: typeof GET_PROFILES;
-  payload: Profile[];
+  payload: { data: Profile[], map: any };
 }
 
 interface SetLoadingAction {

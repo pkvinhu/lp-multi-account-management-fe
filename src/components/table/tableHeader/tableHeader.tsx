@@ -1,34 +1,28 @@
 
 import React from 'react';
-import { Order, Data, HeadCell } from '../types';
+import { DataDisplay } from '../../../store/table/types';
 import TableHead from '@material-ui/core/TableHead';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Checkbox from '@material-ui/core/Checkbox';
 import { useStyles } from './styles';
-
-const headCells: HeadCell[] = [
-    { id: 'name', numeric: false, disablePadding: true, label: 'Dessert (100g serving)' },
-    { id: 'calories', numeric: true, disablePadding: false, label: 'Calories' },
-    { id: 'fat', numeric: true, disablePadding: false, label: 'Fat (g)' },
-    { id: 'carbs', numeric: true, disablePadding: false, label: 'Carbs (g)' },
-    { id: 'protein', numeric: true, disablePadding: false, label: 'Protein (g)' },
-  ];
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../store';
 
 interface EnhancedTableProps {
     classes: ReturnType<typeof useStyles>;
-    numSelected: number;
-    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
+    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof DataDisplay) => void;
     onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    order: Order;
-    orderBy: string;
-    rowCount: number;
   }
 
 export default function EnhancedTableHead(props: EnhancedTableProps) {
-    const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
-    const createSortHandler = (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
+    const { onSelectAllClick, onRequestSort } = props;
+    const classes = useStyles();
+    // const dispatch = useDispatch();
+    const table = useSelector((state: RootState) => state.table);
+    const { dataDisplay, order, orderBy, numSelected, rowCount, headCells } = table;
+    const createSortHandler = (property: keyof DataDisplay) => (event: React.MouseEvent<unknown>) => {
       onRequestSort(event, property);
     };
   

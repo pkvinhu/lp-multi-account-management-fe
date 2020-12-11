@@ -3,7 +3,7 @@ export const SET_USER_LOADING = "SET_USER_LOADING";
 export const SET_USER_ERROR = "SET_USER_ERROR";
 
 export interface UserState {
-  users: User[];
+  data: User[];
   loading: boolean;
   error: UsersError | null;
 }
@@ -52,7 +52,7 @@ export interface User {
   resetMfaSecret: boolean | null;
 }
 
-interface MemberOf {
+export interface MemberOf {
   agentGroupId: string;
   assignmentDate: Date;
 }

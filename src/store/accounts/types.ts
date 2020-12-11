@@ -3,7 +3,7 @@ export const SELECT_ACCOUNT = "SELECT_ACCOUNT";
 export const CATCH_ERROR = "CATCH_ERROR";
 
 export interface Accounts {
-  accounts: string[];
+  data: string[];
   selectedAccount: string;
   error: string;  
 }

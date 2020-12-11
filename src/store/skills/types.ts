@@ -3,7 +3,8 @@ export const SET_SKILLS_ERROR = "SET_SKILLS_ERROR";
 export const SET_SKILLS_LOADING = "SET_SKILLS_LOADING";
 
 export interface SkillsState {
-  skills: Skill[];
+  data: Skill[];
+  map: any;
   error: SkillsError | null;
   loading: boolean;
 }
@@ -73,7 +74,7 @@ export interface CreateSkillPayload {
 
   interface GetSkillsAction {
     type: typeof GET_SKILLS;
-    payload: Skill[];
+    payload: { data: Skill[], map: any };
   }
 
   interface SetSkillsError {

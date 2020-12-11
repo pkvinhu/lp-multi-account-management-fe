@@ -6,11 +6,11 @@ import EnhancedTable from '../table/tableData/tableData';
 
 const Dashboard: FC = () => {
     const dispatch = useDispatch();
-    const accounts = useSelector((state: RootState) => state.accounts.accounts);
-    const users = useSelector((state: RootState) => state.users.users);
-    const skills = useSelector((state: RootState) => state.skills.skills);
-    const profiles = useSelector((state: RootState) => state.profiles.profiles)
-    const agentGroups = useSelector((state: RootState) => state.agentGroups.agentGroups)
+    const accounts = useSelector((state: RootState) => state.accounts);
+    const users = useSelector((state: RootState) => state.users);
+    const skills = useSelector((state: RootState) => state.skills);
+    const profiles = useSelector((state: RootState) => state.profiles)
+    const agentGroups = useSelector((state: RootState) => state.agentGroups)
     useEffect(() => {
         dispatch(actions.getAccounts())
     }, [])
@@ -18,19 +18,19 @@ const Dashboard: FC = () => {
         <div>
             <EnhancedTable />
             Some Dashboard filler
-            {accounts.length ? accounts.map((e, i) => {
+            {accounts.data.length ? accounts.data.map((e, i) => {
                 return <div key={i}>{e}</div>
             }) : null}
-            {users.length ? users.map((e, i) => {
+            {users.data.length ? users.data.map((e, i) => {
                return <div key={i}>{e.fullName}</div> 
             }) : null}
-            {skills.length ? skills.map((e, i) => {
+            {skills.data.length ? skills.data.map((e, i) => {
                return <div key={i}>{e.name}</div> 
             }) : null}
-            {profiles.length ? profiles.map((e, i) => {
+            {profiles.data.length ? profiles.data.map((e, i) => {
                return <div key={i}>{e.name}</div> 
             }) : null}
-            {agentGroups.length ? agentGroups.map((e, i) => {
+            {agentGroups.data.length ? agentGroups.data.map((e, i) => {
                return <div key={i}>{e.name}</div> 
             }) : null}
             <button onClick={() => dispatch(actions.getUsers())}>Get Users</button>
