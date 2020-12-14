@@ -61,18 +61,18 @@ export interface AgentGroupHeadCell {
 
 export interface UserDataDisplay {
   id: string;
-  pid: string | null;
+  pid?: string;
   loginName: string;
   fullName: string;
   maxChats: string;
   email: string;
-  skillIds: number[] | string | null;
+  skillIds?: number[] | string;
   profileIds: number[] | string;
-  managerOf: MemberOf[] | null;
-  dateCreated: Date | null;
-  dateUpdated: Date | null;
-  isApiUser: boolean | null;
-  lpaCreatedUser: boolean | null;
+  managerOf?: MemberOf[];
+  dateCreated?: Date;
+  dateUpdated?: Date;
+  isApiUser?: boolean;
+  lpaCreatedUser?: boolean;
 }
 
 export interface SkillDataDisplay {
@@ -94,9 +94,9 @@ export interface ProfileDataDisplay {
 
 export interface AgentGroupDataDisplay {
   name: string;
-  parentGroupId: number | null;
+  parentGroupId?: number;
   id: number;
-  dateUpdated: string | null;
+  dateUpdated?: string;
 }
 
 export interface SetView {
@@ -152,7 +152,7 @@ export type HeadCell =
   | SkillHeadCell
   | ProfileHeadCell
   | AgentGroupHeadCell;
-  
+
 export type Data = 
   | User[]
   | Skill[]

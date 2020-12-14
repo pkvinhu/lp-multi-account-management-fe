@@ -22,7 +22,7 @@ export default function EnhancedTableHead(props: EnhancedTableProps) {
     // const dispatch = useDispatch();
     const table = useSelector((state: RootState) => state.table);
     const { dataDisplay, order, orderBy, numSelected, rowCount, headCells } = table;
-    const createSortHandler = (property: keyof DataDisplay) => (event: React.MouseEvent<unknown>) => {
+    const createSortHandler = (property: keyof DataDisplay | any) => (event: React.MouseEvent<unknown>) => {
       onRequestSort(event, property);
     };
   

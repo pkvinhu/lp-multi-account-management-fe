@@ -13,10 +13,10 @@ export interface AgentGroup {
   deleted: boolean;
   isEnabled: boolean;
   name: string;
-  description: string | null;
-  parentGroupId: number | null;
+  description?: string;
+  parentGroupId?: number;
   id: number;
-  dateUpdated: string | null;
+  dateUpdated?: string;
 }
 
 export interface AgentGroupsError {

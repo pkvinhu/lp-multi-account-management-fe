@@ -10,8 +10,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import { useStyles } from './styles';
-import { Order, Data } from '../types';
-import { useSelector } from 'react-redux';
+import { Order, Data } from '../../../store/table/types';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from "../../../store";
 import allActions from "../../../store/allActions";
 import EnhancedTableToolbar from '../tableToolbar/tableToolbar';
@@ -74,6 +74,7 @@ function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
 
 export default function EnhancedTable() {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const order = useSelector((state: RootState) => state.table.order);
   const orderBy = useSelector((state: RootState) => state.table.orderBy);
   const [page, setPage] = React.useState(0);
@@ -96,24 +97,25 @@ export default function EnhancedTable() {
 //     setSelected([]);
 //   };
 
-  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected: string[] = [];
+  const handleClick = (event: React.MouseEvent<unknown>, index: number/*name: string*/) => {
+      dispatch(setSelected(index))
+    // const selectedIndex = selected.indexOf(name);
+    // let newSelected: string[] = [];
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
-    }
+    // if (selectedIndex === -1) {
+    //   newSelected = newSelected.concat(selected, name);
+    // } else if (selectedIndex === 0) {
+    //   newSelected = newSelected.concat(selected.slice(1));
+    // } else if (selectedIndex === selected.length - 1) {
+    //   newSelected = newSelected.concat(selected.slice(0, -1));
+    // } else if (selectedIndex > 0) {
+    //   newSelected = newSelected.concat(
+    //     selected.slice(0, selectedIndex),
+    //     selected.slice(selectedIndex + 1),
+    //   );
+    // }
 
-    setSelected(newSelected);
+    // setSelected(newSelected);
   };
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -164,18 +166,18 @@ export default function EnhancedTable() {
                     <TableRow
                       hover
                       onClick={(event) => handleClick(event, row.name)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
+                    //   role="checkbox"
+                    //   aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={row.name}
                       selected={isItemSelected}
                     >
-                      <TableCell padding="checkbox">
+                      {/* <TableCell padding="checkbox">
                         <Checkbox
                           checked={isItemSelected}
                           inputProps={{ 'aria-labelledby': labelId }}
                         />
-                      </TableCell>
+                      </TableCell> */}
                       <TableCell component="th" id={labelId} scope="row" padding="none">
                         {row.name}
                       </TableCell>

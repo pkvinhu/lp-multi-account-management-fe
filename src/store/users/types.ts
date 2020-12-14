@@ -17,7 +17,7 @@ export interface BasicUser {
 
 export interface User {
   id: string;
-  pid: string | null;
+  pid?: string;
   deleted: string;
   loginName: string;
   fullName: string;
@@ -26,30 +26,30 @@ export interface User {
   isEnabled: string;
   maxChats: string;
   email: string;
-  disabledManually: boolean | null;
-  skillIds: number[] | null;
+  disabledManually?: boolean;
+  skillIds?: number[];
   profileIds: number[];
-  lobIds: number[] | null;
-  changePwdNextLogin: boolean | null;
+  lobIds?: number[] ;
+  changePwdNextLogin?: boolean;
   memberOf: MemberOf;
-  managerOf: MemberOf[] | null;
-  permissionGroups: string[] | null;
-  pictureUrl: string | null;
-  pictureId: string | null;
-  description: string | null;
-  mobileNumber: string | null;
-  employeeId: string | null;
-  maxAsyncChats: string | null;
-  backgndImgUri: string | null;
-  pnCertName: string | null;
-  dateCreated: Date | null;
-  dateUpdated: Date | null;
-  lastPwdChangeDate: Date | null;
-  isApiUser: boolean | null;
-  userTypeId: number | null;
-  allowedAppKeys: string | null;
-  lpaCreatedUser: boolean | null;
-  resetMfaSecret: boolean | null;
+  managerOf?: MemberOf[];
+  permissionGroups?: string[];
+  pictureUrl?: string ;
+  pictureId?: string;
+  description?: string;
+  mobileNumber?: string;
+  employeeId?: string;
+  maxAsyncChats?: string;
+  backgndImgUri?: string;
+  pnCertName?: string;
+  dateCreated?: Date;
+  dateUpdated?: Date;
+  lastPwdChangeDate?: Date;
+  isApiUser?: boolean;
+  userTypeId?: number;
+  allowedAppKeys?: string;
+  lpaCreatedUser?: boolean;
+  resetMfaSecret?: boolean;
 }
 
 export interface MemberOf {

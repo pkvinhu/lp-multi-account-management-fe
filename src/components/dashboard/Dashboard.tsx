@@ -12,27 +12,15 @@ const Dashboard: FC = () => {
     const profiles = useSelector((state: RootState) => state.profiles)
     const agentGroups = useSelector((state: RootState) => state.agentGroups)
     useEffect(() => {
-        dispatch(actions.getAccounts())
+        dispatch(actions.getAccounts());
+        dispatch(actions.getUsers());
+        dispatch(actions.getSkills());
+        dispatch(actions.getProfiles());
+        dispatch(actions.getAgentGroups());
     }, [])
     return (
         <div>
             <EnhancedTable />
-            Some Dashboard filler
-            {accounts.data.length ? accounts.data.map((e, i) => {
-                return <div key={i}>{e}</div>
-            }) : null}
-            {users.data.length ? users.data.map((e, i) => {
-               return <div key={i}>{e.fullName}</div> 
-            }) : null}
-            {skills.data.length ? skills.data.map((e, i) => {
-               return <div key={i}>{e.name}</div> 
-            }) : null}
-            {profiles.data.length ? profiles.data.map((e, i) => {
-               return <div key={i}>{e.name}</div> 
-            }) : null}
-            {agentGroups.data.length ? agentGroups.data.map((e, i) => {
-               return <div key={i}>{e.name}</div> 
-            }) : null}
             <button onClick={() => dispatch(actions.getUsers())}>Get Users</button>
             <button onClick={() => dispatch(actions.getSkills())}>Get Skills</button>
             <button onClick={() => dispatch(actions.getProfiles())}>Get Profiles</button>

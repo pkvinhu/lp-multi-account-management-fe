@@ -15,7 +15,7 @@ export interface Profile {
   roleTypeName: string;
   permissions: number[];
   name: string;
-  description: string | null;
+  description?: string;
   id: number;
   permissionPackages: Package[];
   dateUpdated: string;
@@ -26,7 +26,7 @@ interface Package {
   isEnabled: boolean;
   isDisplayed: boolean;
   id: number;
-  featuredKeys: string[] | null;
+  featuredKeys?: string[];
 }
 
 export interface ProfilesError {
