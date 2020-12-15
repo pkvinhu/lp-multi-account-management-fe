@@ -6,16 +6,22 @@ import {
   UserHeadCell,
   SkillHeadCell,
   ProfileHeadCell,
-  AgentGroupHeadCell
+  AgentGroupHeadCell,
+  View,
+  Order,
+  DataDisplay
 } from "../table/types";
 
 export const getDisplayForUsers = (
   skillsMap: any,
   profilesMap: any,
   agentGroupsMap: any,
-  data: User[]
-) => {
-  return data.map(
+  data: User[],
+  view: View,
+  order: Order,
+  orderBy: string
+): DataDisplay[] => {
+  const notSorted = data.map(
     (
       {
         id,
@@ -45,26 +51,38 @@ export const getDisplayForUsers = (
         dateUpdated,
         isApiUser,
         lpaCreatedUser,
-        skillIds: skillIds
-          ? skillIds.map((e, i) => (skillsMap[e] ? skillsMap[e] : null))
-          : [],
-        profileIds: profileIds.map((e, i) =>
-          profilesMap[e] ? profilesMap[e] : null
-        ),
-        managerOf: managerOf
-          ? managerOf.map((e, i) =>
-              agentGroupsMap[e.agentGroupId]
-                ? agentGroupsMap[e.agentGroupId]
-                : null
-            )
-          : []
+        skillIds:
+          skillIds && skillIds.length
+            ? skillIds.map((e, i) => (e && skillsMap[e] ? skillsMap[e] : null))
+            : [],
+        profileIds:
+          profileIds && profileIds.length
+            ? profileIds.map((e, i) =>
+                e && profilesMap[e] ? profilesMap[e] : null
+              )
+            : [],
+        managerOf:
+          managerOf && managerOf.length
+            ? managerOf.map((e, i) =>
+                e && agentGroupsMap[e.agentGroupId]
+                  ? agentGroupsMap[e.agentGroupId]
+                  : null
+              )
+            : []
       };
     }
   );
+  let sorted = stableSort(notSorted, getComparator(order, orderBy));
+  return sorted;
 };
 
-export const getDisplayForProfiles = (data: Profile[]) => {
-  return data.map(
+export const getDisplayForProfiles = (
+  data: Profile[],
+  view: View,
+  order: Order,
+  orderBy: string
+) => {
+  let notSorted = data.map(
     (
       e: {
         id;
@@ -78,10 +96,18 @@ export const getDisplayForProfiles = (data: Profile[]) => {
       return e;
     }
   );
+  let sorted = stableSort(notSorted, getComparator(order, orderBy));
+  return sorted;
 };
 
-export const getDisplayForSkills = (skillsMap: any, data: Skill[]) => {
-  return data.map(
+export const getDisplayForSkills = (
+  data: Skill[],
+  skillsMap: any,
+  view: View,
+  order: Order,
+  orderBy: string
+) => {
+  let notSorted = data.map(
     (
       { id, name, skillOrder, dateUpdated, canTransfer, skillTransferList },
       i
@@ -92,16 +118,28 @@ export const getDisplayForSkills = (skillsMap: any, data: Skill[]) => {
         skillOrder,
         dateUpdated,
         canTransfer,
-        skillTransferList
+        skillTransferList:
+          skillTransferList && skillTransferList.length
+            ? skillTransferList.map((e, i) =>
+                e && skillsMap[e] ? skillsMap[e] : null
+              )
+            : []
       };
     }
   );
+  return stableSort(notSorted, getComparator(order, orderBy));
 };
 
-export const getDisplayForAgentGroups = (data: AgentGroup[]) => {
-  return data.map(({ id, name, parentGroupId, dateUpdated }, i) => {
+export const getDisplayForAgentGroups = (
+  data: AgentGroup[],
+  view: View,
+  order: Order,
+  orderBy: string
+) => {
+  let notSorted = data.map(({ id, name, parentGroupId, dateUpdated }, i) => {
     return { id, name, parentGroupId, dateUpdated };
   });
+  return stableSort(notSorted, getComparator(order, orderBy));
 };
 
 export const getHeadCellsForUsers = (): UserHeadCell[] => {
@@ -136,7 +174,6 @@ export const getHeadCellsForUsers = (): UserHeadCell[] => {
       label: "LPA Created User"
     }
   ];
-  console.log("USER HEAD CELL: ", result);
   return result;
 };
 
@@ -202,3 +239,55 @@ export const getHeadCellsForAgentGroups = (): AgentGroupHeadCell[] => {
     { id: "dateUpdated", numeric: false, disablePadding, label: "Date Updated" }
   ];
 };
+
+const stableSort = (array, comparator) => {
+  const stabilizedThis = array.map((el, index) => [el, index]);
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0]);
+    if (order !== 0) return order;
+    return a[1] - b[1];
+  });
+  return stabilizedThis.map(el => el[0]);
+};
+
+function getComparator(order, orderBy) {
+  return order === "desc"
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
+function descendingComparator(a, b, orderBy) {
+  let A = Array.isArray(a[orderBy])
+    ? a[orderBy].join(",").toLowerCase()
+    : typeof a[orderBy] === "number"
+    ? a
+    : String(a[orderBy]).toLowerCase();
+  let B = Array.isArray(b[orderBy])
+    ? b[orderBy].join(",").toLowerCase()
+    : typeof b[orderBy] === "number"
+    ? b
+    : String(b[orderBy]).toLowerCase();
+  if (B < A) {
+    return -1;
+  }
+  if (B > A) {
+    return 1;
+  }
+  return 0;
+}
+
+// function getComparator<T extends keyof DataDisplay>(order: Order, orderBy: T): (a: { [key in T]: number | string }, b: { [key in T]: number | string }) => number {
+//     return order === 'desc'
+//         ? (a, b) => descendingComparator(a, b, orderBy)
+//         : (a, b) => -descendingComparator(a, b, orderBy);
+// }
+
+// function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
+//     const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
+//     stabilizedThis.sort((a, b) => {
+//         const order = comparator(a[0], b[0]);
+//         if (order !== 0) return order;
+//         return a[1] - b[1];
+//     });
+//     return stabilizedThis.map((el) => el[0]);
+// }

@@ -33,6 +33,8 @@ import {
 export const setDataDisplay = (
   view: View,
   data: Data | any,
+  order: Order,
+  orderBy: string,
   skillsMap?: any,
   profilesMap?: any,
   agentGroupsMap?: any
@@ -40,24 +42,27 @@ export const setDataDisplay = (
   let payload: DataDisplayState = {
     data: [],
     headCells: [],
-    rowCount: 0
+    rowCount: 0,
+    view,
+    order,
+    orderBy
   };
   console.log(view)
   switch (view) {
     case "users":
-      payload.data = getDisplayForUsers(skillsMap, profilesMap, agentGroupsMap, data);
+      payload.data = getDisplayForUsers(skillsMap, profilesMap, agentGroupsMap, data, view, order, orderBy);
       payload.headCells = getHeadCellsForUsers();
       break;
     case "profiles":
-      payload.data = getDisplayForProfiles(data);
+      payload.data = getDisplayForProfiles(data, view, order, orderBy);
       payload.headCells = getHeadCellsForProfiles();
       break;
     case "skills":
-      payload.data = getDisplayForSkills(skillsMap, data);
+      payload.data = getDisplayForSkills(data, skillsMap, view, order, orderBy);
       payload.headCells = getHeadCellsForSkills();
       break;
     case "agentGroups":
-      payload.data = getDisplayForAgentGroups(data);
+      payload.data = getDisplayForAgentGroups(data, view, order, orderBy);
       payload.headCells = getHeadCellsForAgentGroups();
       break;
   }

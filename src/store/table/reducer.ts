@@ -25,14 +25,17 @@ const initialState: TableState = {
 export default (state = initialState, action: GetTableAction): TableState => {
     switch(action.type) {
         case SET_DISPLAY_DATA:
-            const { data, headCells, rowCount } = action.payload;
+            const { data, headCells, rowCount, view, order, orderBy } = action.payload;
             return {
                 ...state,
                 loading: false,
                 error: false,
                 dataDisplay: data,
                 headCells,
-                rowCount
+                rowCount,
+                view,
+                order,
+                orderBy
             }   
         case SET_VIEW:
             return {

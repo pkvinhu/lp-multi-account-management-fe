@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store';
 
 interface EnhancedTableProps {
-    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof DataDisplay) => void;
+    onRequestSort: (event: React.MouseEvent<unknown>, property: string) => void;
     // onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   }
 
@@ -21,9 +21,9 @@ export default function EnhancedTableHead(props: EnhancedTableProps) {
     // const dispatch = useDispatch();
     const table = useSelector((state: RootState) => state.table);
     const { order, orderBy, headCells } = table;
-    const createSortHandler = (property: keyof DataDisplay | any) => (event: React.MouseEvent<unknown>) => {
-      onRequestSort(event, property);
-    };
+    // const createSortHandler = (property: keyof DataDisplay | any) => (event: React.MouseEvent<unknown>) => {
+    //   onRequestSort(event, property);
+    // };
   
     return (
       <TableHead>
@@ -46,7 +46,7 @@ export default function EnhancedTableHead(props: EnhancedTableProps) {
               <TableSortLabel
                 active={orderBy === headCell.id}
                 direction={orderBy === headCell.id ? order : 'asc'}
-                onClick={createSortHandler(headCell.id)}
+                onClick={(e) => onRequestSort(e, headCell.id)}
               >
                 {headCell.label}
                 {orderBy === headCell.id ? (

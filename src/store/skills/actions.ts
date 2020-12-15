@@ -22,13 +22,14 @@ export const getSkills = (): ThunkAction<
       );
       let data: Skill[] = res.data;
       let map = {};
-      res.data.forEach((e, i) => { map[e.id] = e.name });
+      res.data.forEach((e, i) => { 
+        map[e.id] = e.name 
+      });
       dispatch({
         type: GET_SKILLS,
         payload: { data, map }
       });
     } catch (error) {
-      console.log(error);
       dispatch({
         type: SET_SKILLS_ERROR,
         payload: error

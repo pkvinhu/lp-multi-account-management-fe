@@ -20,7 +20,7 @@ export interface TableState {
   dataDisplay: DataDisplay[];
   numSelected: number;
   order: Order;
-  orderBy: keyof DataDisplay;
+  orderBy: string;
   rowCount: number;
   error: boolean;
   loading: boolean;
@@ -30,6 +30,9 @@ export interface DataDisplayState {
   data: DataDisplay[];
   headCells: HeadCell[];
   rowCount: number;
+  view: View;
+  order: Order;
+  orderBy: string;
 }
 
 export interface HeadCellTemplate {
@@ -60,8 +63,8 @@ export interface UserDataDisplay {
   fullName: string;
   maxChats: string;
   email: string;
-  skillIds?: number[];
-  profileIds: number[];
+  skillIds?: (number|string)[];
+  profileIds: (number|string)[];
   managerOf?: MemberOf[];
   dateCreated?: Date;
   dateUpdated?: Date;
