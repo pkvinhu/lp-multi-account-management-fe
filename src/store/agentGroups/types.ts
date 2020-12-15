@@ -1,3 +1,6 @@
+import { AgentGroupDataDisplay } from "../table/types";
+import { GenericError } from "../users/types";
+
 export const GET_AGENTGROUPS = "GET_AGENTGROUPS";
 export const SET_AGENTGROUPS_ERROR = "SET_AGENTGROUPS_ERROR";
 export const SET_AGENTGROUPS_LOADING = "SET_AGENTGROUPS_LOADING";
@@ -9,22 +12,13 @@ export interface AgentGroupsState {
     loading: boolean;
 }
 
-export interface AgentGroup {
+export interface AgentGroup extends AgentGroupDataDisplay {
   deleted: boolean;
   isEnabled: boolean;
-  name: string;
   description?: string;
-  parentGroupId?: number;
-  id: number;
-  dateUpdated?: string;
 }
 
-export interface AgentGroupsError {
-  time: string;
-  message: string;
-  internalCode: number;
-  responseStatus: string;
-}
+export interface AgentGroupsError extends GenericError {}
 
 export interface GetAgentGroupsAction {
   type: typeof GET_AGENTGROUPS;

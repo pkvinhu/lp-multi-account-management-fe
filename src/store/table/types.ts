@@ -20,43 +20,37 @@ export interface TableState {
   dataDisplay: DataDisplay[];
   numSelected: number;
   order: Order;
-  orderBy: keyof DataDisplay | null;
+  orderBy: keyof DataDisplay;
   rowCount: number;
   error: boolean;
   loading: boolean;
 }
 
 export interface DataDisplayState {
-    data: DataDisplay[];
-    headCells: HeadCell[];
-    rowCount: number;
+  data: DataDisplay[];
+  headCells: HeadCell[];
+  rowCount: number;
 }
 
-export interface UserHeadCell {
+export interface HeadCellTemplate {
   disablePadding: boolean;
+  label: string;
+  numeric: boolean;
+}
+
+export interface UserHeadCell extends HeadCellTemplate {
   id: keyof UserDataDisplay;
-  label: string;
-  numeric: boolean;
 }
-export interface SkillHeadCell {
-  disablePadding: boolean;
+export interface SkillHeadCell extends HeadCellTemplate {
   id: keyof SkillDataDisplay;
-  label: string;
-  numeric: boolean;
 }
 
-export interface ProfileHeadCell {
-  disablePadding: boolean;
+export interface ProfileHeadCell extends HeadCellTemplate {
   id: keyof ProfileDataDisplay;
-  label: string;
-  numeric: boolean;
 }
 
-export interface AgentGroupHeadCell {
-  disablePadding: boolean;
+export interface AgentGroupHeadCell extends HeadCellTemplate {
   id: keyof AgentGroupDataDisplay;
-  label: string;
-  numeric: boolean;
 }
 
 export interface UserDataDisplay {
@@ -66,8 +60,8 @@ export interface UserDataDisplay {
   fullName: string;
   maxChats: string;
   email: string;
-  skillIds?: number[] | string;
-  profileIds: number[] | string;
+  skillIds?: number[];
+  profileIds: number[];
   managerOf?: MemberOf[];
   dateCreated?: Date;
   dateUpdated?: Date;
@@ -129,7 +123,7 @@ export interface SetTableError {
 }
 
 export interface SetTableLoading {
-    type: typeof SET_TABLE_LOADING;
+  type: typeof SET_TABLE_LOADING;
 }
 
 export type GetTableAction =
@@ -153,8 +147,4 @@ export type HeadCell =
   | ProfileHeadCell
   | AgentGroupHeadCell;
 
-export type Data = 
-  | User[]
-  | Skill[]
-  | Profile[]
-  | AgentGroup[];
+export type Data = (User | Skill | Profile | AgentGroup)[];

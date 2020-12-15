@@ -13,7 +13,7 @@ export const getDisplayForUsers = (skillsMap: any, profilesMap: any, data: User[
 
   return data.map(
     (
-      e: {
+      {
         id,
         pid,
         loginName,
@@ -31,9 +31,9 @@ export const getDisplayForUsers = (skillsMap: any, profilesMap: any, data: User[
       i
     ) => {
         return {
-            ...e,
-            skillIds: e.skillIds.map((e, i) => skillsMap[e] ? skillsMap[e] : null).join(", "),
-            profileIds: e.profileIds.map((e, i) => profilesMap[e] ? profilesMap[e] : null).join(", ")
+            id, pid, loginName, fullName, maxChats, email, managerOf, dateCreated, dateUpdated, isApiUser, lpaCreatedUser,
+            skillIds: skillIds ? skillIds.map((e, i) => skillsMap[e] ? skillsMap[e] : null) : [],
+            profileIds: profileIds.map((e, i) => profilesMap[e] ? profilesMap[e] : null)
         }
     }
   );
@@ -58,7 +58,7 @@ export const getDisplayForProfiles = (data: Profile[]) => {
 export const getDisplayForSkills = (skillsMap: any, data: Skill[]) => {
     return data.map(
         (
-            e: {
+            {
                 id,
                 name,
                 skillOrder,
@@ -69,8 +69,7 @@ export const getDisplayForSkills = (skillsMap: any, data: Skill[]) => {
             i
         ) => {
             return {
-                ...e,
-                skillIds: e.skillTransferList.map((e, i) => skillsMap[e] ? skillsMap[e] : null).join(", ")
+                id, name, skillOrder, dateUpdated, canTransfer, skillTransferList
             }
         }
     )
@@ -79,7 +78,7 @@ export const getDisplayForSkills = (skillsMap: any, data: Skill[]) => {
 export const getDisplayForAgentGroups = (data: AgentGroup[]) => {
     return data.map(
         (
-            e: {
+            {
                 id,
                 name,
                 parentGroupId,
@@ -87,14 +86,14 @@ export const getDisplayForAgentGroups = (data: AgentGroup[]) => {
             },
             i
         ) => {
-            return e;
+            return { id, name, parentGroupId, dateUpdated};
         }
     )
 };
 
-export const getHeadCellsForUsers = (): UserHeadCell[] => {
+export const getHeadCellsForUsers = () => {
   const disablePadding: boolean = false;
-  return [
+  const result = [
     { id: "id", numeric: false, disablePadding, label: "Id" },
     { id: "pid", numeric: false, disablePadding, label: "Pid" },
     { id: "loginName", numeric: false, disablePadding, label: "Login Name" },
@@ -124,6 +123,8 @@ export const getHeadCellsForUsers = (): UserHeadCell[] => {
       label: "LPA Created User"
     }
   ];
+  console.log("USER HEAD CELL: ", result);
+  return result;
 };
 
 export const getHeadCellsForProfiles = (): ProfileHeadCell[] => {

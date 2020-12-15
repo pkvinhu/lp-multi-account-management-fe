@@ -11,17 +11,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store';
 
 interface EnhancedTableProps {
-    classes: ReturnType<typeof useStyles>;
     onRequestSort: (event: React.MouseEvent<unknown>, property: keyof DataDisplay) => void;
-    onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    // onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   }
 
 export default function EnhancedTableHead(props: EnhancedTableProps) {
-    const { onSelectAllClick, onRequestSort } = props;
+    const { onRequestSort } = props;
     const classes = useStyles();
     // const dispatch = useDispatch();
     const table = useSelector((state: RootState) => state.table);
-    const { dataDisplay, order, orderBy, numSelected, rowCount, headCells } = table;
+    const { order, orderBy, headCells } = table;
     const createSortHandler = (property: keyof DataDisplay | any) => (event: React.MouseEvent<unknown>) => {
       onRequestSort(event, property);
     };
@@ -29,14 +28,14 @@ export default function EnhancedTableHead(props: EnhancedTableProps) {
     return (
       <TableHead>
         <TableRow>
-          <TableCell padding="checkbox">
+          {/* <TableCell padding="checkbox">
             <Checkbox
               indeterminate={numSelected > 0 && numSelected < rowCount}
               checked={rowCount > 0 && numSelected === rowCount}
               onChange={onSelectAllClick}
               inputProps={{ 'aria-label': 'select all desserts' }}
             />
-          </TableCell>
+          </TableCell> */}
           {headCells.map((headCell) => (
             <TableCell
               key={headCell.id}

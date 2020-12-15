@@ -16,7 +16,7 @@ const initialState: TableState = {
   dataDisplay: [],
   numSelected: 0,
   order: "asc",
-  orderBy: null,
+  orderBy: "id",
   rowCount: 0,
   error: false,
   loading: false

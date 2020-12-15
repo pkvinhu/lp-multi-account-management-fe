@@ -20,7 +20,7 @@ const Dashboard: FC = () => {
     }, [])
     return (
         <div>
-            <EnhancedTable />
+            {users.data.length && profiles.data.length && skills.data.length && agentGroups.data.length ? <EnhancedTable /> : null}
             <button onClick={() => dispatch(actions.getUsers())}>Get Users</button>
             <button onClick={() => dispatch(actions.getSkills())}>Get Skills</button>
             <button onClick={() => dispatch(actions.getProfiles())}>Get Profiles</button>

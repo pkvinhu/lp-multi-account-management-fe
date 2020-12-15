@@ -1,3 +1,5 @@
+import { UserDataDisplay } from "../table/types";
+
 export const GET_USERS = "GET_USERS";
 export const SET_USER_LOADING = "SET_USER_LOADING";
 export const SET_USER_ERROR = "SET_USER_ERROR";
@@ -15,24 +17,15 @@ export interface BasicUser {
   id: number;
 }
 
-export interface User {
-  id: string;
-  pid?: string;
+export interface User extends UserDataDisplay {
   deleted: string;
-  loginName: string;
-  fullName: string;
   nickname: string;
   passwordSh: string;
   isEnabled: string;
-  maxChats: string;
-  email: string;
   disabledManually?: boolean;
-  skillIds?: number[];
-  profileIds: number[];
   lobIds?: number[] ;
   changePwdNextLogin?: boolean;
   memberOf: MemberOf;
-  managerOf?: MemberOf[];
   permissionGroups?: string[];
   pictureUrl?: string ;
   pictureId?: string;
@@ -42,13 +35,9 @@ export interface User {
   maxAsyncChats?: string;
   backgndImgUri?: string;
   pnCertName?: string;
-  dateCreated?: Date;
-  dateUpdated?: Date;
   lastPwdChangeDate?: Date;
-  isApiUser?: boolean;
   userTypeId?: number;
   allowedAppKeys?: string;
-  lpaCreatedUser?: boolean;
   resetMfaSecret?: boolean;
 }
 
@@ -57,12 +46,14 @@ export interface MemberOf {
   assignmentDate: Date;
 }
 
-export interface UsersError {
-  fields: string[];
+export interface GenericError {
   time: string;
   message: string;
   internalCode: number;
   responseStatus: string;
+}
+export interface UsersError extends GenericError {
+  fields: string[];
 }
 
 export interface GetUsersAction {
