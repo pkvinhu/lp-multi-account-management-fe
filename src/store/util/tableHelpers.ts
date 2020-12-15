@@ -9,8 +9,12 @@ import {
   AgentGroupHeadCell
 } from "../table/types";
 
-export const getDisplayForUsers = (skillsMap: any, profilesMap: any, data: User[]) => {
-
+export const getDisplayForUsers = (
+  skillsMap: any,
+  profilesMap: any,
+  agentGroupsMap: any,
+  data: User[]
+) => {
   return data.map(
     (
       {
@@ -30,68 +34,77 @@ export const getDisplayForUsers = (skillsMap: any, profilesMap: any, data: User[
       },
       i
     ) => {
-        return {
-            id, pid, loginName, fullName, maxChats, email, managerOf, dateCreated, dateUpdated, isApiUser, lpaCreatedUser,
-            skillIds: skillIds ? skillIds.map((e, i) => skillsMap[e] ? skillsMap[e] : null) : [],
-            profileIds: profileIds.map((e, i) => profilesMap[e] ? profilesMap[e] : null)
-        }
+      return {
+        id,
+        pid,
+        loginName,
+        fullName,
+        maxChats,
+        email,
+        dateCreated,
+        dateUpdated,
+        isApiUser,
+        lpaCreatedUser,
+        skillIds: skillIds
+          ? skillIds.map((e, i) => (skillsMap[e] ? skillsMap[e] : null))
+          : [],
+        profileIds: profileIds.map((e, i) =>
+          profilesMap[e] ? profilesMap[e] : null
+        ),
+        managerOf: managerOf
+          ? managerOf.map((e, i) =>
+              agentGroupsMap[e.agentGroupId]
+                ? agentGroupsMap[e.agentGroupId]
+                : null
+            )
+          : []
+      };
     }
   );
 };
 
 export const getDisplayForProfiles = (data: Profile[]) => {
-    return data.map(
-        (
-            e: { 
-                id, 
-                name, 
-                roleTypeName, 
-                dateUpdated, 
-                isAssignedToLPA 
-            }, 
-            i
-            ) => {
-        return e;
-    })
+  return data.map(
+    (
+      e: {
+        id;
+        name;
+        roleTypeName;
+        dateUpdated;
+        isAssignedToLPA;
+      },
+      i
+    ) => {
+      return e;
+    }
+  );
 };
 
 export const getDisplayForSkills = (skillsMap: any, data: Skill[]) => {
-    return data.map(
-        (
-            {
-                id,
-                name,
-                skillOrder,
-                dateUpdated,
-                canTransfer,
-                skillTransferList
-            },
-            i
-        ) => {
-            return {
-                id, name, skillOrder, dateUpdated, canTransfer, skillTransferList
-            }
-        }
-    )
+  return data.map(
+    (
+      { id, name, skillOrder, dateUpdated, canTransfer, skillTransferList },
+      i
+    ) => {
+      return {
+        id,
+        name,
+        skillOrder,
+        dateUpdated,
+        canTransfer,
+        skillTransferList
+      };
+    }
+  );
 };
 
 export const getDisplayForAgentGroups = (data: AgentGroup[]) => {
-    return data.map(
-        (
-            {
-                id,
-                name,
-                parentGroupId,
-                dateUpdated
-            },
-            i
-        ) => {
-            return { id, name, parentGroupId, dateUpdated};
-        }
-    )
+  return data.map(({ id, name, parentGroupId, dateUpdated }, i) => {
+    return { id, name, parentGroupId, dateUpdated };
+  });
 };
 
-export const getHeadCellsForUsers = () => {
+export const getHeadCellsForUsers = (): UserHeadCell[] => {
   const disablePadding: boolean = false;
   const result = [
     { id: "id", numeric: false, disablePadding, label: "Id" },

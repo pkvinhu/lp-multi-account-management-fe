@@ -39,7 +39,7 @@ export interface HeadCellTemplate {
 }
 
 export interface UserHeadCell extends HeadCellTemplate {
-  id: keyof UserDataDisplay;
+  id: string;//keyof UserDataDisplay;
 }
 export interface SkillHeadCell extends HeadCellTemplate {
   id: keyof SkillDataDisplay;

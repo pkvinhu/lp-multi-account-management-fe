@@ -31,30 +31,35 @@ import {
 } from "../util/tableHelpers";
 
 export const setDataDisplay = (
-  skillsMap: any,
-  profilesMap: any,
-  agentGroupsMap: any,
   view: View,
-  data: Data | any
+  data: Data | any,
+  skillsMap?: any,
+  profilesMap?: any,
+  agentGroupsMap?: any
 ): GetTableAction => {
   let payload: DataDisplayState = {
     data: [],
     headCells: [],
     rowCount: 0
   };
+  console.log(view)
   switch (view) {
     case "users":
-      payload.data = getDisplayForUsers(skillsMap, profilesMap, data);
+      payload.data = getDisplayForUsers(skillsMap, profilesMap, agentGroupsMap, data);
       payload.headCells = getHeadCellsForUsers();
+      break;
     case "profiles":
       payload.data = getDisplayForProfiles(data);
       payload.headCells = getHeadCellsForProfiles();
+      break;
     case "skills":
       payload.data = getDisplayForSkills(skillsMap, data);
       payload.headCells = getHeadCellsForSkills();
+      break;
     case "agentGroups":
       payload.data = getDisplayForAgentGroups(data);
       payload.headCells = getHeadCellsForAgentGroups();
+      break;
   }
   payload.rowCount = payload.data.length;
   return {
@@ -78,6 +83,7 @@ export const setSelected = (selectedIndex: number): SetSelected => {
 };
 
 export const setOrder = (order: Order): SetOrder => {
+  console.log("hit setorder:", order)
   return {
     type: SET_ORDER,
     payload: order
@@ -85,6 +91,7 @@ export const setOrder = (order: Order): SetOrder => {
 };
 
 export const setOrderBy = (field: keyof DataDisplay): SetOrderBy => {
+  console.log("hit setorderby:", field)
   return {
     type: SET_ORDER_BY,
     payload: field

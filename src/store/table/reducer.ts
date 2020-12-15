@@ -54,7 +54,6 @@ export default (state = initialState, action: GetTableAction): TableState => {
             return {
                 ...state,
                 orderBy: action.payload,
-                order: "asc" 
             }
         case SET_TABLE_ERROR:
             return {

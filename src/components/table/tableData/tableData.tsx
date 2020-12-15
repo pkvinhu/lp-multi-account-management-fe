@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, Fragment } from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import { useStyles } from './styles';
-import { Order, DataDisplay } from '../../../store/table/types';
+import { DataDisplay } from '../../../store/table/types';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from "../../../store";
 import actions from "../../../store/allActions";
@@ -43,20 +43,25 @@ function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
 // }
 
 function getComparator(order, orderBy) {
+    console.log("hit comparator")
     return order === 'desc'
-      ? (a, b) => descendingComparator(a, b, orderBy)
-      : (a, b) => -descendingComparator(a, b, orderBy);
-  }
-  
-  function stableSort(array, comparator) {
+        ? (a, b) => descendingComparator(a, b, orderBy)
+        : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
+function stableSort(array, comparator) {
     const stabilizedThis = array.map((el, index) => [el, index]);
     stabilizedThis.sort((a, b) => {
-      const order = comparator(a[0], b[0]);
-      if (order !== 0) return order;
-      return a[1] - b[1];
+        const order = comparator(a[0], b[0]);
+        if (order !== 0) return order;
+        return a[1] - b[1];
     });
     return stabilizedThis.map((el) => el[0]);
-  }
+}
+
+function stringify(value) {
+    return Array.isArray(value) ? value.join(", ") : value;
+}
 
 const EnhancedTable: FC = () => {
     const classes = useStyles();
@@ -66,18 +71,19 @@ const EnhancedTable: FC = () => {
     const skills = useSelector((state: RootState) => state.skills);
     const profiles = useSelector((state: RootState) => state.profiles);
     const agentGroups = useSelector((state: RootState) => state.agentGroups);
-    const { dataDisplay, order, orderBy, rowCount } = table;
-    
+    const { dataDisplay, order, orderBy, rowCount, headCells } = table;
+
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const { setOrder, setOrderBy, setSelected } = actions;
 
     useEffect(() => {
-        dispatch(actions.setDataDisplay(skills.map, profiles.map, agentGroups.map, "users", users.data))
+        dispatch(actions.setDataDisplay("users", users.data, skills.map, profiles.map, agentGroups.map))
     }, []);
 
     const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof DataDisplay) => {
+        console.log("HIT REQUEST SORT: ", orderBy, property, order)
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
@@ -111,7 +117,7 @@ const EnhancedTable: FC = () => {
                 <TableContainer>
                     <Table
                         className={classes.table}
-                        aria-labelledby="tableTitle"
+                        aria-labelledby="Contact Center Management"
                         size={dense ? 'small' : 'medium'}
                         aria-label="enhanced table"
                     >
@@ -122,7 +128,7 @@ const EnhancedTable: FC = () => {
                             {stableSort(dataDisplay, getComparator(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row, index) => {
-                                    const labelId = `enhanced-table-checkbox-${index}`;
+                                    // const labelId = `enhanced-table-checkbox-${index}`;
 
                                     return (
                                         <TableRow
@@ -131,13 +137,16 @@ const EnhancedTable: FC = () => {
                                             tabIndex={-1}
                                             key={index}
                                         >
-                                            <TableCell component="th" id={labelId} scope="row" padding="none">
+                                            {headCells.map((cell, i) => {
+                                                return <TableCell align="right" key={cell.id}>{stringify(row[cell.id])}</TableCell>
+                                            })}
+                                            {/* <TableCell component="th" id={labelId} scope="row" padding="none">
                                                 {row.name}
                                             </TableCell>
                                             <TableCell align="right">{row.calories}</TableCell>
                                             <TableCell align="right">{row.fat}</TableCell>
                                             <TableCell align="right">{row.carbs}</TableCell>
-                                            <TableCell align="right">{row.protein}</TableCell>
+                                            <TableCell align="right">{row.protein}</TableCell> */}
                                         </TableRow>
                                     );
                                 })}
