@@ -10,7 +10,7 @@ export const useStyles = makeStyles((theme: Theme) =>
     },
     paper: {
       width: '100%',
-      marginBottom: theme.spacing(2),
+      margin: theme.spacing(15, "auto"),
     },
     row: {},
     table: {

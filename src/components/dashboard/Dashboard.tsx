@@ -4,11 +4,17 @@ import { RootState } from '../../store';
 import actions from '../../store/allActions';
 import EnhancedTable from '../table/tableData/tableData';
 import { View } from '../../store/table/types';
+import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
+import LinearProgress from '@material-ui/core/LinearProgress'
+import { useStyles } from './styles';
+import EnhancedTableToolbar from '../table/tableToolbar/tableToolbar';
 
 const Dashboard: FC = () => {
+    const classes = useStyles();
     const dispatch = useDispatch();
     const state = useSelector((state: RootState) => state);
-    const { accounts, users, skills, profiles, agentGroups } = state;
+    // const { accounts, users, skills, profiles, agentGroups } = state;
     const dataDisplay = ((state: RootState) => state.table.dataDisplay);
 
     useEffect(() => {
@@ -26,9 +32,11 @@ const Dashboard: FC = () => {
     }
 
     return (
-        <div>
-            {checkForData(state.table.view) ? <EnhancedTable /> : null}
-            <button onClick={() => dispatch(actions.logout())}>Logout</button>
+        <div className={classes.root}>
+            <div className={classes.inside}>
+                {checkForData(state.table.view) ? <EnhancedTable /> : (<Paper className={classes.paper}><EnhancedTableToolbar /><LinearProgress /></Paper>)}
+                <Button onClick={() => dispatch(actions.logout())}>Logout</Button>
+            </div>
         </div>
     )
 }

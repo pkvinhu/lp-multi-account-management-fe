@@ -12,14 +12,13 @@ const EnhancedTableToolbar = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state);
-  const { users, skills, profiles, agentGroups, table } = state;
+  const { skills, profiles, agentGroups, table } = state;
+  const { setDataDisplay, setTableLoading } = actions;
   const handleChange = (event: unknown, value: View) => {
-    if (value === "users") {
-      dispatch(actions.setDataDisplay(value, users.data, "asc", "id", skills.map, profiles.map, agentGroups.map));
-    }
-    else {
-      dispatch(actions.setDataDisplay(value, state[value].data, "asc", "id", skills.map))
-    }
+    // let args = [value, state[value].data, "asc", "id", skills.map]
+    // if (value === "users") args = args.concat([profiles.map, agentGroups.map])
+    dispatch(setTableLoading());
+    value === "users" ? dispatch(setDataDisplay(value, state[value].data, "asc", "id", skills.map, profiles.map, agentGroups.map)) : dispatch(setDataDisplay(value, state[value].data, "asc", "id", skills.map));
   };
 
   return (
@@ -27,18 +26,18 @@ const EnhancedTableToolbar = () => {
     /*className={clsx(classes.root, {
       [classes.highlight]: numSelected > 0,
     })}*/
+    className={classes.toolbar}
     >
       <Tabs
         value={table.view}
         onChange={handleChange}
-        indicatorColor="primary"
-        textColor="primary"
         centered
+        classes={{indicator: classes.root}}
       >
         <Tab value="users" label="Users" />
-        <Tab value="skills" label="Skills" />
-        <Tab value="profiles" label="Profiles" />
-        <Tab value="agentGroups" label="Agent Groups" />
+        <Tab  value="skills" label="Skills" />
+        <Tab  value="profiles" label="Profiles" />
+        <Tab  value="agentGroups" label="Agent Groups" />
       </Tabs>
     </Toolbar>
   );

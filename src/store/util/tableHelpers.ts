@@ -3,6 +3,7 @@ import { Profile } from "../profiles/types";
 import { Skill } from "../skills/types";
 import { AgentGroup } from "../agentGroups/types";
 import {
+  UserDataDisplay,
   UserHeadCell,
   SkillHeadCell,
   ProfileHeadCell,
@@ -254,23 +255,20 @@ const stableSort = (array, comparator) => {
   return stabilizedThis.map(el => el[0]);
 };
 
-// function getComparator(order, orderBy) {
-//   return order === "desc"
-//     ? (a, b) => descendingComparator(a, b, orderBy)
-//     : (a, b) => -descendingComparator(a, b, orderBy);
-// }
-
 function descendingComparator(a, b, orderBy) {
   let A = Array.isArray(a[orderBy])
     ? a[orderBy].join(",").toLowerCase()
     : typeof a[orderBy] === "number"
-    ? a
+    ? a[orderBy]
     : String(a[orderBy]).toLowerCase();
   let B = Array.isArray(b[orderBy])
     ? b[orderBy].join(",").toLowerCase()
     : typeof b[orderBy] === "number"
-    ? b
+    ? b[orderBy]
     : String(b[orderBy]).toLowerCase();
+    if(typeof A === "number") {
+      console.log(A, B)
+    }
   if (B < A) {
     return -1;
   }

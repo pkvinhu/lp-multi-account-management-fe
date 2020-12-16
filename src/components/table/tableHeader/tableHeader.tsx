@@ -1,11 +1,9 @@
 
 import React from 'react';
-// import { DataDisplay } from '../../../store/table/types';
 import TableHead from '@material-ui/core/TableHead';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-// import Checkbox from '@material-ui/core/Checkbox';
 import { useStyles } from './styles';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store';

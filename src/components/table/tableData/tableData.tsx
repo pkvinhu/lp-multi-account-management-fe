@@ -1,4 +1,4 @@
-import React, { FC, useEffect, Fragment } from 'react';
+import React, { FC, useEffect } from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -7,7 +7,6 @@ import TableRow from '@material-ui/core/TableRow';
 import TablePagination from '@material-ui/core/TablePagination';
 import Paper from '@material-ui/core/Paper';
 import { useStyles } from './styles';
-import { DataDisplay } from '../../../store/table/types';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from "../../../store";
 import actions from "../../../store/allActions";
@@ -26,15 +25,43 @@ const EnhancedTable: FC = () => {
     const { setOrder, setOrderBy, setSelected, setDataDisplay } = actions;
 
     useEffect(() => {
-        dispatch(actions.setDataDisplay("users", users.data, "asc", "id", skills.map, profiles.map, agentGroups.map))
+        dispatch(
+            setDataDisplay(
+                "users",
+                users.data,
+                "asc",
+                "id",
+                skills.map,
+                profiles.map,
+                agentGroups.map
+            )
+        )
     }, []);
 
     const handleRequestSort = (event: React.MouseEvent<unknown>, property: string) => {
         const isAsc = orderBy === property && order === 'asc';
-        if(table.view === "users") {
-            dispatch(setDataDisplay(table.view, users.data, isAsc?"desc":"asc", property, skills.map, profiles.map, agentGroups.map))
+        if (table.view === "users") {
+            dispatch(
+                setDataDisplay(
+                    table.view, 
+                    users.data, 
+                    isAsc ? "desc" : "asc", 
+                    property, 
+                    skills.map, 
+                    profiles.map, 
+                    agentGroups.map
+                )
+            )
         } else {
-            dispatch(setDataDisplay(table.view, state[table.view].data, isAsc?"desc":"asc", property, skills.map))
+            dispatch(
+                setDataDisplay(
+                    table.view, 
+                    state[table.view].data, 
+                    isAsc ? "desc" : "asc", 
+                    property, 
+                    skills.map
+                )
+            )
         }
     };
 
@@ -59,7 +86,7 @@ const EnhancedTable: FC = () => {
                     <Table
                         className={classes.table}
                         aria-labelledby="Contact Center Management"
-                        size={'medium'}
+                        size='medium'
                         aria-label="enhanced table"
                     >
                         <EnhancedTableHead
