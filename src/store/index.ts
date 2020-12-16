@@ -9,6 +9,7 @@ import skillsReducer from './skills/reducer';
 import profilesReducer from './profiles/reducer';
 import authReducer from './auth/reducer';
 import agentGroupsReducer from './agentGroups/reducer';
+import tableReducer from './table/reducer';
 import { combineReducers } from 'redux';
 
 const rootReducer = combineReducers({
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
     skills: skillsReducer,
     profiles: profilesReducer,
     agentGroups: agentGroupsReducer,
+    table: tableReducer,
     auth: authReducer
 });
 

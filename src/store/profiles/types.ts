@@ -1,43 +1,37 @@
+import { ProfileDataDisplay } from "../table/types";
+import { GenericError } from "../users/types";
+
 export const GET_PROFILES = "GET_PROFILES";
 export const SET_PROFILE_ERROR = "SET_PROFILE_ERROR";
 export const SET_PROFILE_LOADING = "SET_PROFILE_LOADING";
 
 export interface ProfileState {
-    profiles: Profile[];
+    data: Profile[];
+    map: any;
     error: ProfilesError | null;
     loading: boolean;
 }
 
-export interface Profile {
+export interface Profile extends ProfileDataDisplay {
   roleTypeId: number;
   deleted: boolean;
-  roleTypeName: string;
   permissions: number[];
-  name: string;
-  description: string | null;
-  id: number;
+  description?: string;
   permissionPackages: Package[];
-  dateUpdated: string;
-  isAssignedToLPA: boolean;
 }
 
 interface Package {
   isEnabled: boolean;
   isDisplayed: boolean;
   id: number;
-  featuredKeys: string[] | null;
+  featuredKeys?: string[];
 }
 
-export interface ProfilesError {
-  time: string;
-  message: string;
-  internalCode: number;
-  responseStatus: string;
-}
+export interface ProfilesError extends GenericError {}
 
 export interface GetProfilesAction {
   type: typeof GET_PROFILES;
-  payload: Profile[];
+  payload: { data: Profile[], map: any };
 }
 
 interface SetLoadingAction {

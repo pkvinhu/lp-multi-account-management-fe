@@ -1,7 +1,8 @@
 import { AgentGroupsState, AgentGroupsAction, GET_AGENTGROUPS, SET_AGENTGROUPS_ERROR, SET_AGENTGROUPS_LOADING } from './types';
 
 const initialState: AgentGroupsState = {
-    agentGroups: [],
+    data: [],
+    map: {},
     error: null,
     loading: false
 }
@@ -12,7 +13,8 @@ export default (state = initialState, action: AgentGroupsAction): AgentGroupsSta
             return {
                 ...state,
                 loading: false,
-                agentGroups: action.payload
+                data: action.payload.data,
+                map: action.payload.map
             }
         case SET_AGENTGROUPS_ERROR:
             return {
