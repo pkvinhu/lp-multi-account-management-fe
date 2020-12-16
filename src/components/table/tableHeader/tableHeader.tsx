@@ -1,12 +1,11 @@
-
-import React from 'react';
-import TableHead from '@material-ui/core/TableHead';
-import TableSortLabel from '@material-ui/core/TableSortLabel';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
-import { useStyles } from './styles';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../store';
+import React from "react";
+import TableHead from "@material-ui/core/TableHead";
+import TableSortLabel from "@material-ui/core/TableSortLabel";
+import TableCell from "@material-ui/core/TableCell";
+import TableRow from "@material-ui/core/TableRow";
+import { useStyles } from "./styles";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
 
 interface EnhancedTableProps {
   onRequestSort: (event: React.MouseEvent<unknown>, property: string) => void;
@@ -33,12 +32,12 @@ export default function EnhancedTableHead(props: EnhancedTableProps) {
           <TableCell
             key={headCell.id}
             align="right"
-            padding={headCell.disablePadding ? 'none' : 'default'}
+            padding={headCell.disablePadding ? "none" : "default"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
+              direction={orderBy === headCell.id ? order : "asc"}
               onClick={(e) => onRequestSort(e, headCell.id)}
             >
               {headCell.label}
