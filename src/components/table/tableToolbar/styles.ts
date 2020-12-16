@@ -4,7 +4,7 @@ export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       backgroundColor: "rgb(253, 253, 253)",
-      textColor: "white"
+      textColor: "rgb(253, 253, 253)"
     },
     highlight:
       theme.palette.type === "light"
@@ -22,6 +22,9 @@ export const useStyles = makeStyles((theme: Theme) =>
     toolbar: {
       display: "flex",
       justifyContent: "center"
+    },
+    tabs: {
+      textColor: "rgb(253, 253, 253)",
     }
   })
 );

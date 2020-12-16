@@ -32,12 +32,12 @@ const EnhancedTableToolbar = () => {
         value={table.view}
         onChange={handleChange}
         centered
-        classes={{indicator: classes.root}}
+        className={classes.root}
       >
         <Tab value="users" label="Users" />
-        <Tab  value="skills" label="Skills" />
-        <Tab  value="profiles" label="Profiles" />
-        <Tab  value="agentGroups" label="Agent Groups" />
+        <Tab value="skills" label="Skills" />
+        <Tab value="profiles" label="Profiles" />
+        <Tab value="agentGroups" label="Agent Groups" />
       </Tabs>
     </Toolbar>
   );
