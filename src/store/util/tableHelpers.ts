@@ -240,6 +240,10 @@ export const getHeadCellsForAgentGroups = (): AgentGroupHeadCell[] => {
   ];
 };
 
+// const formatDate = (date) => {
+
+// }
+
 const stableSort = (array, comparator) => {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
@@ -250,11 +254,11 @@ const stableSort = (array, comparator) => {
   return stabilizedThis.map(el => el[0]);
 };
 
-function getComparator(order, orderBy) {
-  return order === "desc"
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
+// function getComparator(order, orderBy) {
+//   return order === "desc"
+//     ? (a, b) => descendingComparator(a, b, orderBy)
+//     : (a, b) => -descendingComparator(a, b, orderBy);
+// }
 
 function descendingComparator(a, b, orderBy) {
   let A = Array.isArray(a[orderBy])
@@ -276,11 +280,11 @@ function descendingComparator(a, b, orderBy) {
   return 0;
 }
 
-// function getComparator<T extends keyof DataDisplay>(order: Order, orderBy: T): (a: { [key in T]: number | string }, b: { [key in T]: number | string }) => number {
-//     return order === 'desc'
-//         ? (a, b) => descendingComparator(a, b, orderBy)
-//         : (a, b) => -descendingComparator(a, b, orderBy);
-// }
+function getComparator<T extends keyof any>(order: Order, orderBy: T): (a: { [key in T]: number | string }, b: { [key in T]: number | string }) => number {
+    return order === 'desc'
+        ? (a, b) => descendingComparator(a, b, orderBy)
+        : (a, b) => -descendingComparator(a, b, orderBy);
+}
 
 // function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
 //     const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);

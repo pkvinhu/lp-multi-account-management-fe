@@ -1,32 +1,45 @@
 import React from "react";
-import clsx from "clsx";
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 import { useStyles } from './styles';
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../../store";
+import { View } from "../../../store/table/types";
+import actions from "../../../store/allActions"
 
-// interface EnhancedTableToolbarProps {
-//   numSelected: number;
-// }
-
-const EnhancedTableToolbar = (/*props: EnhancedTableToolbarProps*/) => {
+const EnhancedTableToolbar = () => {
   const classes = useStyles();
-//   const { numSelected } = props;
+  const dispatch = useDispatch();
+  const state = useSelector((state: RootState) => state);
+  const { users, skills, profiles, agentGroups, table } = state;
+  const handleChange = (event: unknown, value: View) => {
+    if (value === "users") {
+      dispatch(actions.setDataDisplay(value, users.data, "asc", "id", skills.map, profiles.map, agentGroups.map));
+    }
+    else {
+      dispatch(actions.setDataDisplay(value, state[value].data, "asc", "id", skills.map))
+    }
+  };
 
   return (
     <Toolbar
-      /*className={clsx(classes.root, {
-        [classes.highlight]: numSelected > 0,
-      })}*/
+    /*className={clsx(classes.root, {
+      [classes.highlight]: numSelected > 0,
+    })}*/
     >
-        <Tooltip title="Filter list">
-          <IconButton aria-label="filter list">
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
+      <Tabs
+        value={table.view}
+        onChange={handleChange}
+        indicatorColor="primary"
+        textColor="primary"
+        centered
+      >
+        <Tab value="users" label="Users" />
+        <Tab value="skills" label="Skills" />
+        <Tab value="profiles" label="Profiles" />
+        <Tab value="agentGroups" label="Agent Groups" />
+      </Tabs>
     </Toolbar>
   );
 };

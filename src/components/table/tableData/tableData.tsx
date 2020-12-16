@@ -59,7 +59,7 @@ const EnhancedTable: FC = () => {
                     <Table
                         className={classes.table}
                         aria-labelledby="Contact Center Management"
-                        size={/*dense ? 'small' : */'medium'}
+                        size={'medium'}
                         aria-label="enhanced table"
                     >
                         <EnhancedTableHead
@@ -75,16 +75,17 @@ const EnhancedTable: FC = () => {
                                             onClick={() => dispatch(actions.setSelected(index))}
                                             tabIndex={-1}
                                             key={index}
+                                            className={classes.row}
                                         >
                                             {headCells.map((cell, i) => {
-                                                return <TableCell align="right" key={cell.id}>{Array.isArray(row[cell.id]) ? row[cell.id].join(", ") : row[cell.id]}</TableCell>
+                                                return <TableCell className={classes.cell} align="right" key={cell.id}>{Array.isArray(row[cell.id]) ? row[cell.id].join(", ") : row[cell.id]}</TableCell>
                                             })}
                                         </TableRow>
                                     );
                                 })}
                             {emptyRows > 0 && (
-                                <TableRow style={{ height: (33) * emptyRows }}>
-                                    <TableCell colSpan={6} />
+                                <TableRow className={classes.row} style={{ height: (33) * emptyRows }}>
+                                    <TableCell className={classes.cell} colSpan={6} />
                                 </TableRow>
                             )}
                         </TableBody>
