@@ -1,7 +1,7 @@
 import { GET_ACCOUNTS, Accounts, SELECT_ACCOUNT, AccountsAction, CATCH_ERROR } from "./types";
 
 const initialState: Accounts = {
-    accounts: [],
+    data: [],
     selectedAccount: "",
     error: ""
 }
@@ -11,7 +11,7 @@ export default (state = initialState, action: AccountsAction): Accounts => {
         case GET_ACCOUNTS:
             return {
                 ...state,
-                accounts: action.payload
+                data: action.payload
             }
         case SELECT_ACCOUNT:
             return {

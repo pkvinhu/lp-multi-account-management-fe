@@ -1,7 +1,8 @@
 import { ProfileState, ProfileAction, GET_PROFILES, SET_PROFILE_ERROR, SET_PROFILE_LOADING } from './types'
 
 const initialState: ProfileState = {
-    profiles: [],
+    data: [],
+    map: {},
     error: null,
     loading: false
 };
@@ -12,7 +13,8 @@ export default (state = initialState, action: ProfileAction): ProfileState => {
             return {
                 ...state,
                 loading: false,
-                profiles: action.payload
+                data: action.payload.data,
+                map: action.payload.map
             }
         case SET_PROFILE_LOADING:
             return {
