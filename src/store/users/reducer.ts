@@ -1,7 +1,7 @@
 import { UserState, UserAction, GET_USERS, SET_USER_ERROR, SET_USER_LOADING } from './types';
 
 const initialState: UserState = {
-    users: [],
+    data: [],
     loading: false,
     error: null
 }
@@ -11,7 +11,7 @@ export default (state = initialState, action: UserAction): UserState => {
         case GET_USERS:
             return {
                 ...state,
-                users: action.payload,
+                data: action.payload,
                 loading: false
             }
         case SET_USER_ERROR:

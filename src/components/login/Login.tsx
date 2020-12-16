@@ -8,7 +8,7 @@ const baseURL: string = "http://localhost:1337";
 
 const Login: FC = () => {
     const classes = loginStyles();
-    const handleLogin = ():void => {
+    const handleLogin = (): void => {
         window.open(`${baseURL}/api/login`, "_self");
     }
     

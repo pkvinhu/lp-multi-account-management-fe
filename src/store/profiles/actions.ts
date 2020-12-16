@@ -8,9 +8,11 @@ export const getProfiles = (): ThunkAction<void, RootState, null, ProfileAction 
         try {
             const res: any = await axios.get("http://localhost:1337/api/profiles/29778756");
             const data: Profile[] = res.data;
+            let map = {};
+            res.data.forEach((e, i) => { map[e.id] = e.name });
             dispatch({
                 type: GET_PROFILES,
-                payload: data
+                payload: { data, map }
             })
         } catch(err) {
             console.log(err);

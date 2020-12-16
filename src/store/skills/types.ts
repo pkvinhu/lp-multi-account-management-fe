@@ -1,45 +1,36 @@
+import { SkillDataDisplay } from "../table/types";
+import { GenericError } from "../users/types";
+
 export const GET_SKILLS = "GET_SKILLS";
 export const SET_SKILLS_ERROR = "SET_SKILLS_ERROR";
 export const SET_SKILLS_LOADING = "SET_SKILLS_LOADING";
 
 export interface SkillsState {
-  skills: Skill[];
+  data: Skill[];
+  map: any;
   error: SkillsError | null;
   loading: boolean;
 }
 
-export interface CreateSkillPayload {
-    id: string;
-    deleted: boolean;
-    name: string | null;
-    description: string | null;
-    skillOrder: number | null;
-    maxWaitTime: number | null;
-    defaultPostChatSurveyId: string | null;
-    defaultOfflineSurveyId: string | null;
-    defaultAgentSurveyId: string | null;
-    dateCreated: string | null;
-    dateUpdated: string | null;
-    skillRoutingConfiguration: RoutingConfig[] | null;
-    agentGroupId: string | null;
-    priority: number | null;
-    splitPercentage: number | null;
-    wrapUpTime: number | null;
-    slaDefaultResponseTime: number | null;
-    slaUrgentResponseTime: number | null;
-    slaFirstTimeResponseTime: number | null;
-    lobIds: number[] | null;
-    canTransfer: boolean | null;
-    skillTransferList: string[] | null;
-    workingHoursId: string | null;
-    specialOccasionId: string | null;
-    postConversationSurveyAppInstallAssociationId: string | null;
-    autoCloseInSeconds: number | null;
-    transferToAgentMaxWaitInSeconds: number | null;
-    fallbackSkill: string | null;
-    fallbackWhenAllAgentsAreAway: boolean | null;
-    agentSurveyForMsgTimeoutInMinutes: number | null;
-    agentSurveyForMsgId: string | null;
+export interface CreateSkillPayload extends Skill {
+    defaultPostChatSurveyId?: string;
+    defaultOfflineSurveyId?: string;
+    defaultAgentSurveyId?: string;
+    dateCreated?: string;
+    agentGroupId?: string;
+    priority?: number;
+    splitPercentage?: number;
+    wrapUpTime?: number;
+    slaDefaultResponseTime?: number;
+    slaUrgentResponseTime?: number;
+    slaFirstTimeResponseTime?: number;
+    postConversationSurveyAppInstallAssociationId?: string;
+    autoCloseInSeconds?: number;
+    transferToAgentMaxWaitInSeconds?: number;
+    fallbackSkill?: string;
+    fallbackWhenAllAgentsAreAway?: boolean;
+    agentSurveyForMsgTimeoutInMinutes?: number;
+    agentSurveyForMsgId?: string;
   }
 
   interface RoutingConfig {
@@ -48,32 +39,21 @@ export interface CreateSkillPayload {
     agentGroupId: number;
   }
 
-  export interface Skill {
-    id: string;
-    skillOrder: number;
+  export interface Skill extends SkillDataDisplay {
     description: string;
     workingHoursId: string;
     specialOccasionId: string;
-    name: string;
     maxWaitTime: number;
     deleted: boolean;
-    dateUpdated: string;
-    canTransfer: boolean;
-    skillTransferList: string[];
     lobIds: string[];
     skillRoutingConfiguration: RoutingConfig[];
   }
 
-  export interface SkillsError {
-    time: string;
-    message: string;
-    internalCode: number;
-    responseStatus: string;
-  }
+  export interface SkillsError extends GenericError {}
 
   interface GetSkillsAction {
     type: typeof GET_SKILLS;
-    payload: Skill[];
+    payload: { data: Skill[], map: any };
   }
 
   interface SetSkillsError {

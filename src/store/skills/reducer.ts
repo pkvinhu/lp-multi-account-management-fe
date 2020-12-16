@@ -1,7 +1,8 @@
 import { SkillsState, SkillAction, GET_SKILLS, SET_SKILLS_ERROR, SET_SKILLS_LOADING } from './types';
 
 const initialState: SkillsState = {
-    skills: [],
+    data: [],
+    map: {},
     error: null,
     loading: false
 }
@@ -11,7 +12,8 @@ export default (state = initialState, action: SkillAction): SkillsState => {
         case GET_SKILLS:
             return {
                 ...state,
-                skills: action.payload,
+                data: action.payload.data,
+                map: action.payload.map,
                 loading: false
             }
         case SET_SKILLS_ERROR:
