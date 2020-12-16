@@ -1,3 +1,3 @@
-import { useStyles } from '../tableData/styles';
+import { useStyles } from "../tableData/styles";
 
 export { useStyles };

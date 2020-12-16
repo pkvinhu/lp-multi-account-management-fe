@@ -1,12 +1,12 @@
 import React from "react";
-import Toolbar from '@material-ui/core/Toolbar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import { useStyles } from './styles';
+import Toolbar from "@material-ui/core/Toolbar";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import { useStyles } from "./styles";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
 import { View } from "../../../store/table/types";
-import actions from "../../../store/allActions"
+import actions from "../../../store/allActions";
 
 const EnhancedTableToolbar = () => {
   const classes = useStyles();
@@ -18,15 +18,29 @@ const EnhancedTableToolbar = () => {
     // let args = [value, state[value].data, "asc", "id", skills.map]
     // if (value === "users") args = args.concat([profiles.map, agentGroups.map])
     dispatch(setTableLoading());
-    value === "users" ? dispatch(setDataDisplay(value, state[value].data, "asc", "id", skills.map, profiles.map, agentGroups.map)) : dispatch(setDataDisplay(value, state[value].data, "asc", "id", skills.map));
+    value === "users"
+      ? dispatch(
+          setDataDisplay(
+            value,
+            state[value].data,
+            "asc",
+            "id",
+            skills.map,
+            profiles.map,
+            agentGroups.map
+          )
+        )
+      : dispatch(
+          setDataDisplay(value, state[value].data, "asc", "id", skills.map)
+        );
   };
 
   return (
     <Toolbar
-    /*className={clsx(classes.root, {
+      /*className={clsx(classes.root, {
       [classes.highlight]: numSelected > 0,
     })}*/
-    className={classes.toolbar}
+      className={classes.toolbar}
     >
       <Tabs
         value={table.view}
