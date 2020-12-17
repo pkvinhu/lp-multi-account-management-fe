@@ -3,14 +3,13 @@ import { Profile } from "../profiles/types";
 import { Skill } from "../skills/types";
 import { AgentGroup } from "../agentGroups/types";
 import {
-  UserDataDisplay,
   UserHeadCell,
   SkillHeadCell,
   ProfileHeadCell,
   AgentGroupHeadCell,
-  View,
   Order,
-  DataDisplay
+  DataDisplay,
+  Data
 } from "../table/types";
 
 export const getDisplayForUsers = (
@@ -18,7 +17,6 @@ export const getDisplayForUsers = (
   profilesMap: any,
   agentGroupsMap: any,
   data: User[],
-  view: View,
   order: Order,
   orderBy: string
 ): DataDisplay[] => {
@@ -79,7 +77,6 @@ export const getDisplayForUsers = (
 
 export const getDisplayForProfiles = (
   data: Profile[],
-  view: View,
   order: Order,
   orderBy: string
 ) => {
@@ -104,7 +101,6 @@ export const getDisplayForProfiles = (
 export const getDisplayForSkills = (
   data: Skill[],
   skillsMap: any,
-  view: View,
   order: Order,
   orderBy: string
 ) => {
@@ -133,7 +129,6 @@ export const getDisplayForSkills = (
 
 export const getDisplayForAgentGroups = (
   data: AgentGroup[],
-  view: View,
   order: Order,
   orderBy: string
 ) => {
@@ -145,7 +140,7 @@ export const getDisplayForAgentGroups = (
 
 export const getHeadCellsForUsers = (): UserHeadCell[] => {
   const disablePadding: boolean = false;
-  const result = [
+  return [
     { id: "id", numeric: false, disablePadding, label: "Id" },
     { id: "pid", numeric: false, disablePadding, label: "Pid" },
     { id: "loginName", numeric: false, disablePadding, label: "Login Name" },
@@ -175,7 +170,6 @@ export const getHeadCellsForUsers = (): UserHeadCell[] => {
       label: "LPA Created User"
     }
   ];
-  return result;
 };
 
 export const getHeadCellsForProfiles = (): ProfileHeadCell[] => {
@@ -241,19 +235,34 @@ export const getHeadCellsForAgentGroups = (): AgentGroupHeadCell[] => {
   ];
 };
 
-// const formatDate = (date) => {
+// const stableSort = (array, comparator) => {
+//   const stabilizedThis = array.map((el, index) => [el, index]);
+//   stabilizedThis.sort((a, b) => {
+//     const order = comparator(a[0], b[0]);
+//     if (order !== 0) return order;
+//     return a[1] - b[1];
+//   });
+//   return stabilizedThis.map(el => el[0]);
+// };
 
-// }
-
-const stableSort = (array, comparator) => {
-  const stabilizedThis = array.map((el, index) => [el, index]);
+function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
+  const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) return order;
     return a[1] - b[1];
   });
   return stabilizedThis.map(el => el[0]);
-};
+}
+
+function getComparator<T extends keyof any>(
+  order: Order,
+  orderBy: T
+): (a: DataDisplay, b: DataDisplay) => number {
+  return order === "desc"
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
 
 function descendingComparator(a, b, orderBy) {
   let A = Array.isArray(a[orderBy])
@@ -266,9 +275,6 @@ function descendingComparator(a, b, orderBy) {
     : typeof b[orderBy] === "number"
     ? b[orderBy]
     : String(b[orderBy]).toLowerCase();
-    if(typeof A === "number") {
-      console.log(A, B)
-    }
   if (B < A) {
     return -1;
   }
@@ -277,19 +283,3 @@ function descendingComparator(a, b, orderBy) {
   }
   return 0;
 }
-
-function getComparator<T extends keyof any>(order: Order, orderBy: T): (a: { [key in T]: number | string }, b: { [key in T]: number | string }) => number {
-    return order === 'desc'
-        ? (a, b) => descendingComparator(a, b, orderBy)
-        : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-// function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
-//     const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
-//     stabilizedThis.sort((a, b) => {
-//         const order = comparator(a[0], b[0]);
-//         if (order !== 0) return order;
-//         return a[1] - b[1];
-//     });
-//     return stabilizedThis.map((el) => el[0]);
-// }

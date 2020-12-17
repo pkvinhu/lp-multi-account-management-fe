@@ -14,8 +14,7 @@ export const useStyles = makeStyles((theme: Theme) =>
     },
     row: {},
     table: {
-      minWidth: 750,
-      maxWidth: "70%",
+      minWidth: 750
     },
     visuallyHidden: {
       border: 0,

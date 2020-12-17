@@ -10,6 +10,8 @@ export const SET_ORDER = "SET_ORDER";
 export const SET_ORDER_BY = "SET_ORDER_BY";
 export const SET_TABLE_ERROR = "SET_TABLE_ERROR";
 export const SET_TABLE_LOADING = "SET_TABLE_LOADING";
+export const SET_ROWS_PER_PAGE = "SET_ROWS_PER_PAGE";
+export const SET_PAGE = "SET_PAGE";
 
 export type Order = "asc" | "desc";
 export type View = "users" | "profiles" | "skills" | "agentGroups";
@@ -22,6 +24,8 @@ export interface TableState {
   order: Order;
   orderBy: string;
   rowCount: number;
+  page: number;
+  rowsPerPage: number;
   error: boolean;
   loading: boolean;
 }
@@ -42,7 +46,7 @@ export interface HeadCellTemplate {
 }
 
 export interface UserHeadCell extends HeadCellTemplate {
-  id: string;//keyof UserDataDisplay;
+  id: keyof UserDataDisplay;
 }
 export interface SkillHeadCell extends HeadCellTemplate {
   id: keyof SkillDataDisplay;
@@ -121,6 +125,16 @@ export interface SetOrderBy {
   payload: keyof DataDisplay;
 }
 
+export interface SetPage {
+  type: typeof SET_PAGE;
+  payload: number;
+}
+
+export interface SetRowsPerPage {
+  type: typeof SET_ROWS_PER_PAGE;
+  payload: number;
+}
+
 export interface SetTableError {
   type: typeof SET_TABLE_ERROR;
 }
@@ -135,6 +149,8 @@ export type GetTableAction =
   | SetSelected
   | SetOrder
   | SetOrderBy
+  | SetPage
+  | SetRowsPerPage
   | SetTableError
   | SetTableLoading;
 
