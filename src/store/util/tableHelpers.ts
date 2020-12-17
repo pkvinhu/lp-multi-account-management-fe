@@ -266,9 +266,6 @@ function descendingComparator(a, b, orderBy) {
     : typeof b[orderBy] === "number"
     ? b[orderBy]
     : String(b[orderBy]).toLowerCase();
-    if(typeof A === "number") {
-      console.log(A, B)
-    }
   if (B < A) {
     return -1;
   }

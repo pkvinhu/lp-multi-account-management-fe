@@ -20,7 +20,6 @@ export const getUsers = (): ThunkAction<
       let res: any = await axios.get(
         "http://localhost:1337/api/users/29778756"
       );
-      console.log(res);
       let data: User[] = res.data;
       dispatch({
         type: GET_USERS,

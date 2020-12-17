@@ -10,6 +10,8 @@ import {
   setOrder,
   setOrderBy,
   setSelected,
+  setPage,
+  setRowsPerPage,
   setTableError,
   setTableLoading
 } from "./table/actions";
@@ -32,6 +34,8 @@ export default {
   setOrder,
   setOrderBy,
   setSelected,
+  setPage,
+  setRowsPerPage,
   setTableError,
   setTableLoading
 };

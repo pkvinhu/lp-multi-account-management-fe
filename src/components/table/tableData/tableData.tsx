@@ -17,12 +17,12 @@ const EnhancedTable: FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state);
+  // const page = useSelector((state: RootState) => state.table.page);
+  // const rowsPerPage = useSelector((state: RootState) => state.table.rowsPerPage)
   const { table, users, skills, profiles, agentGroups } = state;
-  const { dataDisplay, order, orderBy, rowCount, headCells } = table;
+  const { page, rowsPerPage, dataDisplay, order, orderBy, rowCount, headCells } = table;
 
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const { setOrder, setOrderBy, setSelected, setDataDisplay } = actions;
+  const { setPage, setRowsPerPage, setSelected, setDataDisplay } = actions;
 
   useEffect(() => {
     dispatch(
@@ -69,17 +69,19 @@ const EnhancedTable: FC = () => {
   };
 
   const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
+    dispatch(setPage(newPage));
   };
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+    dispatch(setRowsPerPage(parseInt(event.target.value, 10)));
+    dispatch(setPage(0));
   };
 
   //   const isSelected = (name: string) => selected.indexOf(name) !== -1;
+
+  const filterType = (value) => Array.isArray(value) ? value.join(", ") : typeof value === "boolean"  ? value ? "Yes" : "No" : value;
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rowCount - page * rowsPerPage);
@@ -115,9 +117,7 @@ const EnhancedTable: FC = () => {
                             align="right"
                             key={cell.id}
                           >
-                            {Array.isArray(row[cell.id])
-                              ? row[cell.id].join(", ")
-                              : row[cell.id]}
+                            {filterType(row[cell.id])}
                           </TableCell>
                         );
                       })}

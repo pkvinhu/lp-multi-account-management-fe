@@ -41,11 +41,6 @@ export default function EnhancedTableHead(props: EnhancedTableProps) {
               onClick={(e) => onRequestSort(e, headCell.id)}
             >
               {headCell.label}
-              {/* {orderBy === headCell.id ? (
-                <span className={classes.visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </span>
-              ) : null} */}
             </TableSortLabel>
           </TableCell>
         ))}
