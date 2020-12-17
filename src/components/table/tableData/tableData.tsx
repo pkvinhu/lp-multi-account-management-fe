@@ -16,8 +16,8 @@ const EnhancedTable: FC = () => {
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state);
   const { table, users, skills, profiles, agentGroups } = state;
-  const { page, rowsPerPage, dataDisplay, rowCount, headCells } = table;
-  const { setPage, setRowsPerPage, setSelected, setDataDisplay } = actions;
+  const { page, rowsPerPage, rowCount } = table;
+  const { setPage, setRowsPerPage, setDataDisplay } = actions;
 
   useEffect(() => {
     dispatch(
@@ -43,13 +43,6 @@ const EnhancedTable: FC = () => {
     dispatch(setRowsPerPage(parseInt(event.target.value, 10)));
     dispatch(setPage(0));
   };
-
-  //   const isSelected = (name: string) => selected.indexOf(name) !== -1;
-
-  const filterType = (value) => Array.isArray(value) ? value.join(", ") : typeof value === "boolean"  ? value ? "Yes" : "No" : value;
-
-  const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, rowCount - page * rowsPerPage);
 
   return (
     <div className={classes.root}>
