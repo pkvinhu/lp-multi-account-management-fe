@@ -13,13 +13,14 @@ const EnhancedTableToolbar = () => {
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state);
   const { skills, profiles, agentGroups, table } = state;
-  const { setDataDisplay, setTableLoading } = actions;
+  const { setPage, setDataDisplay, setTableLoading } = actions;
   const handleChange = (event: unknown, value: View) => {
     // let args = [value, state[value].data, "asc", "id", skills.map]
     // if (value === "users") args = args.concat([profiles.map, agentGroups.map])
-    dispatch(setTableLoading());
-    value === "users"
-      ? dispatch(
+    if (value !== table.view) {
+      dispatch(setTableLoading());
+      value === "users"
+        ? dispatch(
           setDataDisplay(
             value,
             state[value].data,
@@ -30,9 +31,12 @@ const EnhancedTableToolbar = () => {
             agentGroups.map
           )
         )
-      : dispatch(
+        : dispatch(
           setDataDisplay(value, state[value].data, "asc", "id", skills.map)
         );
+      dispatch(setPage(0))
+    }
+
   };
 
   return (

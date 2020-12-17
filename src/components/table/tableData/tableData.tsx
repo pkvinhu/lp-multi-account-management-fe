@@ -1,9 +1,6 @@
 import React, { FC, useEffect } from "react";
 import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
-import TableRow from "@material-ui/core/TableRow";
 import TablePagination from "@material-ui/core/TablePagination";
 import Paper from "@material-ui/core/Paper";
 import { useStyles } from "./styles";
@@ -12,16 +9,14 @@ import { RootState } from "../../../store";
 import actions from "../../../store/allActions";
 import EnhancedTableToolbar from "../tableToolbar/tableToolbar";
 import EnhancedTableHead from "../tableHeader/tableHeader";
+import EnhancedTableBody from "../tableBody/tableBody";
 
 const EnhancedTable: FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state);
-  // const page = useSelector((state: RootState) => state.table.page);
-  // const rowsPerPage = useSelector((state: RootState) => state.table.rowsPerPage)
   const { table, users, skills, profiles, agentGroups } = state;
-  const { page, rowsPerPage, dataDisplay, order, orderBy, rowCount, headCells } = table;
-
+  const { page, rowsPerPage, dataDisplay, rowCount, headCells } = table;
   const { setPage, setRowsPerPage, setSelected, setDataDisplay } = actions;
 
   useEffect(() => {
@@ -37,36 +32,6 @@ const EnhancedTable: FC = () => {
       )
     );
   }, []);
-
-  const handleRequestSort = (
-    event: React.MouseEvent<unknown>,
-    property: string
-  ) => {
-    const isAsc = orderBy === property && order === "asc";
-    if (table.view === "users") {
-      dispatch(
-        setDataDisplay(
-          table.view,
-          users.data,
-          isAsc ? "desc" : "asc",
-          property,
-          skills.map,
-          profiles.map,
-          agentGroups.map
-        )
-      );
-    } else {
-      dispatch(
-        setDataDisplay(
-          table.view,
-          state[table.view].data,
-          isAsc ? "desc" : "asc",
-          property,
-          skills.map
-        )
-      );
-    }
-  };
 
   const handleChangePage = (event: unknown, newPage: number) => {
     dispatch(setPage(newPage));
@@ -97,42 +62,8 @@ const EnhancedTable: FC = () => {
             size="medium"
             aria-label="enhanced table"
           >
-            <EnhancedTableHead onRequestSort={handleRequestSort} />
-            <TableBody>
-              {dataDisplay
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  return (
-                    <TableRow
-                      hover
-                      onClick={() => dispatch(actions.setSelected(index))}
-                      tabIndex={-1}
-                      key={index}
-                      className={classes.row}
-                    >
-                      {headCells.map((cell, i) => {
-                        return (
-                          <TableCell
-                            className={classes.cell}
-                            align="right"
-                            key={cell.id}
-                          >
-                            {filterType(row[cell.id])}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  );
-                })}
-              {emptyRows > 0 && (
-                <TableRow
-                  className={classes.row}
-                  style={{ height: 33 * emptyRows }}
-                >
-                  <TableCell className={classes.cell} colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
+            <EnhancedTableHead />
+            <EnhancedTableBody />
           </Table>
         </TableContainer>
         <TablePagination
