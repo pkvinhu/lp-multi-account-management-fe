@@ -1,4 +1,4 @@
-import { SkillDataDisplay } from "../table/types";
+import { SkillDataDisplay, Data } from "../table/types";
 import { GenericError } from "../users/types";
 
 export const GET_SKILLS = "GET_SKILLS";

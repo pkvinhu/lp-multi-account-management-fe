@@ -58,22 +58,21 @@ export const setDataDisplay = (
         profilesMap,
         agentGroupsMap,
         data,
-        view,
         order,
         orderBy
       );
       payload.headCells = getHeadCellsForUsers();
       break;
     case "profiles":
-      payload.data = getDisplayForProfiles(data, view, order, orderBy);
+      payload.data = getDisplayForProfiles(data, order, orderBy);
       payload.headCells = getHeadCellsForProfiles();
       break;
     case "skills":
-      payload.data = getDisplayForSkills(data, skillsMap, view, order, orderBy);
+      payload.data = getDisplayForSkills(data, skillsMap, order, orderBy);
       payload.headCells = getHeadCellsForSkills();
       break;
     case "agentGroups":
-      payload.data = getDisplayForAgentGroups(data, view, order, orderBy);
+      payload.data = getDisplayForAgentGroups(data, order, orderBy);
       payload.headCells = getHeadCellsForAgentGroups();
       break;
   }

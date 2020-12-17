@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC } from "react";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
@@ -16,47 +16,47 @@ const EnhancedTableBody: FC = () => {
 
     //   const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
-  const filterType = (value) => Array.isArray(value) ? value.join(", ") : typeof value === "boolean"  ? value ? "Yes" : "No" : value;
+    const filterType = (value) => Array.isArray(value) ? value.join(", ") : typeof value === "boolean" ? value ? "Yes" : "No" : value;
 
-  const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, rowCount - page * rowsPerPage);
+    const emptyRows =
+        rowsPerPage - Math.min(rowsPerPage, rowCount - page * rowsPerPage);
 
     return (
         <TableBody>
-              {dataDisplay
+            {dataDisplay
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  return (
-                    <TableRow
-                      hover
-                      onClick={() => dispatch(setSelected(index))}
-                      tabIndex={-1}
-                      key={index}
-                      className={classes.row}
-                    >
-                      {headCells.map((cell, i) => {
-                        return (
-                          <TableCell
-                            className={classes.cell}
-                            align="right"
-                            key={cell.id}
-                          >
-                            {filterType(row[cell.id])}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  );
+                    return (
+                        <TableRow
+                            hover
+                            onClick={() => dispatch(setSelected(index))}
+                            tabIndex={-1}
+                            key={index}
+                            className={classes.row}
+                        >
+                            {headCells.map((cell, i) => {
+                                return (
+                                    <TableCell
+                                        className={classes.cell}
+                                        align="right"
+                                        key={cell.id}
+                                    >
+                                        {filterType(row[cell.id])}
+                                    </TableCell>
+                                );
+                            })}
+                        </TableRow>
+                    );
                 })}
-              {emptyRows > 0 && (
+            {emptyRows > 0 && (
                 <TableRow
-                  className={classes.row}
-                  style={{ height: 33 * emptyRows }}
+                    className={classes.row}
+                    style={{ height: 33 * emptyRows }}
                 >
-                  <TableCell className={classes.cell} colSpan={6} />
+                    <TableCell className={classes.cell} colSpan={6} />
                 </TableRow>
-              )}
-            </TableBody>
+            )}
+        </TableBody>
     )
 }
 

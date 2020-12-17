@@ -7,6 +7,7 @@ import { useStyles } from "./styles";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
 import actions from "../../../store/allActions";
+import { DataDisplay } from "../../../store/table/types";
 
 // interface EnhancedTableProps {
 //   onRequestSort: (event: React.MouseEvent<unknown>, property: string) => void;
@@ -24,7 +25,7 @@ export default function EnhancedTableHead() {
     event: React.MouseEvent<unknown>,
     property: string
   ) => {
-    const isAsc = orderBy === property && order === "asc";
+    const isAsc:boolean = orderBy === property && order === "asc";
     if (table.view === "users") {
       dispatch(
         setDataDisplay(
