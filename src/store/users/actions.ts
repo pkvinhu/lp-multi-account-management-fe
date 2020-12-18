@@ -9,7 +9,7 @@ import {
 } from "./types";
 import axios from "axios";
 
-export const getUsers = (): ThunkAction<
+export const getUsers = (account: string|number): ThunkAction<
   void,
   RootState,
   null,
@@ -18,7 +18,7 @@ export const getUsers = (): ThunkAction<
   return async dispatch => {
     try {
       let res: any = await axios.get(
-        "http://localhost:1337/api/users/29778756"
+        `http://localhost:1337/api/users/${account}`
       );
       let data: User[] = res.data;
       dispatch({
@@ -40,3 +40,4 @@ export const setUserLoading = (): UserAction => {
     type: SET_USER_LOADING,
   }
 }
+

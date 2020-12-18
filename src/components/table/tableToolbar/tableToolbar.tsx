@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
 import { View } from "../../../store/table/types";
 import actions from "../../../store/allActions";
+import AccountDropDown from "../../dashboard/accountDropDown/accountDropDown";
 
 const EnhancedTableToolbar = () => {
   const classes = useStyles();
@@ -18,7 +19,7 @@ const EnhancedTableToolbar = () => {
     // let args = [value, state[value].data, "asc", "id", skills.map]
     // if (value === "users") args = args.concat([profiles.map, agentGroups.map])
     if (value !== table.view) {
-      dispatch(setTableLoading());
+      dispatch(setTableLoading(true));
       value === "users"
         ? dispatch(
           setDataDisplay(
@@ -46,6 +47,7 @@ const EnhancedTableToolbar = () => {
     })}*/
       className={classes.toolbar}
     >
+      <AccountDropDown />
       <Tabs
         value={table.view}
         onChange={handleChange}

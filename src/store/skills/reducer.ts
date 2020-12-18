@@ -25,7 +25,8 @@ export default (state = initialState, action: SkillAction): SkillsState => {
         case SET_SKILLS_LOADING:
             return {
                 ...state,
-                loading: true
+                loading: true,
+                data: []
             }
         default:
             return state;

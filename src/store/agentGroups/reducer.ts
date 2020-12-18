@@ -25,7 +25,8 @@ export default (state = initialState, action: AgentGroupsAction): AgentGroupsSta
         case SET_AGENTGROUPS_LOADING:
             return {
                 ...state,
-                loading: true
+                loading: true,
+                data: []
             }
         default:
             return state;

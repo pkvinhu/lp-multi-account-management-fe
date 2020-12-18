@@ -141,6 +141,7 @@ export interface SetTableError {
 
 export interface SetTableLoading {
   type: typeof SET_TABLE_LOADING;
+  payload: boolean;
 }
 
 export type GetTableAction =

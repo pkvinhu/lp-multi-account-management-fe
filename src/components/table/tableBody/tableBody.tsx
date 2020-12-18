@@ -26,6 +26,7 @@ const EnhancedTableBody: FC = () => {
             {dataDisplay
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
+                    console.log(row)
                     return (
                         <TableRow
                             hover
