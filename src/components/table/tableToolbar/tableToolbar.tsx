@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
 import { View } from "../../../store/table/types";
 import actions from "../../../store/allActions";
-import AccountDropDown from "../../dashboard/accountDropDown/accountDropDown";
+import AccountDropDown from "../../dashboard/accountDropDown/AccountDropDown";
 
 const EnhancedTableToolbar = () => {
   const classes = useStyles();

@@ -1,5 +1,4 @@
 import React, { FC, useEffect } from "react";
-import PropTypes from 'prop-types';
 import Table from "@material-ui/core/Table";
 import TableContainer from "@material-ui/core/TableContainer";
 import TablePagination from "@material-ui/core/TablePagination";
@@ -8,10 +7,10 @@ import { useStyles } from "./styles";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
 import actions from "../../../store/allActions";
-import EnhancedTableToolbar from "../tableToolbar/tableToolbar";
-import EnhancedTableHead from "../tableHeader/tableHeader";
-import EnhancedTableBody from "../tableBody/tableBody";
-import DashboardLoading from "../../dashboard/dashboardLoading/dashboardLoading";
+import EnhancedTableToolbar from "../tableToolbar/TableToolbar";
+import EnhancedTableHead from "../tableHeader/TableHeader";
+import EnhancedTableBody from "../tableBody/TableBody";
+import DashboardLoading from "../../dashboard/dashboardLoading/DashboardLoading";
 import { View } from "../../../store/table/types";
 
 const EnhancedTable = () => {

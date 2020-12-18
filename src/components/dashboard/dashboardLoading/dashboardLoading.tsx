@@ -1,9 +1,9 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from "../styles";
 import Paper from '@material-ui/core/Paper';
 import LinearProgress from '@material-ui/core/LinearProgress'
-import EnhancedTableToolbar from '../../table/tableToolbar/tableToolbar';
+import EnhancedTableToolbar from '../../table/tableToolbar/TableToolbar';
 import { RootState } from '../../../store';
 import actions from "../../../store/allActions";
 

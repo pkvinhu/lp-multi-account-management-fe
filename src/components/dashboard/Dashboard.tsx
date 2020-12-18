@@ -2,12 +2,12 @@ import React, { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import actions from '../../store/allActions';
-import EnhancedTable from '../table/tableData/tableData';
+import EnhancedTable from '../table/tableData/TableData';
 import { View } from '../../store/table/types';
 import { useStyles } from './styles';
 import AppToolbar from '../toolbar/AppToolbar';
-import DashboardLoading from './dashboardLoading/dashboardLoading';
-import AccountDropDown from './accountDropDown/accountDropDown';
+import DashboardLoading from './dashboardLoading/DashboardLoading';
+import AccountDropDown from './accountDropDown/AccountDropDown';
 
 const Dashboard: FC = () => {
     const classes = useStyles();
