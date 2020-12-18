@@ -25,7 +25,7 @@ const EnhancedTable = ({handleDelete}) => {
     console.log("from enhanced table")
     dispatch(
       setDataDisplay(
-        "users",
+        table.view || "users",
         users.data,
         "asc",
         "id",
