@@ -13,7 +13,8 @@ import {
   setPage,
   setRowsPerPage,
   setTableError,
-  setTableLoading
+  setTableLoading,
+  deleteEntity
 } from "./table/actions";
 
 export default {
@@ -37,5 +38,6 @@ export default {
   setPage,
   setRowsPerPage,
   setTableError,
-  setTableLoading
+  setTableLoading,
+  deleteEntity
 };

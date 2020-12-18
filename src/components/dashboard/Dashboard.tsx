@@ -13,10 +13,32 @@ const Dashboard: FC = () => {
     const dispatch = useDispatch();
     const state = useSelector((state: RootState) => state);
     const account = useSelector((state: RootState) => state.accounts.selectedAccount)
-    console.log(account, state.table.loading);
+    const { accounts, table } = state;
+    const { view } = table;
+    const { selectedAccount } = accounts;
+    const { setUserLoading, setProfileLoading, setSkillsLoading, setAgentGroupsLoading, setTableLoading, setDataDisplay, deleteEntity } = actions;
+
     useEffect(() => {
         dispatch(actions.getAccounts())
     }, [])
+
+    const handleDelete = (event, entityId: any) => {
+        let act;
+        switch(view) {
+            case "users":
+                act = setUserLoading;break;
+            case "skills":
+                act = setSkillsLoading;break;
+            case "profiles":
+                act = setProfileLoading;break;
+            case "agentGroups":
+                act = setAgentGroupsLoading;break;
+        }
+        Promise.resolve(() => console.log("...handle delete"))
+        .then(() => dispatch(deleteEntity(selectedAccount, view, String(entityId))))
+        .then(() => dispatch(act()))
+        .then(() => dispatch(setTableLoading(true)))
+        }
 
     return (
         <div className={classes.root}>
@@ -25,7 +47,7 @@ const Dashboard: FC = () => {
                 {!account
                     ? (<div className={classes.paper}><AccountDropDown /></div>) :
                     (!state.table.loading
-                        ? <EnhancedTable />
+                        ? <EnhancedTable handleDelete={handleDelete}/>
                         : <DashboardLoading />)}
             </div>
         </div>

@@ -87,7 +87,8 @@ export default (state = initialState, action: GetTableAction): TableState => {
     case SET_TABLE_LOADING:
       return {
         ...state,
-        loading: action.payload
+        loading: action.payload,
+        dataDisplay: []
       };
     default:
       return state;

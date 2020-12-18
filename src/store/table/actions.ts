@@ -33,6 +33,9 @@ import {
   getDisplayForSkills,
   getDisplayForAgentGroups
 } from "../util/tableHelpers";
+import axios from "axios";
+import { RootState } from "..";
+import { ThunkAction } from "redux-thunk";
 
 export const setDataDisplay = (
   view: View,
@@ -80,6 +83,25 @@ export const setDataDisplay = (
   return {
     type: SET_DISPLAY_DATA,
     payload
+  };
+};
+
+export const deleteEntity = (
+  account: string,
+  view: View,
+  entityId: string
+): ThunkAction<void, RootState, null, GetTableAction | any> => {
+  return async dispatch => {
+    try {
+      console.log("FROM STORE ACTION DELETE: ", view, account, entityId)
+      const res = await axios.delete(
+        `http://localhost:1337/api/${view}/${account}/${entityId}`
+      );
+      console.log(res);
+    } catch (err) {
+      dispatch({ type: SET_TABLE_ERROR });
+    }
+    return;
   };
 };
 

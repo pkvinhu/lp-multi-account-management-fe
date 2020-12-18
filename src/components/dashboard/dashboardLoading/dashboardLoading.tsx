@@ -16,12 +16,10 @@ const DashboardLoading: FC = () => {
     const account = useSelector((state: RootState) => state.accounts.selectedAccount)
 
     useEffect(() => {
-        Promise.resolve(() => console.log("....retrieving"))
-            .then(() => dispatch(actions.getUsers(account)))
-            .then(() => dispatch(actions.getSkills(account)))
-            .then(() => dispatch(actions.getProfiles(account)))
-            .then(() => dispatch(actions.getAgentGroups(account)))
-            .catch(err => console.log(err))
+            if(!users.data.length) dispatch(actions.getUsers(account))
+            if(!skills.data.length) dispatch(actions.getSkills(account))
+            if(!profiles.data.length) dispatch(actions.getProfiles(account))
+            if(!agentGroups.data.length) dispatch(actions.getAgentGroups(account))
     }, [])
 
     const checkForData = (): boolean => {

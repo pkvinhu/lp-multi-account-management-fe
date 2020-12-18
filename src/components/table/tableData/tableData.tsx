@@ -13,7 +13,7 @@ import EnhancedTableBody from "../tableBody/TableBody";
 import DashboardLoading from "../../dashboard/dashboardLoading/DashboardLoading";
 import { View } from "../../../store/table/types";
 
-const EnhancedTable = () => {
+const EnhancedTable = ({handleDelete}) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state);
@@ -61,7 +61,7 @@ const EnhancedTable = () => {
               aria-label="enhanced table"
             >
               <EnhancedTableHead />
-              <EnhancedTableBody />
+              <EnhancedTableBody handleDelete={handleDelete}/>
             </Table>
           </TableContainer>
           <TablePagination

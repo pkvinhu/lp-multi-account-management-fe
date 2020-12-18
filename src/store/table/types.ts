@@ -12,6 +12,7 @@ export const SET_TABLE_ERROR = "SET_TABLE_ERROR";
 export const SET_TABLE_LOADING = "SET_TABLE_LOADING";
 export const SET_ROWS_PER_PAGE = "SET_ROWS_PER_PAGE";
 export const SET_PAGE = "SET_PAGE";
+export const DELETE_ENTITY = "DELETE_ENTITY";
 
 export type Order = "asc" | "desc";
 export type View = "users" | "profiles" | "skills" | "agentGroups";
@@ -142,6 +143,11 @@ export interface SetTableError {
 export interface SetTableLoading {
   type: typeof SET_TABLE_LOADING;
   payload: boolean;
+}
+
+export interface DeleteEntity {
+  type: typeof DELETE_ENTITY;
+  payload: string;
 }
 
 export type GetTableAction =
