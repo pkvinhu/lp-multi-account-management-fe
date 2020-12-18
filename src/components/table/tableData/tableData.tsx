@@ -47,11 +47,6 @@ const EnhancedTable = () => {
     dispatch(setPage(0));
   };
 
-  const checkForData = (view: View): boolean => {
-    let b = !!state[view].data.length && !!dataDisplay.length;
-    return b;
-  }
-
   return (
     <div className={classes.root}>
       {table.loading ?
