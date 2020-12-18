@@ -38,7 +38,7 @@ const AccountDropDown: FC = () => {
                     <em>None</em>
                 </MenuItem>
                 {state.accounts.data.map((e, i) => {
-                    return <MenuItem value={e}><em>{e}</em></MenuItem>
+                    return <MenuItem value={e.accountId} key={e.accountId}><em>{`${e.accountId} - ${e.accountName}`}</em></MenuItem>
                 })}
             </Select>
         </FormControl>

@@ -3,14 +3,19 @@ export const SELECT_ACCOUNT = "SELECT_ACCOUNT";
 export const CATCH_ERROR = "CATCH_ERROR";
 
 export interface Accounts {
-  data: (string | number)[];
+  data: Account[];
   selectedAccount: string;
   error: string;
 }
 
+export interface Account {
+  accountId: string;
+  accountName: string;
+}
+
 interface GetAccountsAction {
   type: typeof GET_ACCOUNTS;
-  payload: string[];
+  payload: Account[];
 }
 
 interface SelectAccountAction {

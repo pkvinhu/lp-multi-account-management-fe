@@ -13,7 +13,7 @@ const Dashboard: FC = () => {
     const dispatch = useDispatch();
     const state = useSelector((state: RootState) => state);
     const account = useSelector((state: RootState) => state.accounts.selectedAccount)
-
+    console.log(account, state.table.loading);
     useEffect(() => {
         dispatch(actions.getAccounts())
     }, [])
