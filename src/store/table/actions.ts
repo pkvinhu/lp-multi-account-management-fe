@@ -115,6 +115,7 @@ export const setRowsPerPage = (rows: number): SetRowsPerPage => ({
 
 export const setTableError = (): SetTableError => ({ type: SET_TABLE_ERROR });
 
-export const setTableLoading = (): SetTableLoading => ({
-  type: SET_TABLE_LOADING
+export const setTableLoading = (bool: boolean): SetTableLoading => ({
+  type: SET_TABLE_LOADING,
+  payload: bool
 });

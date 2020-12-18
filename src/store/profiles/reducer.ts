@@ -19,7 +19,8 @@ export default (state = initialState, action: ProfileAction): ProfileState => {
         case SET_PROFILE_LOADING:
             return {
                 ...state,
-                loading: true
+                loading: true,
+                data: []
             }
         case SET_PROFILE_ERROR:
             return {

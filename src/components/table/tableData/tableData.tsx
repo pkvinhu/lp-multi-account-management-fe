@@ -7,19 +7,22 @@ import { useStyles } from "./styles";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
 import actions from "../../../store/allActions";
-import EnhancedTableToolbar from "../tableToolbar/tableToolbar";
-import EnhancedTableHead from "../tableHeader/tableHeader";
-import EnhancedTableBody from "../tableBody/tableBody";
+import EnhancedTableToolbar from "../tableToolbar/TableToolbar";
+import EnhancedTableHead from "../tableHeader/TableHeader";
+import EnhancedTableBody from "../tableBody/TableBody";
+import DashboardLoading from "../../dashboard/dashboardLoading/DashboardLoading";
+import { View } from "../../../store/table/types";
 
-const EnhancedTable: FC = () => {
+const EnhancedTable = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state);
   const { table, users, skills, profiles, agentGroups } = state;
-  const { page, rowsPerPage, rowCount } = table;
+  const { page, rowsPerPage, rowCount, dataDisplay } = table;
   const { setPage, setRowsPerPage, setDataDisplay } = actions;
 
   useEffect(() => {
+    console.log("from enhanced table")
     dispatch(
       setDataDisplay(
         "users",
@@ -44,31 +47,40 @@ const EnhancedTable: FC = () => {
     dispatch(setPage(0));
   };
 
+  const checkForData = (view: View): boolean => {
+    let b = !!state[view].data.length && !!dataDisplay.length;
+    return b;
+  }
+
   return (
     <div className={classes.root}>
-      <Paper className={classes.paper}>
-        <EnhancedTableToolbar />
-        <TableContainer>
-          <Table
-            className={classes.table}
-            aria-labelledby="Contact Center Management"
-            size="medium"
-            aria-label="enhanced table"
-          >
-            <EnhancedTableHead />
-            <EnhancedTableBody />
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={rowCount}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
-      </Paper>
+      {table.loading ?
+        <DashboardLoading /> :
+        (<Paper className={classes.paper}>
+          <EnhancedTableToolbar />
+          <TableContainer>
+            <Table
+              className={classes.table}
+              aria-labelledby="Contact Center Management"
+              size="medium"
+              aria-label="enhanced table"
+            >
+              <EnhancedTableHead />
+              <EnhancedTableBody />
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={rowCount}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+          />
+        </Paper>
+        )
+      }
     </div>
   );
 };

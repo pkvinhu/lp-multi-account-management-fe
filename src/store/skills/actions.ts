@@ -9,7 +9,7 @@ import {
 } from "./types";
 import axios from "axios";
 
-export const getSkills = (): ThunkAction<
+export const getSkills = (account: string|number): ThunkAction<
   void,
   RootState,
   null,
@@ -18,7 +18,7 @@ export const getSkills = (): ThunkAction<
   return async dispatch => {
     try {
       let res: any = await axios.get(
-        "http://localhost:1337/api/skills/29778756"
+        `http://localhost:1337/api/skills/${account}`
       );
       let data: Skill[] = res.data;
       let map = {};

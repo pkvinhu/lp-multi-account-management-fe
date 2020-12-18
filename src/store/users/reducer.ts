@@ -23,7 +23,8 @@ export default (state = initialState, action: UserAction): UserState => {
         case SET_USER_LOADING:
             return {
                 ...state,
-                loading: true
+                loading: true,
+                data: []
             }
         default:
             return state;
