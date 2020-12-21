@@ -20,7 +20,7 @@ const EnhancedTable = ({handleDelete}: EnhancedTableProps) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state);
-  const { table, users, skills, profiles, agentGroups } = state;
+  const { table, users, skills, profiles, agentGroups, appKeys } = state;
   const { page, rowsPerPage, rowCount, dataDisplay } = table;
   const { setPage, setRowsPerPage, setDataDisplay } = actions;
 

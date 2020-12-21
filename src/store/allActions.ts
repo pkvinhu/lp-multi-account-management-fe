@@ -16,6 +16,7 @@ import {
   setTableLoading,
   deleteEntity
 } from "./table/actions";
+import { getAppKeys, setAppKeysLoading } from "./appkeys/actions";
 
 export default {
   checkAuth,
@@ -39,5 +40,7 @@ export default {
   setRowsPerPage,
   setTableError,
   setTableLoading,
-  deleteEntity
+  deleteEntity,
+  getAppKeys,
+  setAppKeysLoading
 };
