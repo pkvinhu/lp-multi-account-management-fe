@@ -1,6 +1,6 @@
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "..";
-import { CHECK_AUTH, CheckAuthAction, Auth } from "./types";
+import { CHECK_AUTH, CheckAuthAction, Auth, SET_AUTH_ERROR } from "./types";
 import axios from "axios";
 
 export const checkAuth = (): ThunkAction<
@@ -34,8 +34,8 @@ null,
 CheckAuthAction | any
 > => {
   return async dispatch => {
-
-        const res = await axios.get(
+    try {
+        await axios.get(
             "http://localhost:1337/api/login/logout"
           );
           dispatch({
@@ -43,5 +43,12 @@ CheckAuthAction | any
             payload: false
           })
           window.location.href = "/";
+        } catch(e) {
+          dispatch({
+            type: SET_AUTH_ERROR,
+            payload: e.message
+          })
         }
+      }
+  
 }

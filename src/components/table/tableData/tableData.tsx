@@ -11,9 +11,12 @@ import EnhancedTableToolbar from "../tableToolbar/TableToolbar";
 import EnhancedTableHead from "../tableHeader/TableHeader";
 import EnhancedTableBody from "../tableBody/TableBody";
 import DashboardLoading from "../../dashboard/dashboardLoading/DashboardLoading";
-import { View } from "../../../store/table/types";
 
-const EnhancedTable = ({handleDelete}) => {
+interface EnhancedTableProps {
+  handleDelete: (event: any, entityId: string) => void;
+}
+
+const EnhancedTable = ({handleDelete}: EnhancedTableProps) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state);
@@ -22,7 +25,6 @@ const EnhancedTable = ({handleDelete}) => {
   const { setPage, setRowsPerPage, setDataDisplay } = actions;
 
   useEffect(() => {
-    console.log("from enhanced table")
     dispatch(
       setDataDisplay(
         table.view || "users",
