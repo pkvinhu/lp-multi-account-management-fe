@@ -10,18 +10,20 @@ const AccountDropDown: FC = () => {
     const dispatch = useDispatch();
     const state = useSelector((state: RootState) => state);
     const account = useSelector((state: RootState) => state.accounts.selectedAccount)
+    const { selectAccount, setUserLoading, setSkillsLoading, setProfileLoading, setAgentGroupsLoading, setAppKeysLoading, setTableLoading } = actions;
     // const textInput = useRef(account);
 
     const handleChange = (event) => {
         const { value } = event.target;
         if (value !== account) {
             Promise.resolve(() => console.log("....clearing"))
-                .then(() => dispatch(actions.selectAccount(event.target.value)))
-                .then(() => dispatch(actions.setUserLoading()))
-                .then(() => dispatch(actions.setSkillsLoading()))
-                .then(() => dispatch(actions.setProfileLoading()))
-                .then(() => dispatch(actions.setAgentGroupsLoading()))
-                .then(() => dispatch(actions.setTableLoading(true)))
+                .then(() => dispatch(selectAccount(event.target.value)))
+                .then(() => dispatch(setUserLoading()))
+                .then(() => dispatch(setSkillsLoading()))
+                .then(() => dispatch(setProfileLoading()))
+                .then(() => dispatch(setAgentGroupsLoading()))
+                .then(() => dispatch(setAppKeysLoading()))
+                .then(() => dispatch(setTableLoading(true)))
                 .catch((err) => console.log(err))
         }
     }
@@ -34,6 +36,7 @@ const AccountDropDown: FC = () => {
                 id="demo-controlled-open-select"
                 value={account}
                 onChange={handleChange}
+                
                 /*ref={textInput}*/
             >
                 <MenuItem value="">
