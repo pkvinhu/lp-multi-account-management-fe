@@ -13,7 +13,7 @@ import EnhancedTableBody from "../tableBody/TableBody";
 import DashboardLoading from "../../dashboard/dashboardLoading/DashboardLoading";
 import { View } from "../../../store/table/types";
 
-const EnhancedTable = () => {
+const EnhancedTable = ({handleDelete}) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state);
@@ -25,8 +25,8 @@ const EnhancedTable = () => {
     console.log("from enhanced table")
     dispatch(
       setDataDisplay(
-        "users",
-        users.data,
+        table.view || "users",
+        state[table.view].data || users.data,
         "asc",
         "id",
         skills.map,
@@ -47,11 +47,6 @@ const EnhancedTable = () => {
     dispatch(setPage(0));
   };
 
-  const checkForData = (view: View): boolean => {
-    let b = !!state[view].data.length && !!dataDisplay.length;
-    return b;
-  }
-
   return (
     <div className={classes.root}>
       {table.loading ?
@@ -66,7 +61,7 @@ const EnhancedTable = () => {
               aria-label="enhanced table"
             >
               <EnhancedTableHead />
-              <EnhancedTableBody />
+              <EnhancedTableBody handleDelete={handleDelete}/>
             </Table>
           </TableContainer>
           <TablePagination

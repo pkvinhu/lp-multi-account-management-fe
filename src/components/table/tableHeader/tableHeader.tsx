@@ -7,11 +7,7 @@ import { useStyles } from "./styles";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
 import actions from "../../../store/allActions";
-import { DataDisplay } from "../../../store/table/types";
-
-// interface EnhancedTableProps {
-//   onRequestSort: (event: React.MouseEvent<unknown>, property: string) => void;
-// }
+// import { DataDisplay } from "../../../store/table/types";
 
 export default function EnhancedTableHead() {
   const dispatch = useDispatch();
@@ -78,6 +74,14 @@ export default function EnhancedTableHead() {
             </TableSortLabel>
           </TableCell>
         ))}
+        <TableCell
+            key={headCells.length}
+            align="right"
+          >
+            <TableSortLabel>
+              Delete User?
+            </TableSortLabel>
+          </TableCell>
       </TableRow>
     </TableHead>
   );
