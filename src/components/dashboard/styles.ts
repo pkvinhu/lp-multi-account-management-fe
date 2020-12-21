@@ -18,9 +18,9 @@ export const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(15, "auto")
     },
     formControl: {
-      margin: theme.spacing(1),
       minWidth: 120,
-      maxWidth: 300
+      maxWidth: 300,
+      margin: "0px 30px"
     },
     chips: {
       display: "flex",

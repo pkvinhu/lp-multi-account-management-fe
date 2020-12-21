@@ -28,27 +28,24 @@ export const checkAuth = (): ThunkAction<
 };
 
 export const logout = (): ThunkAction<
-void,
-RootState,
-null,
-CheckAuthAction | any
+  void,
+  RootState,
+  null,
+  CheckAuthAction | any
 > => {
   return async dispatch => {
     try {
-        await axios.get(
-            "http://localhost:1337/api/login/logout"
-          );
-          dispatch({
-            type: CHECK_AUTH,
-            payload: false
-          })
-          window.location.href = "/";
-        } catch(e) {
-          dispatch({
-            type: SET_AUTH_ERROR,
-            payload: e.message
-          })
-        }
-      }
-  
-}
+      await axios.get("http://localhost:1337/api/login/logout");
+      dispatch({
+        type: CHECK_AUTH,
+        payload: false
+      });
+      window.location.href = "/";
+    } catch (e) {
+      dispatch({
+        type: SET_AUTH_ERROR,
+        payload: e.message
+      });
+    }
+  };
+};

@@ -5,6 +5,12 @@ export const useStyles = makeStyles((theme:Theme) =>
         appbar: {
             borderBottom: "10px solid orange",
         },
+        actionsContainer: {
+            display: "flex",
+            justifyContent: "center",
+            alignContent: "center",
+            alignItems: "center"
+        },
         button: {
             backgroundColor: '#fad19c',
             "&:hover": {
