@@ -1,30 +1,43 @@
-import React, { FC } from "react";
+// dependencies
+import React, { FC, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+// components
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
-import { useStyles } from "./styles";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../../store";
-import actions from "../../../store/allActions";
-import Icon from "@material-ui/core/Icon";
-import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
+
 import DeleteIcon from '@material-ui/icons/Delete';
 
-const EnhancedTableBody = ({handleDelete}) => {
+// store
+import { RootState } from "../../../store";
+import actions from "../../../store/allActions";
+
+// styles
+import { useStyles } from "./styles";
+
+// utils 
+import { filterType, emptyRows } from "../../../util/components/helpers";
+import DeleteModal from "../deleteModal/DeleteModal";
+
+
+const EnhancedTableBody = ({ handleDelete }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const [modalOpen, setModalStatus] = useState(false);
+    const [ deleteId, setDeleteId ] = useState("");
     const state = useSelector((state: RootState) => state);
     const { table } = state;
     const { page, rowsPerPage, dataDisplay, rowCount, headCells, view } = table;
     const { setSelected } = actions;
-    
-    //   const isSelected = (name: string) => selected.indexOf(name) !== -1;
+    const emptyR = emptyRows(rowsPerPage, rowCount, page)
 
-    const filterType = (value) => Array.isArray(value) ? value.join(", ") : typeof value === "boolean" ? value ? "Yes" : "No" : value;
-
-    const emptyRows =
-        rowsPerPage - Math.min(rowsPerPage, rowCount - page * rowsPerPage);
+    const handleOpen = (id) => {
+        setDeleteId(id)
+        setModalStatus(true)
+    }
+    const handleClose = () => setModalStatus(false);
 
     return (
         <TableBody>
@@ -54,20 +67,21 @@ const EnhancedTableBody = ({handleDelete}) => {
                                 className={classes.cell}
                                 align="right"
                                 key={headCells.length}
-                                >
-                                    <IconButton onClick={(e) =>handleDelete(e, row.id)}><DeleteIcon /></IconButton>
-                                </TableCell>
+                            >
+                                <IconButton onClick={(e) => handleOpen(row.id)}><DeleteIcon /></IconButton>
+                            </TableCell>
                         </TableRow>
                     );
                 })}
-            {emptyRows > 0 && (
+            {emptyR > 0 && (
                 <TableRow
                     className={classes.row}
-                    style={{ height: 33 * emptyRows }}
+                    style={{ height: 33 * emptyR }}
                 >
                     <TableCell className={classes.cell} colSpan={6} />
                 </TableRow>
             )}
+            {modalOpen && <DeleteModal id={deleteId} handleClose={handleClose} handleDelete={handleDelete} open={modalOpen} />}
         </TableBody>
     )
 }

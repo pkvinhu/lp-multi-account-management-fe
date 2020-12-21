@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from "../styles";
 import { RootState } from '../../../store';
@@ -10,6 +10,7 @@ const AccountDropDown: FC = () => {
     const dispatch = useDispatch();
     const state = useSelector((state: RootState) => state);
     const account = useSelector((state: RootState) => state.accounts.selectedAccount)
+    // const textInput = useRef(account);
 
     const handleChange = (event) => {
         const { value } = event.target;
@@ -33,6 +34,7 @@ const AccountDropDown: FC = () => {
                 id="demo-controlled-open-select"
                 value={account}
                 onChange={handleChange}
+                /*ref={textInput}*/
             >
                 <MenuItem value="">
                     <em>None</em>
