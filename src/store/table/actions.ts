@@ -32,7 +32,7 @@ import {
   getDisplayForProfiles,
   getDisplayForSkills,
   getDisplayForAgentGroups
-} from "../util/tableHelpers";
+} from "../../util/store/tableHelpers";
 import axios from "axios";
 import { RootState } from "..";
 import { ThunkAction } from "redux-thunk";

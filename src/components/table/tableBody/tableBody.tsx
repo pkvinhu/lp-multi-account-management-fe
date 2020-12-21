@@ -15,10 +15,9 @@ const EnhancedTableBody = ({handleDelete}) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const state = useSelector((state: RootState) => state);
-    const { accounts, table, users, skills, agentGroups, profiles } = state;
+    const { table } = state;
     const { page, rowsPerPage, dataDisplay, rowCount, headCells, view } = table;
-    const { selectedAccount } = accounts;
-    const { setSelected, getUsers, getProfiles, getSkills, getAgentGroups, setTableLoading, setDataDisplay, deleteEntity } = actions;
+    const { setSelected } = actions;
     
     //   const isSelected = (name: string) => selected.indexOf(name) !== -1;
 

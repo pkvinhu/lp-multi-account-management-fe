@@ -26,7 +26,7 @@ const EnhancedTable = ({handleDelete}) => {
     dispatch(
       setDataDisplay(
         table.view || "users",
-        users.data,
+        state[table.view].data || users.data,
         "asc",
         "id",
         skills.map,

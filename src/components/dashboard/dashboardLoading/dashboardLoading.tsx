@@ -6,6 +6,7 @@ import LinearProgress from '@material-ui/core/LinearProgress'
 import EnhancedTableToolbar from '../../table/tableToolbar/TableToolbar';
 import { RootState } from '../../../store';
 import actions from "../../../store/allActions";
+import { wait } from '../../../util/components/sleeper';
 
 const DashboardLoading: FC = () => {
     const classes = useStyles();
@@ -16,10 +17,12 @@ const DashboardLoading: FC = () => {
     const account = useSelector((state: RootState) => state.accounts.selectedAccount)
 
     useEffect(() => {
-            if(!users.data.length) dispatch(actions.getUsers(account))
-            if(!skills.data.length) dispatch(actions.getSkills(account))
-            if(!profiles.data.length) dispatch(actions.getProfiles(account))
-            if(!agentGroups.data.length) dispatch(actions.getAgentGroups(account))
+        Promise.resolve(() => console.log("...loading data"))
+            .then(async () => {if(!users.data.length) await dispatch(actions.getUsers(account))})
+            .then(async () => {if(!skills.data.length) await dispatch(actions.getSkills(account))})
+            .then(async () => {if(!profiles.data.length) await dispatch(actions.getProfiles(account))})
+            .then(async () => {if(!agentGroups.data.length) await dispatch(actions.getAgentGroups(account))})
+            .catch(e => console.log(e))
     }, [])
 
     const checkForData = (): boolean => {

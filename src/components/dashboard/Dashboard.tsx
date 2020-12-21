@@ -7,6 +7,7 @@ import { useStyles } from './styles';
 import AppToolbar from '../toolbar/AppToolbar';
 import DashboardLoading from './dashboardLoading/DashboardLoading';
 import AccountDropDown from './accountDropDown/AccountDropDown';
+import { getLoadingAction } from '../../util/components/getActions';
 
 const Dashboard: FC = () => {
     const classes = useStyles();
@@ -16,29 +17,20 @@ const Dashboard: FC = () => {
     const { accounts, table } = state;
     const { view } = table;
     const { selectedAccount } = accounts;
-    const { setUserLoading, setProfileLoading, setSkillsLoading, setAgentGroupsLoading, setTableLoading, setDataDisplay, deleteEntity } = actions;
+    const { setTableLoading, deleteEntity } = actions;
 
     useEffect(() => {
         dispatch(actions.getAccounts())
     }, [])
 
     const handleDelete = (event, entityId: any) => {
-        let act;
-        switch(view) {
-            case "users":
-                act = setUserLoading;break;
-            case "skills":
-                act = setSkillsLoading;break;
-            case "profiles":
-                act = setProfileLoading;break;
-            case "agentGroups":
-                act = setAgentGroupsLoading;break;
-        }
+        const act = getLoadingAction(view);
         Promise.resolve(() => console.log("...handle delete"))
         .then(() => dispatch(deleteEntity(selectedAccount, view, String(entityId))))
         .then(() => dispatch(act()))
         .then(() => dispatch(setTableLoading(true)))
-        }
+        .catch(e => console.log(e)) 
+    }
 
     return (
         <div className={classes.root}>

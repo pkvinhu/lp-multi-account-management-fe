@@ -1,7 +1,7 @@
-import { User } from "../users/types";
-import { Profile } from "../profiles/types";
-import { Skill } from "../skills/types";
-import { AgentGroup } from "../agentGroups/types";
+import { User } from "../../store/users/types";
+import { Profile } from "../../store/profiles/types";
+import { Skill } from "../../store/skills/types";
+import { AgentGroup } from "../../store/agentGroups/types";
 import {
   UserHeadCell,
   SkillHeadCell,
@@ -10,7 +10,7 @@ import {
   Order,
   DataDisplay,
   Data
-} from "../table/types";
+} from "../../store/table/types";
 
 export const getDisplayForUsers = (
   skillsMap: any,
