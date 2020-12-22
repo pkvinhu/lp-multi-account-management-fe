@@ -36,7 +36,7 @@ export interface User extends UserDataDisplay {
   backgndImgUri?: string;
   pnCertName?: string;
   lastPwdChangeDate?: Date;
-  userTypeId?: number;
+  // userTypeId: number;
   allowedAppKeys?: string;
   resetMfaSecret?: boolean;
 }

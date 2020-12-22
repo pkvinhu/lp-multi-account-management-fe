@@ -26,7 +26,8 @@ export default (state = initialState, action: SkillAction): SkillsState => {
             return {
                 ...state,
                 loading: true,
-                data: []
+                data: [],
+                map: {}
             }
         default:
             return state;

@@ -11,7 +11,6 @@ export interface AppKeysState {
 export interface AppKeys {
     developerID: string;
     appName: string;
-    appDescription: string;
     purpose: string;
     privileges: Privilege[];
     keyId: string;
@@ -21,17 +20,15 @@ export interface AppKeys {
     tokenSecret: string;
     creationTime: Date;
     keyType: string;
-    ipRanges: string[];
+    appDescription?: string;
+    ipRanges?: string[];
+    external?: string;
 }
 
 interface Privilege {
     type: string;
     data: string;
 }
-
-// export interface AppKeysError {
-    
-// }
 
 export interface GetAppKeys {
     type: typeof GET_APP_KEYS;

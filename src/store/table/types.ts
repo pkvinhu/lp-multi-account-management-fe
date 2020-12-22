@@ -63,6 +63,7 @@ export interface AgentGroupHeadCell extends HeadCellTemplate {
 
 export interface UserDataDisplay {
   id: string;
+  userTypeId: number|string;
   pid?: string;
   loginName: string;
   fullName: string;
@@ -81,7 +82,7 @@ export interface SkillDataDisplay {
   id: string;
   skillOrder: number;
   name: string;
-  dateUpdated: string;
+  dateUpdated?: string;
   canTransfer: boolean;
   skillTransferList: string[];
 }
@@ -90,7 +91,7 @@ export interface ProfileDataDisplay {
   roleTypeName: string;
   name: string;
   id: number;
-  dateUpdated: string;
+  dateUpdated?: string;
   isAssignedToLPA: boolean;
 }
 
@@ -172,5 +173,7 @@ export type HeadCell =
   | SkillHeadCell
   | ProfileHeadCell
   | AgentGroupHeadCell;
+
+export type Entity = User | Skill | Profile | AgentGroup;
 
 export type Data = (User | Skill | Profile | AgentGroup)[];

@@ -24,7 +24,8 @@ export const getDisplayForUsers = (
     (
       {
         id,
-        pid,
+        // pid,
+        userTypeId,
         loginName,
         fullName,
         maxChats,
@@ -32,24 +33,25 @@ export const getDisplayForUsers = (
         skillIds,
         profileIds,
         managerOf,
-        dateCreated,
-        dateUpdated,
+        // dateCreated,
+        // dateUpdated,
         isApiUser,
-        lpaCreatedUser
+        // lpaCreatedUser
       },
       i
     ) => {
       return {
         id,
-        pid,
+        userTypeId,
+        // pid,
         loginName,
         fullName,
         maxChats,
         email,
-        dateCreated,
-        dateUpdated,
+        // dateCreated,
+        // dateUpdated,
         isApiUser,
-        lpaCreatedUser,
+        // lpaCreatedUser,
         skillIds:
           skillIds && skillIds.length
             ? skillIds.map((e, i) => (e && skillsMap[e] ? skillsMap[e] : null))
@@ -83,11 +85,11 @@ export const getDisplayForProfiles = (
   let notSorted = data.map(
     (
       e: {
-        id;
-        name;
-        roleTypeName;
-        dateUpdated;
-        isAssignedToLPA;
+        id,
+        name,
+        roleTypeName,
+        // dateUpdated,
+        isAssignedToLPA,
       },
       i
     ) => {
@@ -106,18 +108,21 @@ export const getDisplayForSkills = (
 ) => {
   let notSorted = data.map(
     (
-      { id, name, skillOrder, dateUpdated, canTransfer, skillTransferList },
+      e: { 
+        id, 
+        name, 
+        skillOrder, 
+        // dateUpdated, 
+        canTransfer, 
+        skillTransferList 
+      },
       i
     ) => {
       return {
-        id,
-        name,
-        skillOrder,
-        dateUpdated,
-        canTransfer,
+        ...e,
         skillTransferList:
-          skillTransferList && skillTransferList.length
-            ? skillTransferList.map((e, i) =>
+          e.skillTransferList && e.skillTransferList.length
+            ? e.skillTransferList.map((e, i) =>
                 e && skillsMap[e] ? skillsMap[e] : null
               )
             : []
@@ -142,7 +147,8 @@ export const getHeadCellsForUsers = (): UserHeadCell[] => {
   const disablePadding: boolean = false;
   return [
     { id: "id", numeric: false, disablePadding, label: "Id" },
-    { id: "pid", numeric: false, disablePadding, label: "Pid" },
+    { id: "userTypeId", numeric: false, disablePadding, label: "Type" },
+    // { id: "pid", numeric: false, disablePadding, label: "Pid" },
     { id: "loginName", numeric: false, disablePadding, label: "Login Name" },
     { id: "fullName", numeric: false, disablePadding, label: "Name" },
     { id: "maxChats", numeric: true, disablePadding, label: "Max Chats" },
@@ -150,25 +156,25 @@ export const getHeadCellsForUsers = (): UserHeadCell[] => {
     { id: "skillIds", numeric: false, disablePadding, label: "Skills" },
     { id: "profileIds", numeric: false, disablePadding, label: "Profiles" },
     { id: "managerOf", numeric: false, disablePadding, label: "Manager Of" },
-    {
-      id: "dateCreated",
-      numeric: false,
-      disablePadding,
-      label: "Date Created"
-    },
-    {
-      id: "dateUpdated",
-      numeric: false,
-      disablePadding,
-      label: "Date Updated"
-    },
+    // {
+    //   id: "dateCreated",
+    //   numeric: false,
+    //   disablePadding,
+    //   label: "Date Created"
+    // },
+    // {
+    //   id: "dateUpdated",
+    //   numeric: false,
+    //   disablePadding,
+    //   label: "Date Updated"
+    // },
     { id: "isApiUser", numeric: false, disablePadding, label: "API User" },
-    {
-      id: "lpaCreatedUser",
-      numeric: false,
-      disablePadding,
-      label: "LPA Created User"
-    }
+    // {
+    //   id: "lpaCreatedUser",
+    //   numeric: false,
+    //   disablePadding,
+    //   label: "LPA Created User"
+    // }
   ];
 };
 
@@ -178,12 +184,12 @@ export const getHeadCellsForProfiles = (): ProfileHeadCell[] => {
     { id: "id", numeric: false, disablePadding, label: "Id" },
     { id: "name", numeric: false, disablePadding, label: "Name" },
     { id: "roleTypeName", numeric: false, disablePadding, label: "Role Type" },
-    {
-      id: "dateUpdated",
-      numeric: false,
-      disablePadding,
-      label: "Date Updated"
-    },
+    // {
+    //   id: "dateUpdated",
+    //   numeric: false,
+    //   disablePadding,
+    //   label: "Date Updated"
+    // },
     {
       id: "isAssignedToLPA",
       numeric: false,
@@ -199,12 +205,12 @@ export const getHeadCellsForSkills = (): SkillHeadCell[] => {
     { id: "id", numeric: false, disablePadding, label: "Id" },
     { id: "name", numeric: false, disablePadding, label: "Name" },
     { id: "skillOrder", numeric: false, disablePadding, label: "Skill Order" },
-    {
-      id: "dateUpdated",
-      numeric: false,
-      disablePadding,
-      label: "Date Updated"
-    },
+    // {
+    //   id: "dateUpdated",
+    //   numeric: false,
+    //   disablePadding,
+    //   label: "Date Updated"
+    // },
     {
       id: "canTransfer",
       numeric: false,
@@ -231,7 +237,7 @@ export const getHeadCellsForAgentGroups = (): AgentGroupHeadCell[] => {
       disablePadding,
       label: "Parent Group"
     },
-    { id: "dateUpdated", numeric: false, disablePadding, label: "Date Updated" }
+    // { id: "dateUpdated", numeric: false, disablePadding, label: "Date Updated" }
   ];
 };
 

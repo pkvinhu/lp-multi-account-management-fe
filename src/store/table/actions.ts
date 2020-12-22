@@ -89,13 +89,14 @@ export const setDataDisplay = (
 export const deleteEntity = (
   account: string,
   view: View,
-  entityId: string
+  entityId: string,
+  lastModified?: string|number
 ): ThunkAction<void, RootState, null, GetTableAction | any> => {
   return async dispatch => {
     try {
       console.log("FROM STORE ACTION DELETE: ", view, account, entityId)
       const res = await axios.delete(
-        `http://localhost:1337/api/${view}/${account}/${entityId}`
+        `http://localhost:1337/api/${view}/${account}/${entityId}${lastModified?`/${lastModified}`:""}`
       );
       console.log(res);
     } catch (err) {

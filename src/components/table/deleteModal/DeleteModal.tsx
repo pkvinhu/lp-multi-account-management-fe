@@ -22,7 +22,7 @@ interface DeleteModalProps {
     open: boolean;
     handleClose: () => void;
     handleDelete: (event: any, entityId: any) => void;
-    id: string|number;
+    id: string | number;
 }
 
 const DeleteModal = ({ open, handleClose, handleDelete, id }: DeleteModalProps) => {
@@ -30,13 +30,13 @@ const DeleteModal = ({ open, handleClose, handleDelete, id }: DeleteModalProps) 
     const state = useSelector((state: RootState) => state);
     const { table } = state;
     const { dataDisplay, view } = table;
-    const entity = getUserById(id, dataDisplay);
+    const entity = getUserById(id, state[view].data);
 
-    const handleDeleteAndClose = (e:any) => {
-        handleDelete(e, id);
+    const handleDeleteAndClose = (e: any) => {
+        handleDelete(e, entity);
         handleClose();
     }
-    
+
     return (
         <Dialog
             open={open}
@@ -46,13 +46,13 @@ const DeleteModal = ({ open, handleClose, handleDelete, id }: DeleteModalProps) 
         >
             <MuiDialogTitle className={classes.title}>Delete {capitalize(view)}</MuiDialogTitle>
             <MuiDialogContent dividers className={classes.content}>
-                Are you sure you want to delete {view} <b>{entity.fullName || entity.name}</b>? 
-                This deletion is permanent and will not be able to be undone. 
+                Are you sure you want to delete {view} <b>{entity.fullName || entity.name}</b>?
+                This deletion is permanent and will not be able to be undone.
                 {(view === "users" && entity.skillIds.length) ? (
-                <Fragment>
-                    <br/>
-                    <br/>
-                    <b>{capitalize(entity.fullName)}</b> is currently connected to {entity.skillIds.length} {entity.skillIds.length > 1 ? "skills" : "skill"}.
+                    <Fragment>
+                        <br />
+                        <br />
+                        <b>{capitalize(entity.fullName)}</b> is currently connected to {entity.skillIds.length} {entity.skillIds.length > 1 ? "skills" : "skill"}.
                 </Fragment>
                 ) : null}
             </MuiDialogContent>

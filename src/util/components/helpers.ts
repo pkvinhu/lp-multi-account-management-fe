@@ -1,4 +1,4 @@
-import { DataDisplay } from "../../store/table/types";
+import { DataDisplay, View, Data, Entity } from "../../store/table/types";
 
 export const wait = async (ms: number, value: any) => {
     await new Promise(resolve => setTimeout(resolve, ms, value));
@@ -12,6 +12,15 @@ export const getUserById = (id: string|number, data: any) => {
     }
 }
 
+export const humanOrBot = (value:number|string) => {
+    if(value == 1) {
+        return "Bot"
+    } else if(value == 2) {
+        return "Human"
+    } else {
+        return "LP App"
+    }
+} 
 export const filterType = (value) => Array.isArray(value) ? value.join(", ") : typeof value === "boolean" ? value ? "Yes" : "No" : value;
 
 export const emptyRows = (rowsPerPage, rowCount, page) => {
@@ -19,3 +28,18 @@ export const emptyRows = (rowsPerPage, rowCount, page) => {
 }
 
 export const capitalize = (s) => s ? s[0].toUpperCase()+s.slice(1) : "";
+
+export const checkRowFromDeleteIconDisable = (view: View, row: any, campaigns?: any, roleCountMap?: any) => {
+    if(view === "users") {
+        return row.userTypeId < 1 ? true : false;
+    }
+    if(view === "profiles") {
+        return (roleCountMap[row.roleTypeName] < 2 || (row.description && row.description.startsWith("LivePerson"))) ? true : false;
+    }
+    if(view === "agentGroups") {
+        return row.id === -1 ? true : false;
+    }
+    if(view === "skills") {
+        return false;
+    }
+}

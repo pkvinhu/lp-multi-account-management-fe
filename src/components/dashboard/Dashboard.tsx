@@ -31,10 +31,18 @@ const Dashboard: FC = () => {
         dispatch(actions.getAccounts())
     }, [])
 
-    const handleDelete = (event, entityId: any) => {
+    const handleDelete = (event, entity: any) => {
         const act = getLoadingAction(view);
         Promise.resolve(() => console.log("...handle delete"))
-        .then(() => dispatch(deleteEntity(selectedAccount, view, String(entityId))))
+        .then(() => {
+            if(view !== "profiles") {
+                dispatch(deleteEntity(selectedAccount, view, String(entity.id)))
+            } else {
+                let lastModified = Date.parse(entity.dateUpdated);
+                console.log(lastModified)
+                dispatch(deleteEntity(selectedAccount, view, String(entity.id), lastModified))
+            }
+        })
         .then(() => dispatch(act()))
         .then(() => dispatch(setTableLoading(true)))
         .catch(e => console.log(e)) 
