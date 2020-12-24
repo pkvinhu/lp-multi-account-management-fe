@@ -17,6 +17,10 @@ export const useStyles = makeStyles((theme: Theme) =>
       width: "100%",
       margin: theme.spacing(15, "auto")
     },
+    paperIntro: {
+      width: "100%",
+      margin: theme.spacing(40, "auto")
+    },
     formControl: {
       minWidth: 120,
       maxWidth: 300,
@@ -35,6 +39,9 @@ export const useStyles = makeStyles((theme: Theme) =>
     select: {
       width: "200px",
       margin: theme.spacing(15, "auto")
+    },
+    welcomeText: {
+      fontFamily: "'Merriweather', serif",
     }
   })
 );

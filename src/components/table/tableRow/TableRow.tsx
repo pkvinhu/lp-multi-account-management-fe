@@ -44,16 +44,18 @@ const EnhancedTableRow = ({ handleOpen, row, index }: EnhancedTableRowProps) => 
     const [open, setOpen] = React.useState(false);
     const state = useSelector((state: RootState) => state);
     const { table, profiles, campaigns, users } = state;
-    const { headCells, view } = table;
+    const { headCells, view, page } = table;
     const { setSelected } = actions;
     const disabled = checkRowFromDeleteIconDisable(view, row, campaigns.skillsConnectedToCampaignsMap, profiles.roleTypeCountMap, users.skillsToUsersMap, users.profilesToUsersMap);
     const previousView = usePrevious(view);
+    const previousPage = usePrevious(page);
 
     useEffect(() => {
-        if(previousView !== view) {
+        if(previousView !== view || previousPage !== page) {
             setOpen(false);
         }
     })
+
     return (
         <React.Fragment>
             <TableRow
