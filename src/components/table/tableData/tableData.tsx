@@ -35,6 +35,7 @@ const EnhancedTable = ({ handleDelete }: EnhancedTableProps) => {
   useEffect(() => {
     Promise.resolve(() => console.log("...loading table data"))
       .then(async () => {
+        let isUser = table.view === "users"
         await dispatch(setPage(0));
         await dispatch(
           setDataDisplay(
@@ -42,9 +43,10 @@ const EnhancedTable = ({ handleDelete }: EnhancedTableProps) => {
             state[table.view].data || users.data,
             "asc",
             "id",
-            skills.map,
-            profiles.map,
-            agentGroups.map
+            isUser ? skills.map : null,
+            isUser ? profiles.map : null,
+            isUser ? agentGroups.map : null,
+            isUser ? appKeys : null
           )
         )
       })

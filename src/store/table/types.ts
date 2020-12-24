@@ -20,7 +20,8 @@ export type View = "users" | "profiles" | "skills" | "agentGroups";
 export interface TableState {
   view: View;
   headCells: HeadCell[];
-  dataDisplay: DataDisplay[];
+  dataDisplay: Data[];
+  // dataSubDisplay: DataSubDisplay[];
   numSelected: number;
   order: Order;
   orderBy: string;
@@ -32,8 +33,9 @@ export interface TableState {
 }
 
 export interface DataDisplayState {
-  data: DataDisplay[];
+  data: Data[];
   headCells: HeadCell[];
+  // dataSub: DataSubDisplay[];
   rowCount: number;
   view: View;
   order: Order;
@@ -69,8 +71,8 @@ export interface UserDataDisplay {
   fullName: string;
   maxChats: string;
   email: string;
-  skillIds?: (number|string)[];
-  profileIds: (number|string)[];
+  skillIds: number[];
+  profileIds: number[];
   managerOf?: MemberOf[];
   dateCreated?: Date;
   dateUpdated?: Date;
@@ -100,6 +102,40 @@ export interface AgentGroupDataDisplay {
   parentGroupId?: number;
   id: number;
   dateUpdated?: string;
+}
+
+export interface UsersSubDataDisplay {
+  appKeys: AppKeyInfo;
+  nickname: string;
+  employeeId: string;
+  isEnabled: boolean;
+  dateCreated: Date;
+  dateUpdated: Date; 
+}
+
+interface AppKeyInfo {
+  appName: string;
+  keyId: string;
+  appSecret: string;
+  token: string;
+  tokenSecret: string;
+}
+
+export interface SkillsSubDataDisplay {
+  description: string;
+  maxWaitTime: number;
+  fallbackWhenAllAgentsAreAway: boolean;
+  dateUpdated: Date;
+}
+
+export interface ProfilesSubDataDisplay {
+  description: string;
+  dateUpdated: Date;
+}
+
+export interface AgentGroupsSubDataDisplay {
+  isEnabled: boolean;
+  dateUpdated: Date;
 }
 
 export interface SetView {
@@ -168,6 +204,8 @@ export type DataDisplay =
   | ProfileDataDisplay
   | AgentGroupDataDisplay;
 
+export type DataSubDisplay = UsersSubDataDisplay | SkillsSubDataDisplay | ProfilesSubDataDisplay | AgentGroupsSubDataDisplay;
+
 export type HeadCell =
   | UserHeadCell
   | SkillHeadCell
@@ -176,4 +214,4 @@ export type HeadCell =
 
 export type Entity = User | Skill | Profile | AgentGroup;
 
-export type Data = (User | Skill | Profile | AgentGroup)[];
+export type Data = User | Skill | Profile | AgentGroup;

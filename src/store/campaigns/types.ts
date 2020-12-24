@@ -4,12 +4,15 @@ export const SET_CAMPAIGN_LOADING = "SET_CAMPAIGN_LOADING";
 
 export interface CampaignsState {
     data: Campaign[];
+    skillsConnectedToCampaignsMap: any;
     error: string;
     loading: boolean;
 }
 
 export interface Campaign {
     id: number;
+    name: string;
+    description: string;
     engagements: Engagement[];
 }
 
@@ -80,7 +83,10 @@ interface Position {
 
 export interface GetCampaigns {
     type: typeof GET_CAMPAIGNS;
-    payload: Campaign[];
+    payload: { 
+        data: Campaign[];
+        skillsConnectedToCampaignsMap: any;
+    } 
 }
 
 export interface SetCampaignError {

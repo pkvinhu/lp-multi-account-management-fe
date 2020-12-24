@@ -6,6 +6,8 @@ export const SET_USER_ERROR = "SET_USER_ERROR";
 
 export interface UserState {
   data: User[];
+  skillsToUsersMap: {};
+  profilesToUsersMap: {};
   loading: boolean;
   error: UsersError | null;
 }
@@ -58,7 +60,13 @@ export interface UsersError extends GenericError {
 
 export interface GetUsersAction {
   type: typeof GET_USERS;
-  payload: User[];
+  payload: UsersDataPayload;
+}
+
+export interface UsersDataPayload {
+  data: User[];
+  skillsToUsersMap: any;
+  profilesToUsersMap: any;
 }
 
 interface SetLoadingAction {

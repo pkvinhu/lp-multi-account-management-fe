@@ -9,7 +9,8 @@ import {
   AgentGroupHeadCell,
   Order,
   DataDisplay,
-  Data
+  Data,
+  DataSubDisplay
 } from "../../store/table/types";
 
 export const getDisplayForUsers = (
@@ -18,40 +19,14 @@ export const getDisplayForUsers = (
   agentGroupsMap: any,
   data: User[],
   order: Order,
-  orderBy: string
-): DataDisplay[] => {
-  const notSorted = data.map(
-    (
-      {
-        id,
-        // pid,
-        userTypeId,
-        loginName,
-        fullName,
-        maxChats,
-        email,
-        skillIds,
-        profileIds,
-        managerOf,
-        // dateCreated,
-        // dateUpdated,
-        isApiUser,
-        // lpaCreatedUser
-      },
-      i
-    ) => {
+  orderBy: string,
+  appKeys: any
+): Data[] => {
+  const notSortedAll = data.map(
+    (e,i) => {
+      let { skillIds, profileIds, managerOf } = e;
       return {
-        id,
-        userTypeId,
-        // pid,
-        loginName,
-        fullName,
-        maxChats,
-        email,
-        // dateCreated,
-        // dateUpdated,
-        isApiUser,
-        // lpaCreatedUser,
+        ...e,
         skillIds:
           skillIds && skillIds.length
             ? skillIds.map((e, i) => (e && skillsMap[e] ? skillsMap[e] : null))
@@ -70,10 +45,10 @@ export const getDisplayForUsers = (
                   : null
               )
             : []
-      };
+      }
     }
   );
-  let sorted = stableSort(notSorted, getComparator(order, orderBy));
+  let sorted = stableSort(notSortedAll, getComparator(order, orderBy));
   return sorted;
 };
 
@@ -82,20 +57,21 @@ export const getDisplayForProfiles = (
   order: Order,
   orderBy: string
 ) => {
-  let notSorted = data.map(
-    (
-      e: {
-        id,
-        name,
-        roleTypeName,
-        // dateUpdated,
-        isAssignedToLPA,
-      },
-      i
-    ) => {
-      return e;
-    }
-  );
+  let notSorted = data;
+  // .map(
+  //   (
+  //     e: {
+  //       id,
+  //       name,
+  //       roleTypeName,
+  //       // dateUpdated,
+  //       isAssignedToLPA,
+  //     },
+  //     i
+  //   ) => {
+  //     return e;
+  //   }
+  // );
   let sorted = stableSort(notSorted, getComparator(order, orderBy));
   return sorted;
 };
@@ -106,18 +82,7 @@ export const getDisplayForSkills = (
   order: Order,
   orderBy: string
 ) => {
-  let notSorted = data.map(
-    (
-      e: { 
-        id, 
-        name, 
-        skillOrder, 
-        // dateUpdated, 
-        canTransfer, 
-        skillTransferList 
-      },
-      i
-    ) => {
+  let notSorted = data.map((e,i) => {
       return {
         ...e,
         skillTransferList:
@@ -137,9 +102,7 @@ export const getDisplayForAgentGroups = (
   order: Order,
   orderBy: string
 ) => {
-  let notSorted = data.map(({ id, name, parentGroupId, dateUpdated }, i) => {
-    return { id, name, parentGroupId, dateUpdated };
-  });
+  let notSorted = data;
   return stableSort(notSorted, getComparator(order, orderBy));
 };
 
@@ -264,7 +227,7 @@ function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
 function getComparator<T extends keyof any>(
   order: Order,
   orderBy: T
-): (a: DataDisplay, b: DataDisplay) => number {
+): (a: Data, b: Data) => number {
   return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);

@@ -22,10 +22,10 @@ const DashboardLoading: FC = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const state = useSelector((state: RootState) => state);
-    const { users, skills, profiles, agentGroups, appKeys, table } = state;
+    const { users, skills, profiles, agentGroups, appKeys, campaigns, table } = state;
     const { setTableLoading } = actions;
     const account = useSelector((state: RootState) => state.accounts.selectedAccount)
-    const { getUsers, getSkills, getProfiles, getAgentGroups, getAppKeys } = actions;
+    const { getUsers, getSkills, getProfiles, getAgentGroups, getAppKeys, getCampaigns } = actions;
 
     useEffect(() => {
         Promise.resolve(() => console.log("...loading data"))
@@ -34,11 +34,12 @@ const DashboardLoading: FC = () => {
             .then(async () => { if (!profiles.data.length) await dispatch(getProfiles(account)) })
             .then(async () => { if (!agentGroups.data.length) await dispatch(getAgentGroups(account)) })
             .then(async () => { if (!appKeys.data.length) await dispatch(getAppKeys(account)) })
+            .then(async () => { if (!campaigns.data.length) await dispatch(getCampaigns(account)) })
             .catch(e => console.log(e))
     }, [])
 
     const checkForData = (): boolean => {
-        let b = table.loading && !!users.data.length && !!skills.data.length && !!profiles.data.length && !!agentGroups.data.length && !!appKeys.data.length;
+        let b = table.loading && !!users.data.length && !!skills.data.length && !!profiles.data.length && !!agentGroups.data.length && !!appKeys.data.length && !!campaigns.data.length;
         return b;
     }
 

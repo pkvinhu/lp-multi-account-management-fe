@@ -15,6 +15,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 // store
 import { RootState } from "../../../store";
 import actions from "../../../store/allActions";
+import { Data } from "../../../store/table/types";
 
 // styles
 import { useStyles } from "../tableBody/styles";
@@ -25,7 +26,7 @@ import { DataDisplay } from "../../../store/table/types";
 
 interface EnhancedTableRowProps {
     handleOpen: (id: string | number) => void;
-    row: DataDisplay;
+    row: Data;
     index: number;
 }
 
@@ -34,10 +35,10 @@ const EnhancedTableRow = ({ handleOpen, row, index }: EnhancedTableRowProps) => 
     const dispatch = useDispatch();
     const [open, setOpen] = React.useState(false);
     const state = useSelector((state: RootState) => state);
-    const { table, profiles } = state;
+    const { table, profiles, campaigns, users } = state;
     const { headCells, view } = table;
     const { setSelected } = actions;
-    const disabled = checkRowFromDeleteIconDisable(view, row, [], profiles.roleTypeCountMap);
+    const disabled = checkRowFromDeleteIconDisable(view, row, campaigns.skillsConnectedToCampaignsMap, profiles.roleTypeCountMap, users.skillsToUsersMap, users.profilesToUsersMap);
 
     return (
         <React.Fragment>
@@ -72,7 +73,7 @@ const EnhancedTableRow = ({ handleOpen, row, index }: EnhancedTableRowProps) => 
                     <IconButton onClick={(e) => handleOpen(row.id)} disabled={disabled}><DeleteIcon /></IconButton>
                 </TableCell>
             </TableRow>
-            <EnhancedTableSubRow open={open}/>
+            <EnhancedTableSubRow row={row} open={open} />
         </React.Fragment>
     )
 }

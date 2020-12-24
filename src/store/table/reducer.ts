@@ -16,6 +16,7 @@ const initialState: TableState = {
   view: "users",
   headCells: [],
   dataDisplay: [],
+  // dataSubDisplay: [],
   numSelected: 0,
   order: "asc",
   orderBy: "id",
@@ -31,6 +32,7 @@ export default (state = initialState, action: GetTableAction): TableState => {
     case SET_DISPLAY_DATA:
       const {
         data,
+        // dataSub,
         headCells,
         rowCount,
         view,
@@ -42,6 +44,7 @@ export default (state = initialState, action: GetTableAction): TableState => {
         loading: false,
         error: false,
         dataDisplay: data,
+        // dataSubDisplay: dataSub,
         headCells,
         rowCount,
         view,
