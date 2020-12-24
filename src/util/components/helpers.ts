@@ -58,7 +58,7 @@ export const checkRowFromDeleteIconDisable = (
     return row.id === -1 ? true : false;
   }
   if (view === "skills") {
-      console.log(campaigns, userSkillMap)
+    //   console.log(campaigns, userSkillMap)
     return (campaigns[row.id] && campaigns[row.id].length) ||
       (userSkillMap[row.id] && userSkillMap[row.id].length)
       ? true

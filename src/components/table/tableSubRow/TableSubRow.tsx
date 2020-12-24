@@ -6,6 +6,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import Collapse from "@material-ui/core/Collapse";
 import Box from "@material-ui/core/Box";
+import Chip from '@material-ui/core/Chip';
 
 // store
 import { RootState } from "../../../store";
@@ -14,9 +15,9 @@ import { Data } from "../../../store/table/types";
 
 // styles
 import { useStyles } from "./styles";
-import { capitalize } from "@material-ui/core";
 
 // utils 
+import { capitalize } from "@material-ui/core";
 
 interface EnhancedTableSubRowProps {
     open: boolean;
@@ -26,25 +27,18 @@ interface EnhancedTableSubRowProps {
 const subRowMap = {
     "users": {
         appKeys: true,
-        nickname: true,
-        employeeId: true,
-        isEnabled: true,
-        dateCreated: true,
-        dateUpdated: true
+        short: ["nickname", "employeeId", "isEnabled", "dateCreated", "dateUpdated"]
     },
     "skills": {
         description: true,
-        maxWaitTime: true,
-        fallbackWhenAllAgentsAreAway: true,
-        dateUpdated: true
+        short: ["maxWaitTime", "fallbackWhenAllAgentsAreAway", "dateUpdated"]
     },
     "profiles": {
         description: true,
-        dateUpdated: true
+        short: ["dateUpdated"]
     },
     "agentGroups": {
-        isEnabled: true,
-        dateUpdated: true
+        short: ["isEnabled", "dateUpdated"]
     }
 }
 
@@ -53,47 +47,59 @@ const EnhancedTableSubRow = ({ row, open }: EnhancedTableSubRowProps) => {
     const dispatch = useDispatch();
     const state = useSelector((state: RootState) => state);
     const keys = useSelector((state: RootState) => state.appKeys.data);
-    const { view } = state.table;
+    const { view, headCells } = state.table;
     const isApiUser = view === "users" && row.isApiUser ? true : false;
-    const cols = view === "agentGroups" || (view === "users" && !isApiUser) ? state.table.headCells.length + 2 : (state.table.headCells.length + 2) / 2;
+    const columns = state.table.headCells.length + 2;
+    // const cols = headCells.length / 2;
     const sub = Object.keys(subRowMap[view]);
 
     return (
         <TableRow>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-                <Box margin={1} className={classes.box}>
-                    {sub.map((e, i) => {
-                        if (e === "description") {
-                            return <TableCell className={classes.rowCell} colSpan={cols}>Description: {row[e]}</TableCell>
-                        } else if (e === "appKeys" && isApiUser) {
-                            return (
-                                <TableCell className={classes.rowCell} colSpan={cols}>API Keys:
-                                        {keys.map((each, i) => {
-                                    if (row.allowedAppKeys === each.keyId) {
-                                        return (
-                                            <React.Fragment>
-                                                <div>Name: {each.appName}</div>
-                                                {each.appDescription && <div>Description: {each.appDescription}</div>}
-                                                <hr />
-                                                <div>Key: {each.keyId}</div>
-                                                <div>Secret: {each.appSecret}</div>
-                                                <div>Token: {each.token}</div>
-                                                <div>Token Secret: {each.tokenSecret}</div>
-                                            </React.Fragment>
-                                        )
-                                    }
-                                })}
-                                </TableCell>
-                            )
-                        } 
-                        // else {
-                        //     return (
-                        //         <div>{capitalize(e)}: {row[e]}</div>
-                        //     )
-                        // }
-                    })}
-                </Box>
-            </Collapse>
+            <TableCell className={classes.rowCell} colSpan={columns}>
+                <Collapse in={open} timeout="auto" unmountOnExit>
+                    <Box margin={1} className={classes.box}>
+                        {sub.map((e, i) => {
+                            if (e === "description") {
+                                return <TableCell key={i} className={open ? classes.rowCellOpen : classes.rowCell}><Chip className={classes.chip} label="Description" /><div className={classes.flexPad}>{row[e]}</div></TableCell>
+                            } else if (e === "appKeys") {
+                                return (
+                                    isApiUser ?
+                                        (<TableCell className={open ? classes.rowCellOpen : classes.rowCell} >
+                                            <Chip className={classes.chip} label="API Keys" />
+                                            {keys.map((each, ind) => {
+                                                if (row.allowedAppKeys === each.keyId) {
+                                                    return (
+                                                        <div className={classes.block}>
+                                                            <div className={classes.flexPad}><Chip className={classes.chip2} label="Name" /><div className={classes.flexPad}>{each.appName}</div></div>
+                                                            {each.appDescription && <div className={classes.flexPad}><Chip className={classes.chip2} label="Description" /><div className={classes.flexPad}>{each.appDescription}</div></div>}
+                                                            <hr />
+                                                            <div className={classes.flexPad}><Chip className={classes.chip2} label="Key" /><div className={classes.flexPad}>{each.keyId}</div></div>
+                                                            <div className={classes.flexPad}><Chip className={classes.chip2} label="Key Secret" /><div className={classes.flexPad}>{each.appSecret}</div></div>
+                                                            <div className={classes.flexPad}><Chip className={classes.chip2} label="Token" /><div className={classes.flexPad}>{each.token}</div></div>
+                                                            <div className={classes.flexPad}><Chip className={classes.chip2} label="Token Secret" /><div className={classes.flexPad}>{each.tokenSecret}</div></div>
+                                                        </div>
+                                                    )
+                                                }
+                                            })}
+                                        </TableCell>
+                                        ) : <TableCell className={open ? classes.rowCellOpen : classes.rowCell} ><Chip className={classes.chip} label="API Keys" /><div className={classes.flexPad}>None</div></TableCell>
+                                )
+                            }
+                            else if (e === "short") {
+                                return (
+                                    <TableCell className={open ? classes.rowCellOpen : classes.rowCell}>
+                                        <div className={classes.block}>
+                                            {subRowMap[view][e].map((each, ind) => {
+                                                return (<div className={classes.flexPad} key={ind}><Chip className={classes.chip2} label={capitalize(each)} /><div className={classes.flexPad}>{typeof row[each] === "boolean" ? String(row[each]) : row[each]}</div></div>)
+                                            })}
+                                        </div>
+                                    </ TableCell>
+                                )
+                            }
+                        })}
+                    </Box>
+                </Collapse>
+            </TableCell>
         </TableRow>
     )
 }

@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 // components
@@ -16,19 +16,27 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { RootState } from "../../../store";
 import actions from "../../../store/allActions";
 import { Data } from "../../../store/table/types";
+// import { DataDisplay } from "../../../store/table/types";
 
 // styles
 import { useStyles } from "../tableBody/styles";
 
 // utils 
 import { filterType, humanOrBot, checkRowFromDeleteIconDisable } from "../../../util/components/helpers";
-import { DataDisplay } from "../../../store/table/types";
-
+// 
 interface EnhancedTableRowProps {
     handleOpen: (id: string | number) => void;
     row: Data;
     index: number;
 }
+
+function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  }
 
 const EnhancedTableRow = ({ handleOpen, row, index }: EnhancedTableRowProps) => {
     const classes = useStyles();
@@ -39,7 +47,13 @@ const EnhancedTableRow = ({ handleOpen, row, index }: EnhancedTableRowProps) => 
     const { headCells, view } = table;
     const { setSelected } = actions;
     const disabled = checkRowFromDeleteIconDisable(view, row, campaigns.skillsConnectedToCampaignsMap, profiles.roleTypeCountMap, users.skillsToUsersMap, users.profilesToUsersMap);
+    const previousView = usePrevious(view);
 
+    useEffect(() => {
+        if(previousView !== view) {
+            setOpen(false);
+        }
+    })
     return (
         <React.Fragment>
             <TableRow
