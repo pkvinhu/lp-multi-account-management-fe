@@ -1,13 +1,19 @@
+// dependencies
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+// components
 import TableHead from "@material-ui/core/TableHead";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
-import { useStyles } from "./styles";
-import { useSelector, useDispatch } from "react-redux";
+
+// store
 import { RootState } from "../../../store";
 import actions from "../../../store/allActions";
-// import { DataDisplay } from "../../../store/table/types";
+
+// styles 
+import { useStyles } from "./styles";
 
 export default function EnhancedTableHead() {
   const dispatch = useDispatch();
@@ -50,14 +56,7 @@ export default function EnhancedTableHead() {
   return (
     <TableHead>
       <TableRow>
-        {/* <TableCell padding="checkbox">
-            <Checkbox
-              indeterminate={numSelected > 0 && numSelected < rowCount}
-              checked={rowCount > 0 && numSelected === rowCount}
-              onChange={onSelectAllClick}
-              inputProps={{ 'aria-label': 'select all desserts' }}
-            />
-          </TableCell> */}
+        <TableCell />
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}

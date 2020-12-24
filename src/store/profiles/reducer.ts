@@ -3,6 +3,7 @@ import { ProfileState, ProfileAction, GET_PROFILES, SET_PROFILE_ERROR, SET_PROFI
 const initialState: ProfileState = {
     data: [],
     map: {},
+    roleTypeCountMap: {},
     error: null,
     loading: false
 };
@@ -10,17 +11,21 @@ const initialState: ProfileState = {
 export default (state = initialState, action: ProfileAction): ProfileState => {
     switch(action.type) {
         case GET_PROFILES:
+            const { data, map, roleTypeCountMap } = action.payload;
             return {
                 ...state,
                 loading: false,
-                data: action.payload.data,
-                map: action.payload.map
+                data,
+                map,
+                roleTypeCountMap
             }
         case SET_PROFILE_LOADING:
             return {
                 ...state,
                 loading: true,
-                data: []
+                data: [],
+                map: {},
+                roleTypeCountMap: {}
             }
         case SET_PROFILE_ERROR:
             return {

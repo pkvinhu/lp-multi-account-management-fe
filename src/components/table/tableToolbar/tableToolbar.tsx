@@ -1,13 +1,19 @@
+// dependencies
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+// components
 import Toolbar from "@material-ui/core/Toolbar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import { useStyles } from "./styles";
-import { useSelector, useDispatch } from "react-redux";
+
+// store 
 import { RootState } from "../../../store";
 import { View } from "../../../store/table/types";
 import actions from "../../../store/allActions";
-import AccountDropDown from "../../dashboard/accountDropDown/AccountDropDown";
+
+// styles
+import { useStyles } from "./styles";
 
 const EnhancedTableToolbar = () => {
   const classes = useStyles();
@@ -15,9 +21,8 @@ const EnhancedTableToolbar = () => {
   const state = useSelector((state: RootState) => state);
   const { skills, profiles, agentGroups, table } = state;
   const { setPage, setDataDisplay, setTableLoading } = actions;
+
   const handleChange = (event: unknown, value: View) => {
-    // let args = [value, state[value].data, "asc", "id", skills.map]
-    // if (value === "users") args = args.concat([profiles.map, agentGroups.map])
     if (value !== table.view) {
       dispatch(setTableLoading(true));
       value === "users"
@@ -42,12 +47,8 @@ const EnhancedTableToolbar = () => {
 
   return (
     <Toolbar
-      /*className={clsx(classes.root, {
-      [classes.highlight]: numSelected > 0,
-    })}*/
       className={classes.toolbar}
     >
-      {/* <AccountDropDown /> */}
       <Tabs
         value={table.view}
         onChange={handleChange}

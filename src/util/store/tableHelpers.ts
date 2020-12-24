@@ -9,7 +9,8 @@ import {
   AgentGroupHeadCell,
   Order,
   DataDisplay,
-  Data
+  Data,
+  DataSubDisplay
 } from "../../store/table/types";
 
 export const getDisplayForUsers = (
@@ -18,38 +19,14 @@ export const getDisplayForUsers = (
   agentGroupsMap: any,
   data: User[],
   order: Order,
-  orderBy: string
-): DataDisplay[] => {
-  const notSorted = data.map(
-    (
-      {
-        id,
-        pid,
-        loginName,
-        fullName,
-        maxChats,
-        email,
-        skillIds,
-        profileIds,
-        managerOf,
-        dateCreated,
-        dateUpdated,
-        isApiUser,
-        lpaCreatedUser
-      },
-      i
-    ) => {
+  orderBy: string,
+  appKeys: any
+): Data[] => {
+  const notSortedAll = data.map(
+    (e,i) => {
+      let { skillIds, profileIds, managerOf } = e;
       return {
-        id,
-        pid,
-        loginName,
-        fullName,
-        maxChats,
-        email,
-        dateCreated,
-        dateUpdated,
-        isApiUser,
-        lpaCreatedUser,
+        ...e,
         skillIds:
           skillIds && skillIds.length
             ? skillIds.map((e, i) => (e && skillsMap[e] ? skillsMap[e] : null))
@@ -68,10 +45,10 @@ export const getDisplayForUsers = (
                   : null
               )
             : []
-      };
+      }
     }
   );
-  let sorted = stableSort(notSorted, getComparator(order, orderBy));
+  let sorted = stableSort(notSortedAll, getComparator(order, orderBy));
   return sorted;
 };
 
@@ -80,20 +57,21 @@ export const getDisplayForProfiles = (
   order: Order,
   orderBy: string
 ) => {
-  let notSorted = data.map(
-    (
-      e: {
-        id;
-        name;
-        roleTypeName;
-        dateUpdated;
-        isAssignedToLPA;
-      },
-      i
-    ) => {
-      return e;
-    }
-  );
+  let notSorted = data;
+  // .map(
+  //   (
+  //     e: {
+  //       id,
+  //       name,
+  //       roleTypeName,
+  //       // dateUpdated,
+  //       isAssignedToLPA,
+  //     },
+  //     i
+  //   ) => {
+  //     return e;
+  //   }
+  // );
   let sorted = stableSort(notSorted, getComparator(order, orderBy));
   return sorted;
 };
@@ -104,20 +82,12 @@ export const getDisplayForSkills = (
   order: Order,
   orderBy: string
 ) => {
-  let notSorted = data.map(
-    (
-      { id, name, skillOrder, dateUpdated, canTransfer, skillTransferList },
-      i
-    ) => {
+  let notSorted = data.map((e,i) => {
       return {
-        id,
-        name,
-        skillOrder,
-        dateUpdated,
-        canTransfer,
+        ...e,
         skillTransferList:
-          skillTransferList && skillTransferList.length
-            ? skillTransferList.map((e, i) =>
+          e.skillTransferList && e.skillTransferList.length
+            ? e.skillTransferList.map((e, i) =>
                 e && skillsMap[e] ? skillsMap[e] : null
               )
             : []
@@ -132,9 +102,7 @@ export const getDisplayForAgentGroups = (
   order: Order,
   orderBy: string
 ) => {
-  let notSorted = data.map(({ id, name, parentGroupId, dateUpdated }, i) => {
-    return { id, name, parentGroupId, dateUpdated };
-  });
+  let notSorted = data;
   return stableSort(notSorted, getComparator(order, orderBy));
 };
 
@@ -142,7 +110,8 @@ export const getHeadCellsForUsers = (): UserHeadCell[] => {
   const disablePadding: boolean = false;
   return [
     { id: "id", numeric: false, disablePadding, label: "Id" },
-    { id: "pid", numeric: false, disablePadding, label: "Pid" },
+    { id: "userTypeId", numeric: false, disablePadding, label: "Type" },
+    // { id: "pid", numeric: false, disablePadding, label: "Pid" },
     { id: "loginName", numeric: false, disablePadding, label: "Login Name" },
     { id: "fullName", numeric: false, disablePadding, label: "Name" },
     { id: "maxChats", numeric: true, disablePadding, label: "Max Chats" },
@@ -150,25 +119,25 @@ export const getHeadCellsForUsers = (): UserHeadCell[] => {
     { id: "skillIds", numeric: false, disablePadding, label: "Skills" },
     { id: "profileIds", numeric: false, disablePadding, label: "Profiles" },
     { id: "managerOf", numeric: false, disablePadding, label: "Manager Of" },
-    {
-      id: "dateCreated",
-      numeric: false,
-      disablePadding,
-      label: "Date Created"
-    },
-    {
-      id: "dateUpdated",
-      numeric: false,
-      disablePadding,
-      label: "Date Updated"
-    },
+    // {
+    //   id: "dateCreated",
+    //   numeric: false,
+    //   disablePadding,
+    //   label: "Date Created"
+    // },
+    // {
+    //   id: "dateUpdated",
+    //   numeric: false,
+    //   disablePadding,
+    //   label: "Date Updated"
+    // },
     { id: "isApiUser", numeric: false, disablePadding, label: "API User" },
-    {
-      id: "lpaCreatedUser",
-      numeric: false,
-      disablePadding,
-      label: "LPA Created User"
-    }
+    // {
+    //   id: "lpaCreatedUser",
+    //   numeric: false,
+    //   disablePadding,
+    //   label: "LPA Created User"
+    // }
   ];
 };
 
@@ -178,12 +147,12 @@ export const getHeadCellsForProfiles = (): ProfileHeadCell[] => {
     { id: "id", numeric: false, disablePadding, label: "Id" },
     { id: "name", numeric: false, disablePadding, label: "Name" },
     { id: "roleTypeName", numeric: false, disablePadding, label: "Role Type" },
-    {
-      id: "dateUpdated",
-      numeric: false,
-      disablePadding,
-      label: "Date Updated"
-    },
+    // {
+    //   id: "dateUpdated",
+    //   numeric: false,
+    //   disablePadding,
+    //   label: "Date Updated"
+    // },
     {
       id: "isAssignedToLPA",
       numeric: false,
@@ -199,12 +168,12 @@ export const getHeadCellsForSkills = (): SkillHeadCell[] => {
     { id: "id", numeric: false, disablePadding, label: "Id" },
     { id: "name", numeric: false, disablePadding, label: "Name" },
     { id: "skillOrder", numeric: false, disablePadding, label: "Skill Order" },
-    {
-      id: "dateUpdated",
-      numeric: false,
-      disablePadding,
-      label: "Date Updated"
-    },
+    // {
+    //   id: "dateUpdated",
+    //   numeric: false,
+    //   disablePadding,
+    //   label: "Date Updated"
+    // },
     {
       id: "canTransfer",
       numeric: false,
@@ -231,7 +200,7 @@ export const getHeadCellsForAgentGroups = (): AgentGroupHeadCell[] => {
       disablePadding,
       label: "Parent Group"
     },
-    { id: "dateUpdated", numeric: false, disablePadding, label: "Date Updated" }
+    // { id: "dateUpdated", numeric: false, disablePadding, label: "Date Updated" }
   ];
 };
 
@@ -258,7 +227,7 @@ function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
 function getComparator<T extends keyof any>(
   order: Order,
   orderBy: T
-): (a: DataDisplay, b: DataDisplay) => number {
+): (a: Data, b: Data) => number {
   return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);

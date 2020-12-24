@@ -8,6 +8,7 @@ import actions from '../../store/allActions';
 import { getLoadingAction } from '../../util/components/getActions';
 
 // components
+import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
 import EnhancedTable from '../table/tableData/TableData';
 import AppToolbar from '../toolbar/AppToolbar';
 import DashboardLoading from './dashboardLoading/DashboardLoading';
@@ -15,7 +16,6 @@ import AccountDropDown from './accountDropDown/AccountDropDown';
 
 // styles
 import { useStyles } from './styles';
-
 
 const Dashboard: FC = () => {
     const classes = useStyles();
@@ -31,10 +31,18 @@ const Dashboard: FC = () => {
         dispatch(actions.getAccounts())
     }, [])
 
-    const handleDelete = (event, entityId: any) => {
+    const handleDelete = (event, entity: any) => {
         const act = getLoadingAction(view);
         Promise.resolve(() => console.log("...handle delete"))
-        .then(() => dispatch(deleteEntity(selectedAccount, view, String(entityId))))
+        .then(() => {
+            if(view !== "profiles") {
+                dispatch(deleteEntity(selectedAccount, view, String(entity.id)))
+            } else {
+                let lastModified = Date.parse(entity.dateUpdated);
+                console.log(lastModified)
+                dispatch(deleteEntity(selectedAccount, view, String(entity.id), lastModified))
+            }
+        })
         .then(() => dispatch(act()))
         .then(() => dispatch(setTableLoading(true)))
         .catch(e => console.log(e)) 
@@ -45,7 +53,17 @@ const Dashboard: FC = () => {
             <AppToolbar />
             <div className={classes.inside}>
                 {!account
-                    ? (<div className={classes.paper}><AccountDropDown /></div>) :
+                    ? (
+                    <div className={classes.paperIntro}>
+                        <div className={classes.welcomeText}>
+                        <h1 >Welcome to the LivePerson Account Management Tool!</h1>
+                        <h3 >In this tool, we organize all your users, skills, profiles, and agent groups data from multiple accounts</h3>
+                        <h3 >and we chart it out so you can access all your accounts from one location.</h3>
+                        <h3 >To begin, please select an account below. <InsertEmoticonIcon/></h3>
+                        <AccountDropDown />
+                        </div>
+                        </div>
+                    ) :
                     (!state.table.loading
                         ? <EnhancedTable handleDelete={handleDelete}/>
                         : <DashboardLoading />)}

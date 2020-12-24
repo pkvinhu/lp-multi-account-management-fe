@@ -17,6 +17,7 @@ import {
   deleteEntity
 } from "./table/actions";
 import { getAppKeys, setAppKeysLoading } from "./appkeys/actions";
+import { getCampaigns, setCampaignLoading } from './campaigns/actions';
 
 export default {
   checkAuth,
@@ -42,5 +43,7 @@ export default {
   setTableLoading,
   deleteEntity,
   getAppKeys,
-  setAppKeysLoading
+  setAppKeysLoading,
+  getCampaigns,
+  setCampaignLoading
 };

@@ -9,10 +9,14 @@ export const getProfiles = (account: string|number): ThunkAction<void, RootState
             const res: any = await axios.get(`http://localhost:1337/api/profiles/${account}`);
             const data: Profile[] = res.data;
             let map = {};
-            res.data.forEach((e, i) => { map[e.id] = e.name });
+            let roleTypeCountMap = {};
+            res.data.forEach((e, i) => { 
+                roleTypeCountMap[e.roleTypeName] ? roleTypeCountMap[e.roleTypeName]++ : roleTypeCountMap[e.roleTypeName] = 1;
+                map[e.id] = e.name; 
+            });
             dispatch({
                 type: GET_PROFILES,
-                payload: { data, map }
+                payload: { data, map, roleTypeCountMap }
             })
         } catch(err) {
             console.log(err);

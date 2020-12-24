@@ -10,7 +10,7 @@ const AccountDropDown: FC = () => {
     const dispatch = useDispatch();
     const state = useSelector((state: RootState) => state);
     const account = useSelector((state: RootState) => state.accounts.selectedAccount)
-    const { selectAccount, setUserLoading, setSkillsLoading, setProfileLoading, setAgentGroupsLoading, setAppKeysLoading, setTableLoading } = actions;
+    const { selectAccount, setUserLoading, setSkillsLoading, setProfileLoading, setAgentGroupsLoading, setAppKeysLoading, setCampaignLoading, setTableLoading } = actions;
     // const textInput = useRef(account);
 
     const handleChange = (event) => {
@@ -23,6 +23,7 @@ const AccountDropDown: FC = () => {
                 .then(() => dispatch(setProfileLoading()))
                 .then(() => dispatch(setAgentGroupsLoading()))
                 .then(() => dispatch(setAppKeysLoading()))
+                .then(() => dispatch(setCampaignLoading()))
                 .then(() => dispatch(setTableLoading(true)))
                 .catch((err) => console.log(err))
         }

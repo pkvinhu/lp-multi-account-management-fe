@@ -15,7 +15,6 @@ export const getAgentGroups = (account: string|number): ThunkAction<void, RootSt
                 payload: { data, map }
             })
         } catch(err) {
-            console.log(err);
             dispatch({
                 type: SET_AGENTGROUPS_ERROR,
                 error: err

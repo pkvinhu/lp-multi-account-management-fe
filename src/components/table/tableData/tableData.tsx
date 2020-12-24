@@ -1,22 +1,30 @@
+// dependencies
 import React, { FC, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+// components
 import Table from "@material-ui/core/Table";
 import TableContainer from "@material-ui/core/TableContainer";
 import TablePagination from "@material-ui/core/TablePagination";
 import Paper from "@material-ui/core/Paper";
-import { useStyles } from "./styles";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../../store";
-import actions from "../../../store/allActions";
+
 import EnhancedTableToolbar from "../tableToolbar/TableToolbar";
 import EnhancedTableHead from "../tableHeader/TableHeader";
 import EnhancedTableBody from "../tableBody/TableBody";
 import DashboardLoading from "../../dashboard/dashboardLoading/DashboardLoading";
 
+// store
+import { RootState } from "../../../store";
+import actions from "../../../store/allActions";
+
+// styles
+import { useStyles } from "./styles";
+
 interface EnhancedTableProps {
   handleDelete: (event: any, entityId: string) => void;
 }
 
-const EnhancedTable = ({handleDelete}: EnhancedTableProps) => {
+const EnhancedTable = ({ handleDelete }: EnhancedTableProps) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state);
@@ -25,17 +33,24 @@ const EnhancedTable = ({handleDelete}: EnhancedTableProps) => {
   const { setPage, setRowsPerPage, setDataDisplay } = actions;
 
   useEffect(() => {
-    dispatch(
-      setDataDisplay(
-        table.view || "users",
-        state[table.view].data || users.data,
-        "asc",
-        "id",
-        skills.map,
-        profiles.map,
-        agentGroups.map
-      )
-    );
+    Promise.resolve(() => console.log("...loading table data"))
+      .then(async () => {
+        let isUser = table.view === "users"
+        await dispatch(setPage(0));
+        await dispatch(
+          setDataDisplay(
+            table.view || "users",
+            state[table.view].data || users.data,
+            "asc",
+            "id",
+            isUser ? skills.map : null,
+            isUser ? profiles.map : null,
+            isUser ? agentGroups.map : null,
+            isUser ? appKeys : null
+          )
+        )
+      })
+      .catch(e => console.log(e))
   }, []);
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -63,7 +78,7 @@ const EnhancedTable = ({handleDelete}: EnhancedTableProps) => {
               aria-label="enhanced table"
             >
               <EnhancedTableHead />
-              <EnhancedTableBody handleDelete={handleDelete}/>
+              <EnhancedTableBody handleDelete={handleDelete} />
             </Table>
           </TableContainer>
           <TablePagination

@@ -44,16 +44,19 @@ export const setDataDisplay = (
   orderBy: string,
   skillsMap?: any,
   profilesMap?: any,
-  agentGroupsMap?: any
+  agentGroupsMap?: any,
+  appKeys?: any
 ): GetTableAction => {
   let payload: DataDisplayState = {
     data: [],
     headCells: [],
     rowCount: 0,
+    // dataSub: [],
     view,
     order,
     orderBy
   };
+  // let display;
   switch (view) {
     case "users":
       payload.data = getDisplayForUsers(
@@ -62,8 +65,10 @@ export const setDataDisplay = (
         agentGroupsMap,
         data,
         order,
-        orderBy
+        orderBy,
+        appKeys
       );
+
       payload.headCells = getHeadCellsForUsers();
       break;
     case "profiles":
@@ -79,6 +84,8 @@ export const setDataDisplay = (
       payload.headCells = getHeadCellsForAgentGroups();
       break;
   }
+  // payload.data = display.dataMain;
+  // payload.dataSub = display.dataSub;
   payload.rowCount = payload.data.length;
   return {
     type: SET_DISPLAY_DATA,
@@ -89,13 +96,16 @@ export const setDataDisplay = (
 export const deleteEntity = (
   account: string,
   view: View,
-  entityId: string
+  entityId: string,
+  lastModified?: string | number
 ): ThunkAction<void, RootState, null, GetTableAction | any> => {
   return async dispatch => {
     try {
-      console.log("FROM STORE ACTION DELETE: ", view, account, entityId)
+      console.log("FROM STORE ACTION DELETE: ", view, account, entityId);
       const res = await axios.delete(
-        `http://localhost:1337/api/${view}/${account}/${entityId}`
+        `http://localhost:1337/api/${view}/${account}/${entityId}${
+          lastModified ? `/${lastModified}` : ""
+        }`
       );
       console.log(res);
     } catch (err) {

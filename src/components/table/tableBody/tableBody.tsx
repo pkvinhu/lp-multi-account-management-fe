@@ -6,9 +6,9 @@ import { useSelector, useDispatch } from "react-redux";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
-import IconButton from "@material-ui/core/IconButton";
 
-import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteModal from "../deleteModal/DeleteModal";
+import EnhancedTableRow from "../tableRow/TableRow";
 
 // store
 import { RootState } from "../../../store";
@@ -18,19 +18,17 @@ import actions from "../../../store/allActions";
 import { useStyles } from "./styles";
 
 // utils 
-import { filterType, emptyRows } from "../../../util/components/helpers";
-import DeleteModal from "../deleteModal/DeleteModal";
+import { emptyRows } from "../../../util/components/helpers";
 
 
 const EnhancedTableBody = ({ handleDelete }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [modalOpen, setModalStatus] = useState(false);
-    const [ deleteId, setDeleteId ] = useState("");
+    const [deleteId, setDeleteId] = useState("");
     const state = useSelector((state: RootState) => state);
     const { table } = state;
-    const { page, rowsPerPage, dataDisplay, rowCount, headCells, view } = table;
-    const { setSelected } = actions;
+    const { page, rowsPerPage, dataDisplay, rowCount } = table;
     const emptyR = emptyRows(rowsPerPage, rowCount, page)
 
     const handleOpen = (id) => {
@@ -44,34 +42,7 @@ const EnhancedTableBody = ({ handleDelete }) => {
             {!table.loading && dataDisplay
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                    return (
-                        <TableRow
-                            hover
-                            onClick={() => dispatch(setSelected(index))}
-                            tabIndex={-1}
-                            key={index}
-                            className={classes.row}
-                        >
-                            {headCells.map((cell, i) => {
-                                return (
-                                    <TableCell
-                                        className={classes.cell}
-                                        align="right"
-                                        key={cell.id}
-                                    >
-                                        {filterType(row[cell.id])}
-                                    </TableCell>
-                                );
-                            })}
-                            <TableCell
-                                className={classes.cell}
-                                align="right"
-                                key={headCells.length}
-                            >
-                                <IconButton onClick={(e) => handleOpen(row.id)}><DeleteIcon /></IconButton>
-                            </TableCell>
-                        </TableRow>
-                    );
+                    return <EnhancedTableRow key={index} handleOpen={handleOpen} row={row} index={index}/>
                 })}
             {emptyR > 0 && (
                 <TableRow
