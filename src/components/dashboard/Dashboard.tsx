@@ -23,7 +23,7 @@ const Dashboard: FC = () => {
     const state = useSelector((state: RootState) => state);
     const account = useSelector((state: RootState) => state.accounts.selectedAccount)
     const { accounts, table } = state;
-    const { view } = table;
+    const { view, loading } = table;
     const { selectedAccount } = accounts;
     const { setTableLoading, deleteEntity } = actions;
 
@@ -53,7 +53,7 @@ const Dashboard: FC = () => {
             <AppToolbar />
             <div className={classes.inside}>
                 {!account
-                    ? (
+                    && (
                     <div className={classes.paperIntro}>
                         <div className={classes.welcomeText}>
                         <h1 >Welcome to the LivePerson Account Management Tool!</h1>
@@ -63,10 +63,10 @@ const Dashboard: FC = () => {
                         <AccountDropDown />
                         </div>
                         </div>
-                    ) :
-                    (!state.table.loading
-                        ? <EnhancedTable handleDelete={handleDelete}/>
-                        : <DashboardLoading />)}
+                    )
+                }
+                {account && !loading && (<EnhancedTable handleDelete={handleDelete}/>)}
+                {account && loading && (<DashboardLoading />)}
             </div>
         </div>
     )
