@@ -34,7 +34,7 @@ export const emptyRows = (rowsPerPage, rowCount, page) => {
   return rowsPerPage - Math.min(rowsPerPage, rowCount - page * rowsPerPage);
 };
 
-export const capitalize = s => (s ? s[0].toUpperCase() + s.slice(1) : "");
+export const capitalize = s => (s ? s[0].toUpperCase() + s.slice(1).replace(/([A-Z])([A-Z])([a-z])|([a-z])([A-Z])/g, '$1$4 $2$3$5') : "");
 
 export const checkRowFromDeleteIconDisable = (
   view: View,

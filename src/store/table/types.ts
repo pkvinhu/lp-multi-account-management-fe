@@ -21,7 +21,6 @@ export interface TableState {
   view: View;
   headCells: HeadCell[];
   dataDisplay: Data[];
-  // dataSubDisplay: DataSubDisplay[];
   numSelected: number;
   order: Order;
   orderBy: string;
@@ -35,7 +34,6 @@ export interface TableState {
 export interface DataDisplayState {
   data: Data[];
   headCells: HeadCell[];
-  // dataSub: DataSubDisplay[];
   rowCount: number;
   view: View;
   order: Order;
@@ -104,39 +102,39 @@ export interface AgentGroupDataDisplay {
   dateUpdated?: string;
 }
 
-export interface UsersSubDataDisplay {
-  appKeys: AppKeyInfo;
-  nickname: string;
-  employeeId: string;
-  isEnabled: boolean;
-  dateCreated: Date;
-  dateUpdated: Date; 
-}
+// export interface UsersSubDataDisplay {
+//   appKeys: AppKeyInfo;
+//   nickname: string;
+//   employeeId: string;
+//   isEnabled: boolean;
+//   dateCreated: Date;
+//   dateUpdated: Date; 
+// }
 
-interface AppKeyInfo {
-  appName: string;
-  keyId: string;
-  appSecret: string;
-  token: string;
-  tokenSecret: string;
-}
+// interface AppKeyInfo {
+//   appName: string;
+//   keyId: string;
+//   appSecret: string;
+//   token: string;
+//   tokenSecret: string;
+// }
 
-export interface SkillsSubDataDisplay {
-  description: string;
-  maxWaitTime: number;
-  fallbackWhenAllAgentsAreAway: boolean;
-  dateUpdated: Date;
-}
+// export interface SkillsSubDataDisplay {
+//   description: string;
+//   maxWaitTime: number;
+//   fallbackWhenAllAgentsAreAway: boolean;
+//   dateUpdated: Date;
+// }
 
-export interface ProfilesSubDataDisplay {
-  description: string;
-  dateUpdated: Date;
-}
+// export interface ProfilesSubDataDisplay {
+//   description: string;
+//   dateUpdated: Date;
+// }
 
-export interface AgentGroupsSubDataDisplay {
-  isEnabled: boolean;
-  dateUpdated: Date;
-}
+// export interface AgentGroupsSubDataDisplay {
+//   isEnabled: boolean;
+//   dateUpdated: Date;
+// }
 
 export interface SetView {
   type: typeof SET_VIEW;
@@ -204,7 +202,7 @@ export type DataDisplay =
   | ProfileDataDisplay
   | AgentGroupDataDisplay;
 
-export type DataSubDisplay = UsersSubDataDisplay | SkillsSubDataDisplay | ProfilesSubDataDisplay | AgentGroupsSubDataDisplay;
+// export type DataSubDisplay = UsersSubDataDisplay | SkillsSubDataDisplay | ProfilesSubDataDisplay | AgentGroupsSubDataDisplay;
 
 export type HeadCell =
   | UserHeadCell

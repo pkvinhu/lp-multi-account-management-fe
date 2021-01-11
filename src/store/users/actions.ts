@@ -23,11 +23,11 @@ export const getUsers = (
       data.forEach((e, i) => {
         e.skillIds.length &&
           e.skillIds.forEach((sk, ind) => {
-              if (skillsToUsersMap[sk]) {
-                skillsToUsersMap[sk].push(e.fullName);
-              } else {
-                skillsToUsersMap[sk] = [e.fullName];
-              }
+            if (skillsToUsersMap[sk]) {
+              skillsToUsersMap[sk].push(e.fullName);
+            } else {
+              skillsToUsersMap[sk] = [e.fullName];
+            }
           });
         e.profileIds.length &&
           e.profileIds.forEach((p, i) => {
@@ -36,7 +36,7 @@ export const getUsers = (
             } else {
               profilesToUsersMap[p] = [e.fullName];
             }
-          })
+          });
       });
       dispatch({
         type: GET_USERS,

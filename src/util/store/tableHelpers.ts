@@ -8,9 +8,7 @@ import {
   ProfileHeadCell,
   AgentGroupHeadCell,
   Order,
-  DataDisplay,
   Data,
-  DataSubDisplay
 } from "../../store/table/types";
 
 export const getDisplayForUsers = (
@@ -57,22 +55,7 @@ export const getDisplayForProfiles = (
   order: Order,
   orderBy: string
 ) => {
-  let notSorted = data;
-  // .map(
-  //   (
-  //     e: {
-  //       id,
-  //       name,
-  //       roleTypeName,
-  //       // dateUpdated,
-  //       isAssignedToLPA,
-  //     },
-  //     i
-  //   ) => {
-  //     return e;
-  //   }
-  // );
-  let sorted = stableSort(notSorted, getComparator(order, orderBy));
+  let sorted = stableSort(data, getComparator(order, orderBy));
   return sorted;
 };
 
@@ -102,8 +85,7 @@ export const getDisplayForAgentGroups = (
   order: Order,
   orderBy: string
 ) => {
-  let notSorted = data;
-  return stableSort(notSorted, getComparator(order, orderBy));
+  return stableSort(data, getComparator(order, orderBy));
 };
 
 export const getHeadCellsForUsers = (): UserHeadCell[] => {
@@ -111,7 +93,6 @@ export const getHeadCellsForUsers = (): UserHeadCell[] => {
   return [
     { id: "id", numeric: false, disablePadding, label: "Id" },
     { id: "userTypeId", numeric: false, disablePadding, label: "Type" },
-    // { id: "pid", numeric: false, disablePadding, label: "Pid" },
     { id: "loginName", numeric: false, disablePadding, label: "Login Name" },
     { id: "fullName", numeric: false, disablePadding, label: "Name" },
     { id: "maxChats", numeric: true, disablePadding, label: "Max Chats" },
@@ -119,25 +100,7 @@ export const getHeadCellsForUsers = (): UserHeadCell[] => {
     { id: "skillIds", numeric: false, disablePadding, label: "Skills" },
     { id: "profileIds", numeric: false, disablePadding, label: "Profiles" },
     { id: "managerOf", numeric: false, disablePadding, label: "Manager Of" },
-    // {
-    //   id: "dateCreated",
-    //   numeric: false,
-    //   disablePadding,
-    //   label: "Date Created"
-    // },
-    // {
-    //   id: "dateUpdated",
-    //   numeric: false,
-    //   disablePadding,
-    //   label: "Date Updated"
-    // },
     { id: "isApiUser", numeric: false, disablePadding, label: "API User" },
-    // {
-    //   id: "lpaCreatedUser",
-    //   numeric: false,
-    //   disablePadding,
-    //   label: "LPA Created User"
-    // }
   ];
 };
 
@@ -147,12 +110,6 @@ export const getHeadCellsForProfiles = (): ProfileHeadCell[] => {
     { id: "id", numeric: false, disablePadding, label: "Id" },
     { id: "name", numeric: false, disablePadding, label: "Name" },
     { id: "roleTypeName", numeric: false, disablePadding, label: "Role Type" },
-    // {
-    //   id: "dateUpdated",
-    //   numeric: false,
-    //   disablePadding,
-    //   label: "Date Updated"
-    // },
     {
       id: "isAssignedToLPA",
       numeric: false,
@@ -168,12 +125,6 @@ export const getHeadCellsForSkills = (): SkillHeadCell[] => {
     { id: "id", numeric: false, disablePadding, label: "Id" },
     { id: "name", numeric: false, disablePadding, label: "Name" },
     { id: "skillOrder", numeric: false, disablePadding, label: "Skill Order" },
-    // {
-    //   id: "dateUpdated",
-    //   numeric: false,
-    //   disablePadding,
-    //   label: "Date Updated"
-    // },
     {
       id: "canTransfer",
       numeric: false,
@@ -200,7 +151,6 @@ export const getHeadCellsForAgentGroups = (): AgentGroupHeadCell[] => {
       disablePadding,
       label: "Parent Group"
     },
-    // { id: "dateUpdated", numeric: false, disablePadding, label: "Date Updated" }
   ];
 };
 
