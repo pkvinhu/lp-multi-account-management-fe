@@ -13,6 +13,8 @@ export const SET_TABLE_LOADING = "SET_TABLE_LOADING";
 export const SET_ROWS_PER_PAGE = "SET_ROWS_PER_PAGE";
 export const SET_PAGE = "SET_PAGE";
 export const DELETE_ENTITY = "DELETE_ENTITY";
+export const SET_FILTER_CATEGORY = "SET_FILTER_CATEGORY";
+export const SET_FILTER_VALUE = "SET_FILTER_VALUE";
 
 export type Order = "asc" | "desc";
 export type View = "users" | "profiles" | "skills" | "agentGroups";
@@ -27,6 +29,8 @@ export interface TableState {
   rowCount: number;
   page: number;
   rowsPerPage: number;
+  filterCategory: string;
+  filterValue: string[];
   error: boolean;
   loading: boolean;
 }
@@ -171,6 +175,16 @@ export interface SetRowsPerPage {
   payload: number;
 }
 
+export interface SetFilterCategory {
+  type: typeof SET_FILTER_CATEGORY;
+  payload: string;
+}
+
+export interface SetFilterValue {
+  type: typeof SET_FILTER_VALUE;
+  payload: string[];
+}
+
 export interface SetTableError {
   type: typeof SET_TABLE_ERROR;
 }
@@ -193,6 +207,8 @@ export type GetTableAction =
   | SetOrderBy
   | SetPage
   | SetRowsPerPage
+  | SetFilterCategory
+  | SetFilterValue
   | SetTableError
   | SetTableLoading;
 

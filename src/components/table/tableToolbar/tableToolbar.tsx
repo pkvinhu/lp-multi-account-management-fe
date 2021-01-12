@@ -14,13 +14,16 @@ import actions from "../../../store/allActions";
 
 // styles
 import { useStyles } from "./styles";
+import SearchFilter from "../../search/SearchFilter";
+import { getAutoCompleteValues } from "../../../util/components/helpers";
 
 const EnhancedTableToolbar = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state);
   const { skills, profiles, agentGroups, table } = state;
-  const { setPage, setDataDisplay, setTableLoading } = actions;
+  const { filterCategory, filterValue, headCells, view } = table;
+  const { setPage, setDataDisplay, setTableLoading, setFilterCategory } = actions;
 
   const handleChange = (event: unknown, value: View) => {
     if (value !== table.view) {
@@ -32,18 +35,30 @@ const EnhancedTableToolbar = () => {
             state[value].data,
             "asc",
             "id",
+            filterCategory,
+            filterValue,
             skills.map,
             profiles.map,
             agentGroups.map
           )
         )
         : dispatch(
-          setDataDisplay(value, state[value].data, "asc", "id", skills.map)
+          setDataDisplay(value, state[value].data, "asc", "id", filterCategory, filterValue, skills.map)
         );
       dispatch(setPage(0))
     }
-
   };
+
+  const handleFilterChange = (event) => {
+    const { value } = event.target;
+    if (value !== filterCategory) {
+      dispatch(setFilterCategory(value))
+    }
+  }
+
+  const handleSort = (event) => {
+    
+  }
 
   return (
     <Toolbar
@@ -60,6 +75,7 @@ const EnhancedTableToolbar = () => {
         <Tab value="profiles" label="Profiles" />
         <Tab value="agentGroups" label="Agent Groups" />
       </Tabs>
+      <SearchFilter handleFilterChange={handleFilterChange} handleSort={handleSort} values={filterCategory && filterValue ? getAutoCompleteValues(filterCategory, state[view].data) : []} categories={headCells} />
     </Toolbar>
   );
 };

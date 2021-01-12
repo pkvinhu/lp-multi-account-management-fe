@@ -9,14 +9,17 @@ import {
   SET_TABLE_ERROR,
   SET_TABLE_LOADING,
   SET_PAGE,
-  SET_ROWS_PER_PAGE
+  SET_ROWS_PER_PAGE,
+  SET_FILTER_CATEGORY,
+  SET_FILTER_VALUE
 } from "./types";
 
 const initialState: TableState = {
   view: "users",
   headCells: [],
   dataDisplay: [],
-  // dataSubDisplay: [],
+  filterCategory: "",
+  filterValue: [],
   numSelected: 0,
   order: "asc",
   orderBy: "id",
@@ -32,7 +35,6 @@ export default (state = initialState, action: GetTableAction): TableState => {
     case SET_DISPLAY_DATA:
       const {
         data,
-        // dataSub,
         headCells,
         rowCount,
         view,
@@ -44,7 +46,6 @@ export default (state = initialState, action: GetTableAction): TableState => {
         loading: false,
         error: false,
         dataDisplay: data,
-        // dataSubDisplay: dataSub,
         headCells,
         rowCount,
         view,
@@ -82,6 +83,16 @@ export default (state = initialState, action: GetTableAction): TableState => {
         ...state,
         rowsPerPage: action.payload
       };
+    case SET_FILTER_CATEGORY:
+      return {
+        ...state,
+        filterCategory: action.payload
+      }
+    case SET_FILTER_VALUE:
+      return {
+        ...state,
+        filterValue: action.payload
+      }
     case SET_TABLE_ERROR:
       return {
         ...state,

@@ -18,7 +18,9 @@ export const getDisplayForUsers = (
   data: User[],
   order: Order,
   orderBy: string,
-  appKeys: any
+  appKeys: any,
+  filterCategory: string, 
+  filterValue: string[]
 ): Data[] => {
   const notSortedAll = data.map(
     (e,i) => {
@@ -46,16 +48,18 @@ export const getDisplayForUsers = (
       }
     }
   );
-  let sorted = stableSort(notSortedAll, getComparator(order, orderBy));
+  let sorted = stableSort(notSortedAll, getComparator(order, orderBy, filterCategory, filterValue));
   return sorted;
 };
 
 export const getDisplayForProfiles = (
   data: Profile[],
   order: Order,
-  orderBy: string
+  orderBy: string,
+  filterCategory: string, 
+  filterValue: string[]
 ) => {
-  let sorted = stableSort(data, getComparator(order, orderBy));
+  let sorted = stableSort(data, getComparator(order, orderBy, filterCategory, filterValue));
   return sorted;
 };
 
@@ -63,7 +67,9 @@ export const getDisplayForSkills = (
   data: Skill[],
   skillsMap: any,
   order: Order,
-  orderBy: string
+  orderBy: string,
+  filterCategory: string, 
+  filterValue: string[]
 ) => {
   let notSorted = data.map((e,i) => {
       return {
@@ -77,15 +83,17 @@ export const getDisplayForSkills = (
       };
     }
   );
-  return stableSort(notSorted, getComparator(order, orderBy));
+  return stableSort(notSorted, getComparator(order, orderBy, filterCategory, filterValue));
 };
 
 export const getDisplayForAgentGroups = (
   data: AgentGroup[],
   order: Order,
-  orderBy: string
+  orderBy: string,
+  filterCategory: string, 
+  filterValue: string[]
 ) => {
-  return stableSort(data, getComparator(order, orderBy));
+  return stableSort(data, getComparator(order, orderBy, filterCategory, filterValue));
 };
 
 export const getHeadCellsForUsers = (): UserHeadCell[] => {
@@ -176,7 +184,9 @@ function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
 
 function getComparator<T extends keyof any>(
   order: Order,
-  orderBy: T
+  orderBy: T,
+  filterCategory: string, 
+  filterValue: string[]
 ): (a: Data, b: Data) => number {
   return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)

@@ -65,3 +65,9 @@ export const checkRowFromDeleteIconDisable = (
       : false;
   }
 };
+
+export const getAutoCompleteValues = (category: string, data: Data | any) => {
+  return data.reduce((a, c, i) => {
+    return c[category] ? [...a, c[category]] : a;
+  }, [])
+}
