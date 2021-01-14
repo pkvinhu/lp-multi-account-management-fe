@@ -1,4 +1,5 @@
 import { DataDisplay, View, Data, Entity } from "../../store/table/types";
+import React, { useRef, useEffect } from "react";
 
 export const wait = async (ms: number, value: any) => {
   await new Promise(resolve => setTimeout(resolve, ms, value));
@@ -34,7 +35,11 @@ export const emptyRows = (rowsPerPage, rowCount, page) => {
   return rowsPerPage - Math.min(rowsPerPage, rowCount - page * rowsPerPage);
 };
 
-export const capitalize = s => (s ? s[0].toUpperCase() + s.slice(1).replace(/([A-Z])([A-Z])([a-z])|([a-z])([A-Z])/g, '$1$4 $2$3$5') : "");
+export const capitalize = s =>
+  s
+    ? s[0].toUpperCase() +
+      s.slice(1).replace(/([A-Z])([A-Z])([a-z])|([a-z])([A-Z])/g, "$1$4 $2$3$5")
+    : "";
 
 export const checkRowFromDeleteIconDisable = (
   view: View,
@@ -66,8 +71,28 @@ export const checkRowFromDeleteIconDisable = (
   }
 };
 
-export const getAutoCompleteValues = (category: string, data: Data | any) => {
-  return data.reduce((a, c, i) => {
-    return c[category] ? [...a, c[category]] : a;
-  }, [])
+export const getAutoCompleteValues = (
+  category: string,
+  data: Data | any,
+  map?: any
+) => {
+  // console.log(category);
+
+  if (category === "profileIds" || category === "skillIds" || category === "managerOf" || category === "skillTransferList") {
+    return Object.values(map);
+  } else if (typeof data[0][category] === 'boolean') {
+    return ['Yes', 'No']
+  } else {
+    return data.reduce((a, c, i) => {
+      return c[category] !== 'undefined' && !a.includes(c[category]) ? [...a, c[category]] : a;
+    }, []);
+  }
+};
+
+export const usePrevious = (value) => {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
 }

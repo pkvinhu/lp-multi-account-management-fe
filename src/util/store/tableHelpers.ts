@@ -8,7 +8,7 @@ import {
   ProfileHeadCell,
   AgentGroupHeadCell,
   Order,
-  Data,
+  Data
 } from "../../store/table/types";
 
 export const getDisplayForUsers = (
@@ -19,36 +19,40 @@ export const getDisplayForUsers = (
   order: Order,
   orderBy: string,
   appKeys: any,
-  filterCategory: string, 
+  filterCategory: string,
   filterValue: string[]
-): Data[] => {
-  const notSortedAll = data.map(
-    (e,i) => {
-      let { skillIds, profileIds, managerOf } = e;
-      return {
-        ...e,
-        skillIds:
-          skillIds && skillIds.length
-            ? skillIds.map((e, i) => (e && skillsMap[e] ? skillsMap[e] : null))
-            : [],
-        profileIds:
-          profileIds && profileIds.length
-            ? profileIds.map((e, i) =>
-                e && profilesMap[e] ? profilesMap[e] : null
-              )
-            : [],
-        managerOf:
-          managerOf && managerOf.length
-            ? managerOf.map((e, i) =>
-                e && agentGroupsMap[e.agentGroupId]
-                  ? agentGroupsMap[e.agentGroupId]
-                  : null
-              )
-            : []
-      }
-    }
+): Data[] | any => {
+  console.log(filterCategory, filterValue)
+  const notSortedAll = data.map((e, i) => {
+    let { skillIds, profileIds, managerOf } = e;
+    return {
+      ...e,
+      skillIds:
+        skillIds && skillIds.length
+          ? skillIds.map((e, i) => (e && skillsMap[e] ? skillsMap[e] : null))
+          : [],
+      profileIds:
+        profileIds && profileIds.length
+          ? profileIds.map((e, i) =>
+              e && profilesMap[e] ? profilesMap[e] : null
+            )
+          : [],
+      managerOf:
+        managerOf && managerOf.length
+          ? managerOf.map((e, i) =>
+              e && agentGroupsMap[e.agentGroupId]
+                ? agentGroupsMap[e.agentGroupId]
+                : null
+            )
+          : []
+    };
+  });
+  let sorted = stableSort(
+    notSortedAll,
+    getComparator(order, orderBy),
+    filterCategory ? filterCategory : undefined,
+    filterValue.length ? filterValue : undefined
   );
-  let sorted = stableSort(notSortedAll, getComparator(order, orderBy, filterCategory, filterValue));
   return sorted;
 };
 
@@ -56,10 +60,15 @@ export const getDisplayForProfiles = (
   data: Profile[],
   order: Order,
   orderBy: string,
-  filterCategory: string, 
+  filterCategory: string,
   filterValue: string[]
 ) => {
-  let sorted = stableSort(data, getComparator(order, orderBy, filterCategory, filterValue));
+  let sorted = stableSort(
+    data,
+    getComparator(order, orderBy),
+    filterCategory ? filterCategory : undefined,
+    filterValue.length ? filterValue : undefined
+  );
   return sorted;
 };
 
@@ -68,32 +77,41 @@ export const getDisplayForSkills = (
   skillsMap: any,
   order: Order,
   orderBy: string,
-  filterCategory: string, 
+  filterCategory: string,
   filterValue: string[]
 ) => {
-  let notSorted = data.map((e,i) => {
-      return {
-        ...e,
-        skillTransferList:
-          e.skillTransferList && e.skillTransferList.length
-            ? e.skillTransferList.map((e, i) =>
-                e && skillsMap[e] ? skillsMap[e] : null
-              )
-            : []
-      };
-    }
+  let notSorted = data.map((e, i) => {
+    return {
+      ...e,
+      skillTransferList:
+        e.skillTransferList && e.skillTransferList.length
+          ? e.skillTransferList.map((e, i) =>
+              e && skillsMap[e] ? skillsMap[e] : null
+            )
+          : []
+    };
+  });
+  return stableSort(
+    notSorted,
+    getComparator(order, orderBy),
+    filterCategory ? filterCategory : undefined,
+    filterValue.length ? filterValue : undefined
   );
-  return stableSort(notSorted, getComparator(order, orderBy, filterCategory, filterValue));
 };
 
 export const getDisplayForAgentGroups = (
   data: AgentGroup[],
   order: Order,
   orderBy: string,
-  filterCategory: string, 
+  filterCategory: string,
   filterValue: string[]
 ) => {
-  return stableSort(data, getComparator(order, orderBy, filterCategory, filterValue));
+  return stableSort(
+    data,
+    getComparator(order, orderBy),
+    filterCategory ? filterCategory : undefined,
+    filterValue.length ? filterValue : undefined
+  );
 };
 
 export const getHeadCellsForUsers = (): UserHeadCell[] => {
@@ -108,7 +126,7 @@ export const getHeadCellsForUsers = (): UserHeadCell[] => {
     { id: "skillIds", numeric: false, disablePadding, label: "Skills" },
     { id: "profileIds", numeric: false, disablePadding, label: "Profiles" },
     { id: "managerOf", numeric: false, disablePadding, label: "Manager Of" },
-    { id: "isApiUser", numeric: false, disablePadding, label: "API User" },
+    { id: "isApiUser", numeric: false, disablePadding, label: "API User" }
   ];
 };
 
@@ -158,7 +176,7 @@ export const getHeadCellsForAgentGroups = (): AgentGroupHeadCell[] => {
       numeric: false,
       disablePadding,
       label: "Parent Group"
-    },
+    }
   ];
 };
 
@@ -172,21 +190,29 @@ export const getHeadCellsForAgentGroups = (): AgentGroupHeadCell[] => {
 //   return stabilizedThis.map(el => el[0]);
 // };
 
-function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
+function stableSort<T>(
+  array: T[],
+  comparator: (a: T, b: T) => number,
+  filterCategory?: string,
+  filterValue?: string[]
+) {
   const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
+  // console.log("Stable Sort: ", stabilizedThis)
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) return order;
     return a[1] - b[1];
   });
-  return stabilizedThis.map(el => el[0]);
+  let m = stabilizedThis
+  .filter(el => !filterValue || !filterCategory || (filterValue && filterCategory && filterValue.indexOf(el[0][filterCategory]) !== -1))
+  .map(el => el[0])
+  console.log(m)
+  return m;
 }
 
 function getComparator<T extends keyof any>(
   order: Order,
-  orderBy: T,
-  filterCategory: string, 
-  filterValue: string[]
+  orderBy: T
 ): (a: Data, b: Data) => number {
   return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)

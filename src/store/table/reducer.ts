@@ -86,7 +86,8 @@ export default (state = initialState, action: GetTableAction): TableState => {
     case SET_FILTER_CATEGORY:
       return {
         ...state,
-        filterCategory: action.payload
+        filterCategory: action.payload,
+        filterValue: []
       }
     case SET_FILTER_VALUE:
       return {

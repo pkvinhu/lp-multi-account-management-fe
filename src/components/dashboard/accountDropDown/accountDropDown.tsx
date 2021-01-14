@@ -1,17 +1,39 @@
-import React, { FC, useRef } from 'react';
+// dependencies
+import React, { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
+// components
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+
+// styles
 import { useStyles } from "../styles";
+
+// store
 import { RootState } from '../../../store';
 import actions from "../../../store/allActions";
-import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
+
+// util
+import { usePrevious } from '../../../util/components/helpers';
 
 const AccountDropDown: FC = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const state = useSelector((state: RootState) => state);
     const account = useSelector((state: RootState) => state.accounts.selectedAccount)
-    const { selectAccount, setUserLoading, setSkillsLoading, setProfileLoading, setAgentGroupsLoading, setAppKeysLoading, setCampaignLoading, setTableLoading } = actions;
-    // const textInput = useRef(account);
+    const { selectAccount, setUserLoading, setSkillsLoading, setProfileLoading, setAgentGroupsLoading, setAppKeysLoading, setCampaignLoading, setTableLoading, setFilterCategory, setFilterValue } = actions;
+    const { view, dataDisplay } = state.table;
+    const previousView = usePrevious(view);
+    const previousData = usePrevious(dataDisplay);
+  
+    useEffect(() => {
+        if(previousView !== view || previousData !== dataDisplay) {
+            dispatch(setFilterCategory(""));
+            dispatch(setFilterValue([]))
+        }
+    })
 
     const handleChange = (event) => {
         const { value } = event.target;

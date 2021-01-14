@@ -18,8 +18,13 @@ import { RootState } from '../../store';
 import actions from '../../store/allActions';
 import { HeadCell } from '../../store/table/types';
 
+// styles
+import { useStyles } from './styles';
+
 // utils
-import { } from '../../util/components/helpers';
+import { usePrevious } from '../../util/components/helpers';
+import Chip from '@material-ui/core/Chip';
+import { setFilterValue } from '../../store/table/actions';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -27,45 +32,62 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 interface SearchFilterProps {
     handleFilterChange: (event: any) => void;
     handleSort: (event: any) => void;
+    handleTagChange: (event: any, value: any | any[]) => void;
     categories: HeadCell[];
     values: string[];
 }
 
-const SearchFilter = ({ handleFilterChange, handleSort, categories, values }: SearchFilterProps) => {
+const SearchFilter = ({ handleFilterChange, handleSort, handleTagChange, categories, values }: SearchFilterProps) => {
+    const classes = useStyles();
     const dispatch = useDispatch();
     const state = useSelector((state: RootState) => state);
     const { headCells, filterCategory, filterValue, dataDisplay } = state.table;
-    // const { setFilterCategory } = actions;
-
+    const { setFilterValue } = actions;
 
     return (
-        <div style={{ display: "flex"}}>
+        <div className={classes.wrapper}>
             <Autocomplete
                 multiple
                 id="checkboxes-tags-demo"
                 options={values}
                 disableCloseOnSelect
-                getOptionLabel={(option) => option}
+                getOptionLabel={(option) => {
+                    // console.log(option)
+                    return String(option)
+                }}
+                onChange={handleTagChange}
+                renderTags={(tagValue, getTagProps) => {
+                    return tagValue.map((option, index) => {
+                        if (values.indexOf(option) !== -1) {
+                            return (<Chip
+                                label={option}
+                                {...getTagProps({ index })}
+                            />)
+                        }
+                    })
+                }
+                }
                 renderOption={(option, { selected }) => (
                     <React.Fragment>
                         <Checkbox
                             icon={icon}
                             checkedIcon={checkedIcon}
-                            style={{ marginRight: 8 }}
+                            className={classes.checkbox}
                             checked={selected}
                         />
                         {option}
                     </React.Fragment>
                 )}
-                style={{ width: 250 }}
+                className={classes.autocomplete}
                 renderInput={(params) => (
-                    <TextField {...params} variant="outlined" label="Checkboxes" placeholder={filterCategory ? filterCategory : "Select A Category"} />
-                )}
+                    <TextField {...params} variant="outlined" label="Search" placeholder={filterCategory ? filterCategory : "Select A Category"} />
+                )
+                }
             />
             <Select
                 labelId="demo-controlled-open-select-label"
                 id="demo-controlled-open-select"
-                style={{ width: 100 }}
+                className={classes.select}
                 value={filterCategory}
                 onChange={handleFilterChange}
             >

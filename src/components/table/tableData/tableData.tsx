@@ -29,7 +29,7 @@ const EnhancedTable = ({ handleDelete }: EnhancedTableProps) => {
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state);
   const { table, users, skills, profiles, agentGroups, appKeys } = state;
-  const { page, rowsPerPage, rowCount, dataDisplay } = table;
+  const { page, rowsPerPage, rowCount, dataDisplay, filterCategory, filterValue } = table;
   const { setPage, setRowsPerPage, setDataDisplay } = actions;
 
   useEffect(() => {
@@ -43,6 +43,8 @@ const EnhancedTable = ({ handleDelete }: EnhancedTableProps) => {
             state[table.view].data || users.data,
             "asc",
             "id",
+            filterCategory,
+            filterValue,
             isUser ? skills.map : null,
             isUser ? profiles.map : null,
             isUser ? agentGroups.map : null,

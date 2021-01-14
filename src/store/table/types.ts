@@ -36,7 +36,7 @@ export interface TableState {
 }
 
 export interface DataDisplayState {
-  data: Data[];
+  data: Data[] | any;
   headCells: HeadCell[];
   rowCount: number;
   view: View;
