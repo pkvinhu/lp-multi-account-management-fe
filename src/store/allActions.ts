@@ -12,6 +12,8 @@ import {
   setSelected,
   setPage,
   setRowsPerPage,
+  setFilterCategory,
+  setFilterValue,
   setTableError,
   setTableLoading,
   deleteEntity
@@ -39,6 +41,8 @@ export default {
   setSelected,
   setPage,
   setRowsPerPage,
+  setFilterCategory,
+  setFilterValue,
   setTableError,
   setTableLoading,
   deleteEntity,

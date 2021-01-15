@@ -21,7 +21,11 @@ import {
   SetPage,
   SET_PAGE,
   SetRowsPerPage,
-  SET_ROWS_PER_PAGE
+  SET_ROWS_PER_PAGE,
+  SetFilterCategory,
+  SET_FILTER_CATEGORY,
+  SetFilterValue,
+  SET_FILTER_VALUE
 } from "./types";
 import {
   getHeadCellsForUsers,
@@ -42,6 +46,8 @@ export const setDataDisplay = (
   data: Data | any,
   order: Order,
   orderBy: string,
+  filterCategory: string,
+  filterValue: string[],
   skillsMap?: any,
   profilesMap?: any,
   agentGroupsMap?: any,
@@ -51,12 +57,10 @@ export const setDataDisplay = (
     data: [],
     headCells: [],
     rowCount: 0,
-    // dataSub: [],
     view,
     order,
     orderBy
   };
-  // let display;
   switch (view) {
     case "users":
       payload.data = getDisplayForUsers(
@@ -66,26 +70,26 @@ export const setDataDisplay = (
         data,
         order,
         orderBy,
-        appKeys
+        appKeys,
+        filterCategory,
+        filterValue
       );
 
       payload.headCells = getHeadCellsForUsers();
       break;
     case "profiles":
-      payload.data = getDisplayForProfiles(data, order, orderBy);
+      payload.data = getDisplayForProfiles(data, order, orderBy, filterCategory, filterValue);
       payload.headCells = getHeadCellsForProfiles();
       break;
     case "skills":
-      payload.data = getDisplayForSkills(data, skillsMap, order, orderBy);
+      payload.data = getDisplayForSkills(data, skillsMap, order, orderBy, filterCategory, filterValue);
       payload.headCells = getHeadCellsForSkills();
       break;
     case "agentGroups":
-      payload.data = getDisplayForAgentGroups(data, order, orderBy);
+      payload.data = getDisplayForAgentGroups(data, order, orderBy, filterCategory, filterValue);
       payload.headCells = getHeadCellsForAgentGroups();
       break;
   }
-  // payload.data = display.dataMain;
-  // payload.dataSub = display.dataSub;
   payload.rowCount = payload.data.length;
   return {
     type: SET_DISPLAY_DATA,
@@ -144,6 +148,16 @@ export const setRowsPerPage = (rows: number): SetRowsPerPage => ({
   type: SET_ROWS_PER_PAGE,
   payload: rows
 });
+
+export const setFilterCategory = (category: string): SetFilterCategory => ({
+  type: SET_FILTER_CATEGORY,
+  payload: category
+})
+
+export const setFilterValue = (value: string[]): SetFilterValue => ({
+  type: SET_FILTER_VALUE,
+  payload: value
+})
 
 export const setTableError = (): SetTableError => ({ type: SET_TABLE_ERROR });
 

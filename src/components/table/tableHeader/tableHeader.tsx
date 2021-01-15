@@ -20,7 +20,7 @@ export default function EnhancedTableHead() {
   const classes = useStyles();
   const state = useSelector((state: RootState) => state);
   const { table, users, skills, profiles, agentGroups } = state;
-  const { order, orderBy, headCells } = table;
+  const { order, orderBy, headCells, filterCategory, filterValue } = table;
   const { setDataDisplay } = actions;
 
   const handleRequestSort = (
@@ -35,6 +35,8 @@ export default function EnhancedTableHead() {
           users.data,
           isAsc ? "desc" : "asc",
           property,
+          filterCategory,
+          filterValue,
           skills.map,
           profiles.map,
           agentGroups.map
@@ -47,6 +49,8 @@ export default function EnhancedTableHead() {
           state[table.view].data,
           isAsc ? "desc" : "asc",
           property,
+          filterCategory,
+          filterValue,
           skills.map
         )
       );

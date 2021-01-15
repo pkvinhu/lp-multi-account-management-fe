@@ -6,6 +6,9 @@ export const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: "rgb(253, 253, 253)",
       textColor: "rgb(253, 253, 253)",
     },
+    buttonContainer: {
+      display: "flex",
+    },
     highlight:
       theme.palette.type === "light"
         ? {
@@ -21,7 +24,7 @@ export const useStyles = makeStyles((theme: Theme) =>
     },
     toolbar: {
       display: "flex",
-      justifyContent: "center",
+      justifyContent: "space-between",
     },
     tabs: {
       textColor: "rgb(253, 253, 253)",

@@ -39,7 +39,7 @@ const Dashboard: FC = () => {
                 dispatch(deleteEntity(selectedAccount, view, String(entity.id)))
             } else {
                 let lastModified = Date.parse(entity.dateUpdated);
-                console.log(lastModified)
+                // console.log(lastModified)
                 dispatch(deleteEntity(selectedAccount, view, String(entity.id), lastModified))
             }
         })

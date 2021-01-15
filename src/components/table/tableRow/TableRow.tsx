@@ -22,21 +22,13 @@ import { Data } from "../../../store/table/types";
 import { useStyles } from "../tableBody/styles";
 
 // utils 
-import { filterType, humanOrBot, checkRowFromDeleteIconDisable } from "../../../util/components/helpers";
+import { filterType, humanOrBot, checkRowFromDeleteIconDisable, usePrevious } from "../../../util/components/helpers";
 // 
 interface EnhancedTableRowProps {
     handleOpen: (id: string | number) => void;
     row: Data;
     index: number;
 }
-
-function usePrevious(value) {
-    const ref = useRef();
-    useEffect(() => {
-      ref.current = value;
-    });
-    return ref.current;
-  }
 
 const EnhancedTableRow = ({ handleOpen, row, index }: EnhancedTableRowProps) => {
     const classes = useStyles();
