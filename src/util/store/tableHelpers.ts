@@ -204,9 +204,29 @@ function stableSort<T>(
     return a[1] - b[1];
   });
   let m = stabilizedThis
-  .filter(el => !filterValue || !filterCategory || (filterValue && filterCategory && filterValue.indexOf(el[0][filterCategory]) !== -1))
+  .filter(el => {
+    if(!filterValue || !filterCategory) {
+      return el; 
+    } else {
+      if (Array.isArray(el[0][filterCategory])) {
+        let map = {};
+        el[0][filterCategory].forEach(e => map[e] = true)
+        for (let i = 0; i < filterValue.length; i++) {
+          if(map[filterValue[i]]) {
+            return el;
+          }
+        }
+      } 
+      else if (filterValue.indexOf(el[0][filterCategory]) !== -1) {
+        return el;
+      }
+      else if(el[0][filterCategory] === true && filterValue.indexOf("Yes") > -1 || el[0][filterCategory] === false && filterValue.indexOf("No") > -1) {
+        return el;
+      }
+    }
+  })
   .map(el => el[0])
-  console.log(m)
+  // console.log(m)
   return m;
 }
 

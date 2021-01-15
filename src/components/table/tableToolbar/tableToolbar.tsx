@@ -38,15 +38,15 @@ const EnhancedTableToolbar = () => {
             state[value].data,
             "asc",
             "id",
-            filterCategory,
-            filterValue,
+            "",
+            [],
             skills.map,
             profiles.map,
             agentGroups.map
           )
         )
         : dispatch(
-          setDataDisplay(value, state[value].data, "asc", "id", filterCategory, filterValue, skills.map)
+          setDataDisplay(value, state[value].data, "asc", "id", "", [], skills.map)
         );
       dispatch(setPage(0))
     }

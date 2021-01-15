@@ -26,10 +26,10 @@ const AccountDropDown: FC = () => {
     const { selectAccount, setUserLoading, setSkillsLoading, setProfileLoading, setAgentGroupsLoading, setAppKeysLoading, setCampaignLoading, setTableLoading, setFilterCategory, setFilterValue } = actions;
     const { view, dataDisplay } = state.table;
     const previousView = usePrevious(view);
-    const previousData = usePrevious(dataDisplay);
+    const previousAccount = usePrevious(account);
   
     useEffect(() => {
-        if(previousView !== view || previousData !== dataDisplay) {
+        if(previousView !== view || previousAccount !== account) {
             dispatch(setFilterCategory(""));
             dispatch(setFilterValue([]))
         }
