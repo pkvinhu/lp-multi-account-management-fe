@@ -2,7 +2,7 @@ import React, { FC, useEffect } from "react";
 import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./store";
-import { Login, Dashboard, UserForm } from "./components";
+import { Login, Dashboard } from "./components";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { checkAuth } from "./store/auth/actions";
 //hi kev
@@ -26,7 +26,6 @@ const App: FC = () => {
         </Route>
         {authenticated ? (
           <div>
-            <Route path="/userForm" component={UserForm} />
             <Route path="/dashboard" component={Dashboard} />
           </div>
         ) : null}
