@@ -22,7 +22,7 @@ export const getDisplayForUsers = (
   filterCategory: string,
   filterValue: string[]
 ): Data[] | any => {
-  console.log(filterCategory, filterValue)
+  console.log(filterCategory, filterValue);
   const notSortedAll = data.map((e, i) => {
     let { skillIds, profileIds, managerOf } = e;
     return {
@@ -190,56 +190,64 @@ export const getHeadCellsForAgentGroups = (): AgentGroupHeadCell[] => {
 //   return stabilizedThis.map(el => el[0]);
 // };
 
-function stableSort<T>(
+const stableSort = <T>(
   array: T[],
   comparator: (a: T, b: T) => number,
   filterCategory?: string,
   filterValue?: string[]
-) {
+) => {
   const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
-  // console.log("Stable Sort: ", stabilizedThis)
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) return order;
     return a[1] - b[1];
   });
-  let m = stabilizedThis
-  .filter(el => {
-    if(!filterValue || !filterCategory) {
-      return el; 
-    } else {
-      if (Array.isArray(el[0][filterCategory])) {
-        let map = {};
-        el[0][filterCategory].forEach(e => map[e] = true)
-        for (let i = 0; i < filterValue.length; i++) {
-          if(map[filterValue[i]]) {
-            return el;
-          }
-        }
-      } 
-      else if (filterValue.indexOf(el[0][filterCategory]) !== -1) {
-        return el;
-      }
-      else if(el[0][filterCategory] === true && filterValue.indexOf("Yes") > -1 || el[0][filterCategory] === false && filterValue.indexOf("No") > -1) {
-        return el;
-      }
-    }
-  })
-  .map(el => el[0])
-  // console.log(m)
+  let m = filterSearch(stabilizedThis, filterCategory, filterValue);
   return m;
-}
+};
 
-function getComparator<T extends keyof any>(
+const filterSearch = <T>(
+  data: T[],
+  filterCategory?: string,
+  filterValue?: string[]
+) => {
+  return data
+    .filter((el: T) => {
+      // console.log("FROM FILTER SEARCH: ", filterValue, filterCategory)
+      if (!filterValue || !filterCategory) {
+        return el;
+      } else {
+        if (Array.isArray(el[0][filterCategory])) {
+          let map = {};
+          el[0][filterCategory].forEach(e => (map[e] = true));
+          for (let i = 0; i < filterValue.length; i++) {
+            if (map[filterValue[i]]) {
+              return el;
+            }
+          }
+        } else if (filterValue.indexOf(el[0][filterCategory]) !== -1) {
+          return el;
+        } else if (
+          (el[0][filterCategory] === true && filterValue.indexOf("Yes") > -1) ||
+          (el[0][filterCategory] === false && filterValue.indexOf("No") > -1)
+        ) {
+          return el;
+        }
+      }
+    })
+    .map((el: T) => el[0]);
+};
+
+const getComparator = <T extends keyof any>(
   order: Order,
   orderBy: T
-): (a: Data, b: Data) => number {
+): ((a: Data, b: Data) => number) => {
   return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
-}
+};
 
-function descendingComparator(a, b, orderBy) {
+const descendingComparator = (a, b, orderBy) => {
   let A = Array.isArray(a[orderBy])
     ? a[orderBy].join(",").toLowerCase()
     : typeof a[orderBy] === "number"
@@ -257,4 +265,4 @@ function descendingComparator(a, b, orderBy) {
     return 1;
   }
   return 0;
-}
+};

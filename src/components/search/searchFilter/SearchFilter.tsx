@@ -1,5 +1,5 @@
 // dependencies
-import React, { FC } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 // components
@@ -14,17 +14,15 @@ import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 
 // store
-import { RootState } from '../../store';
-import actions from '../../store/allActions';
-import { HeadCell } from '../../store/table/types';
+import { RootState } from '../../../store';
+// import actions from '../../../store/allActions';
+import { HeadCell } from '../../../store/table/types';
 
 // styles
 import { useStyles } from './styles';
 
 // utils
-import { usePrevious } from '../../util/components/helpers';
 import Chip from '@material-ui/core/Chip';
-import { setFilterValue } from '../../store/table/actions';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -39,20 +37,18 @@ interface SearchFilterProps {
 
 const SearchFilter = ({ handleFilterChange, handleSort, handleTagChange, categories, values }: SearchFilterProps) => {
     const classes = useStyles();
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const state = useSelector((state: RootState) => state);
-    const { headCells, filterCategory, filterValue, dataDisplay } = state.table;
-    const { setFilterValue } = actions;
+    const { filterCategory } = state.table;
 
     return (
-        <div className={classes.wrapper}>
+        <div className={classes.paper}>
             <Autocomplete
                 multiple
                 id="checkboxes-tags-demo"
                 options={values}
                 disableCloseOnSelect
                 getOptionLabel={(option) => {
-                    // console.log(option)
                     return String(option)
                 }}
                 onChange={handleTagChange}
@@ -91,15 +87,12 @@ const SearchFilter = ({ handleFilterChange, handleSort, handleTagChange, categor
                 value={filterCategory}
                 onChange={handleFilterChange}
             >
-                <MenuItem value="">
-                    <em></em>
-                </MenuItem>
                 {categories.map((e, i) => {
                     return <MenuItem value={e.id} key={i}><em>{e.label}</em></MenuItem>
                 })}
             </Select>
             <Button onClick={handleSort}>
-                <Icon>sort</Icon>
+                <Icon>filter</Icon>
             </Button>
         </div>
     );
