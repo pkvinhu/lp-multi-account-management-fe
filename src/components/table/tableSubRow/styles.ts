@@ -14,18 +14,20 @@ export const useStyles = makeStyles((theme: Theme) =>
       padding: "0px 50px"
     },
     chip: {
-      backgroundColor: "orange",
+      backgroundColor: theme.palette.primary.dark,
       padding: "0px 10px",
       margin: "5px",
       minWidth: "200px",
-      fontSize: "12px"
+      fontSize: "12px",
+      color: "white"
     },
     chip2: {
-      backgroundColor: "lightgrey",
+      backgroundColor: theme.palette.secondary.main,
       padding: "0px 10px",
       margin: "5px",
       minWidth: "200px",
-      fontSize: "12px"
+      fontSize: "12px",
+      color: "white"
     },
     flexPad: {
         display: "flex",

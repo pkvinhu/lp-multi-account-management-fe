@@ -9,7 +9,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
 // styles
-import { useStyles } from "../styles";
+import { useStyles } from "./styles";
 
 // store
 import { RootState } from '../../../store';
@@ -18,7 +18,11 @@ import actions from "../../../store/allActions";
 // util
 import { usePrevious } from '../../../util/components/helpers';
 
-const AccountDropDown: FC = () => {
+interface AccountDropDownProps {
+    styles:string;
+}
+
+const AccountDropDown = ({ styles }: AccountDropDownProps) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const state = useSelector((state: RootState) => state);
@@ -53,13 +57,13 @@ const AccountDropDown: FC = () => {
 
     return (
         <FormControl className={classes.formControl}>
-            <InputLabel id="demo-controlled-open-select-label">Account</InputLabel>
+            <InputLabel className={classes[styles]} id="demo-controlled-open-select-label">Account</InputLabel>
             <Select
                 labelId="demo-controlled-open-select-label"
                 id="demo-controlled-open-select"
                 value={account}
                 onChange={handleChange}
-                
+                classes={{ root: classes[styles], icon: classes[styles] }}
                 /*ref={textInput}*/
             >
                 <MenuItem value="">

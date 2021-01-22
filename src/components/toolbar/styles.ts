@@ -3,7 +3,7 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core";
 export const useStyles = makeStyles((theme:Theme) => 
     createStyles({
         appbar: {
-            borderBottom: "10px solid orange",
+            borderBottom: "10px solid " + theme.palette.primary.main,
         },
         actionsContainer: {
             display: "flex",
@@ -12,7 +12,7 @@ export const useStyles = makeStyles((theme:Theme) =>
             alignItems: "center"
         },
         button: {
-            backgroundColor: '#fad19c',
+            backgroundColor: theme.palette.primary.main,
             "&:hover": {
                 borderBottom: '4px solid black'
             }

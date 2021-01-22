@@ -57,6 +57,7 @@ const SearchFilter = ({ handleFilterChange, handleSort, handleTagChange, categor
                         if (values.indexOf(option) !== -1) {
                             return (<Chip
                                 label={option}
+                                classes={{root: classes.chip, deleteIcon: classes.chipIcon }}
                                 {...getTagProps({ index })}
                             />)
                         }
@@ -70,11 +71,12 @@ const SearchFilter = ({ handleFilterChange, handleSort, handleTagChange, categor
                             checkedIcon={checkedIcon}
                             className={classes.checkbox}
                             checked={selected}
+                            color="primary"
                         />
                         {option}
                     </React.Fragment>
                 )}
-                className={classes.autocomplete}
+                classes={{ root: classes.autocomplete, input: classes.icon }}
                 renderInput={(params) => (
                     <TextField {...params} variant="outlined" label="Search" placeholder={filterCategory ? filterCategory : "Select A Category"} />
                 )
@@ -83,7 +85,7 @@ const SearchFilter = ({ handleFilterChange, handleSort, handleTagChange, categor
             <Select
                 labelId="demo-controlled-open-select-label"
                 id="demo-controlled-open-select"
-                className={classes.select}
+                classes={{ root: classes.select, icon: classes.icon }}
                 value={filterCategory}
                 onChange={handleFilterChange}
             >

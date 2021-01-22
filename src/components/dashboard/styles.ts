@@ -21,11 +21,6 @@ export const useStyles = makeStyles((theme: Theme) =>
       width: "100%",
       margin: theme.spacing(40, "auto")
     },
-    formControl: {
-      minWidth: 120,
-      maxWidth: 300,
-      margin: "0px 30px"
-    },
     chips: {
       display: "flex",
       flexWrap: "wrap"
@@ -42,6 +37,7 @@ export const useStyles = makeStyles((theme: Theme) =>
     },
     welcomeText: {
       fontFamily: "'Merriweather', serif",
+      color: theme.palette.primary.light
     }
   })
 );

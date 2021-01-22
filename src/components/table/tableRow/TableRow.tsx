@@ -19,7 +19,7 @@ import { Data } from "../../../store/table/types";
 // import { DataDisplay } from "../../../store/table/types";
 
 // styles
-import { useStyles } from "../tableBody/styles";
+import { useStyles } from "./styles";
 
 // utils 
 import { filterType, humanOrBot, checkRowFromDeleteIconDisable, usePrevious } from "../../../util/components/helpers";
@@ -44,7 +44,7 @@ const EnhancedTableRow = ({ handleOpen, row, index }: EnhancedTableRowProps) => 
     const previousData = usePrevious(dataDisplay);
 
     useEffect(() => {
-        if(previousView !== view || previousPage !== page || previousData !== dataDisplay) {
+        if (previousView !== view || previousPage !== page || previousData !== dataDisplay) {
             setOpen(false);
         }
     })
@@ -56,17 +56,17 @@ const EnhancedTableRow = ({ handleOpen, row, index }: EnhancedTableRowProps) => 
                 onClick={() => dispatch(setSelected(index))}
                 tabIndex={-1}
                 key={index}
-                className={classes.row}
+                classes={{ root: classes.row }}
             >
                 <TableCell>
-                    <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
+                    <IconButton classes={{ root: classes.iconButton }} aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
                         {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                     </IconButton>
                 </TableCell>
                 {headCells.map((cell, i) => {
                     return (
                         <TableCell
-                            className={classes.cell}
+                            classes={{ root: classes.cell }}
                             align="right"
                             key={cell.id}
                         >
@@ -75,11 +75,11 @@ const EnhancedTableRow = ({ handleOpen, row, index }: EnhancedTableRowProps) => 
                     );
                 })}
                 <TableCell
-                    className={classes.cell}
+                    classes={{ root: classes.cell }}
                     align="right"
                     key={headCells.length}
                 >
-                    <IconButton onClick={(e) => handleOpen(row.id)} disabled={disabled}><DeleteIcon /></IconButton>
+                    <IconButton classes={{ root: classes.iconButton, disabled: classes.iconButtonDisabled }} onClick={(e) => handleOpen(row.id)} disabled={disabled}><DeleteIcon /></IconButton>
                 </TableCell>
             </TableRow>
             <EnhancedTableSubRow row={row} open={open} />

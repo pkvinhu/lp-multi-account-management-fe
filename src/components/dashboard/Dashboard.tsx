@@ -60,7 +60,7 @@ const Dashboard: FC = () => {
                         <h3 >In this tool, we organize all your users, skills, profiles, and agent groups data from multiple accounts</h3>
                         <h3 >and we chart it out so you can access all your accounts from one location.</h3>
                         <h3 >To begin, please select an account below. <InsertEmoticonIcon/></h3>
-                        <AccountDropDown />
+                        <AccountDropDown styles="lightDropDown"/>
                         </div>
                         </div>
                     )

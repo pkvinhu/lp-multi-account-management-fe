@@ -27,7 +27,7 @@ const AppToolbar: FC = () => {
             <Toolbar className={clsx(classes.toolbar)}>
                 LivePerson Account Management
                     <div className={classes.actionsContainer}>
-                    {account ? <AccountDropDown /> : null}
+                    {account ? <AccountDropDown styles="darkDropDown"/> : null}
                     {auth && <Button className={clsx(classes.button)} onClick={() => dispatch(actions.logout())}>Logout</Button>}
                 </div>
             </Toolbar>

@@ -2,32 +2,35 @@ import { makeStyles, Theme, createStyles, lighten } from "@material-ui/core";
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      backgroundColor: "rgb(253, 253, 253)",
-      textColor: "rgb(253, 253, 253)",
+    button: {
+      color: theme.palette.primary.dark
     },
     buttonContainer: {
-      display: "flex",
+      display: "flex"
     },
     highlight:
       theme.palette.type === "light"
         ? {
             color: theme.palette.secondary.main,
-            backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+            backgroundColor: lighten(theme.palette.secondary.light, 0.85)
           }
         : {
             color: theme.palette.text.primary,
-            backgroundColor: theme.palette.secondary.dark,
+            backgroundColor: theme.palette.secondary.dark
           },
+    tab: {
+      color: theme.palette.secondary.dark
+    },
+    tabSelected: {
+      color: theme.palette.secondary.main
+    },
     title: {
-      flex: "1 1 100%",
+      flex: "1 1 100%"
     },
     toolbar: {
       display: "flex",
       justifyContent: "space-between",
-    },
-    tabs: {
-      textColor: "rgb(253, 253, 253)",
-    },
+      backgroundColor: theme.palette.secondary.main + " !important"
+    }
   })
 );

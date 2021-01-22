@@ -5,14 +5,10 @@ export const useStyles = makeStyles((theme: Theme) =>
     root: {
       width: "100%",
     },
-    cell: {
-      fontSize: "12px",
-    },
     paper: {
       width: "100%",
       margin: theme.spacing(15, "auto"),
     },
-    row: {},
     table: {
       minWidth: 750
     },

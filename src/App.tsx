@@ -1,12 +1,23 @@
+// dependencies
 import React, { FC, useEffect } from "react";
-import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "./store";
+
+// components
 import { Login, Dashboard, UserForm } from "./components";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+
+// store
+import { RootState } from "./store";
+
+// utils
 import { checkAuth } from "./store/auth/actions";
-//hi kev
+
+// styles
+import { useStyles } from "./styles";
+import "./App.css";
+
 const App: FC = () => {
+  const classes = useStyles();
   const dispatch = useDispatch();
   const authenticated = useSelector((state: RootState) => state.auth.loggedIn);
   useEffect(() => {
@@ -16,8 +27,8 @@ const App: FC = () => {
   return (
     <Router>
       <div className="App">
-        <div className="polygon"></div>
-        <div className="polygon2"></div>
+        <div className={classes.polygon}></div>
+        <div className={classes.polygon2}></div>
         <Route path="/">
           {authenticated ? <Redirect to="/dashboard" /> : <Login />}
         </Route>
