@@ -27,7 +27,8 @@ export default (state = initialState, action: AgentGroupsAction): AgentGroupsSta
                 ...state,
                 loading: true,
                 data: [],
-                map: {}
+                map: {},
+                error: null
             }
         default:
             return state;

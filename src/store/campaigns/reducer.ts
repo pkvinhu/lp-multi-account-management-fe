@@ -3,7 +3,7 @@ import { GET_CAMPAIGNS, SET_CAMPAIGN_ERROR, SET_CAMPAIGN_LOADING, GetCampaignAct
 const initialState: CampaignsState = {
     data: [],
     skillsConnectedToCampaignsMap: {},
-    error: "",
+    error: null,
     loading: false
 }
 export default (state = initialState, action: GetCampaignAction): CampaignsState => {
@@ -27,7 +27,8 @@ export default (state = initialState, action: GetCampaignAction): CampaignsState
                 ...state,
                 loading: true,
                 data: [],
-                skillsConnectedToCampaignsMap: {}
+                skillsConnectedToCampaignsMap: {},
+                error: null
             }
         default:
             return state;

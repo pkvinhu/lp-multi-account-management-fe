@@ -1,5 +1,9 @@
 import { DataDisplay, View, Data, Entity } from "../../store/table/types";
 import React, { useRef, useEffect } from "react";
+import { UsersError } from "../../store/users/types";
+import { SkillsError } from "../../store/skills/types";
+import { ProfilesError } from "../../store/profiles/types";
+import { AgentGroupsError } from "../../store/agentGroups/types";
 
 export const wait = async (ms: number, value: any) => {
   await new Promise(resolve => setTimeout(resolve, ms, value));
@@ -78,21 +82,46 @@ export const getAutoCompleteValues = (
 ) => {
   // console.log(category);
 
-  if (category === "profileIds" || category === "skillIds" || category === "managerOf" || category === "skillTransferList") {
+  if (
+    category === "profileIds" ||
+    category === "skillIds" ||
+    category === "managerOf" ||
+    category === "skillTransferList"
+  ) {
     return Object.values(map);
-  } else if (typeof data[0][category] === 'boolean') {
-    return ['Yes', 'No']
+  } else if (typeof data[0][category] === "boolean") {
+    return ["Yes", "No"];
   } else {
     return data.reduce((a, c, i) => {
-      return c[category] !== 'undefined' && !a.includes(c[category]) ? [...a, c[category]] : a;
+      return c[category] !== "undefined" && !a.includes(c[category])
+        ? [...a, c[category]]
+        : a;
     }, []);
   }
 };
 
-export const usePrevious = (value) => {
+export const usePrevious = value => {
   const ref = useRef();
   useEffect(() => {
     ref.current = value;
   });
   return ref.current;
-}
+};
+
+export const checkError = (
+  usersError: any | null,
+  skillsError: any | null,
+  profilesError: any | null,
+  agentGroupsError: any | null,
+  campaignsError: any | null,
+  appKeysError: any | null
+): boolean => {
+  return (
+    !!usersError ||
+    !!skillsError ||
+    !!profilesError ||
+    !!agentGroupsError ||
+    !!campaignsError ||
+    !!appKeysError
+  );
+};

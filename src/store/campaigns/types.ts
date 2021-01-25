@@ -5,7 +5,7 @@ export const SET_CAMPAIGN_LOADING = "SET_CAMPAIGN_LOADING";
 export interface CampaignsState {
     data: Campaign[];
     skillsConnectedToCampaignsMap: any;
-    error: string;
+    error: string | null;
     loading: boolean;
 }
 

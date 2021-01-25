@@ -16,7 +16,7 @@ import actions from '../../store/allActions';
 import { useStyles } from './styles';
 import clsx from 'clsx';
 
-const AppToolbar: FC = () => {
+const AppToolbar = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const auth = useSelector((state: RootState) => state.auth.loggedIn);
