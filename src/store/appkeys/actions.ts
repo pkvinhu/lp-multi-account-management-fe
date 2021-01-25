@@ -27,3 +27,10 @@ export const setAppKeysLoading = () => {
         payload: true
     }
 }
+
+export const setAppKeysError = (error) => {
+    return {
+        type: SET_APP_KEYS_ERROR,
+        payload: false
+    }
+}

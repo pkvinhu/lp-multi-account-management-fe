@@ -1,9 +1,9 @@
 import { checkAuth, logout } from "./auth/actions";
 import { getAccounts, selectAccount } from "./accounts/actions";
-import { getUsers, setUserLoading } from "./users/actions";
-import { getSkills, setSkillsLoading } from "./skills/actions";
-import { getProfiles, setProfileLoading } from "./profiles/actions";
-import { getAgentGroups, setAgentGroupsLoading } from "./agentGroups/actions";
+import { getUsers, setUserLoading, setUserError } from "./users/actions";
+import { getSkills, setSkillsLoading, setSkillsError } from "./skills/actions";
+import { getProfiles, setProfileLoading, setProfileError } from "./profiles/actions";
+import { getAgentGroups, setAgentGroupsLoading, setAgentGroupsError } from "./agentGroups/actions";
 import {
   setDataDisplay,
   setView,
@@ -18,8 +18,8 @@ import {
   setTableLoading,
   deleteEntity
 } from "./table/actions";
-import { getAppKeys, setAppKeysLoading } from "./appkeys/actions";
-import { getCampaigns, setCampaignLoading } from './campaigns/actions';
+import { getAppKeys, setAppKeysLoading, setAppKeysError } from "./appkeys/actions";
+import { getCampaigns, setCampaignLoading, setCampaignError } from './campaigns/actions';
 
 export default {
   checkAuth,
@@ -49,5 +49,11 @@ export default {
   getAppKeys,
   setAppKeysLoading,
   getCampaigns,
-  setCampaignLoading
+  setCampaignLoading,
+  setUserError,
+  setSkillsError,
+  setProfileError,
+  setAgentGroupsError,
+  setCampaignError, 
+  setAppKeysError
 };

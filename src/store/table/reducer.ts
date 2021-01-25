@@ -103,7 +103,8 @@ export default (state = initialState, action: GetTableAction): TableState => {
       return {
         ...state,
         loading: action.payload,
-        dataDisplay: []
+        dataDisplay: [],
+        error: false
       };
     default:
       return state;

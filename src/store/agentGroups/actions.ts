@@ -28,3 +28,10 @@ export const setAgentGroupsLoading = (): AgentGroupsAction => {
         type: SET_AGENTGROUPS_LOADING
     }
 }
+
+export const setAgentGroupsError = (error): AgentGroupsAction => {
+    return {
+        type: SET_AGENTGROUPS_ERROR,
+        payload: error
+    }
+}

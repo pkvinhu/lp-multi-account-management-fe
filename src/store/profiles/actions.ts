@@ -33,3 +33,10 @@ export const setProfileLoading = (): ProfileAction => {
         type: SET_PROFILE_LOADING,
     }
 }
+
+export const setProfileError = (error): ProfileAction => {
+    return {
+        type: SET_PROFILE_ERROR,
+        payload: error
+    }
+}

@@ -47,3 +47,8 @@ export const getCampaigns = (
 export const setCampaignLoading = (): GetCampaignAction => ({
     type: SET_CAMPAIGN_LOADING,
 })
+
+export const setCampaignError = (error): GetCampaignAction => ({
+  type: SET_CAMPAIGN_ERROR,
+  payload: error
+})

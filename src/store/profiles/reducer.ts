@@ -25,7 +25,8 @@ export default (state = initialState, action: ProfileAction): ProfileState => {
                 loading: true,
                 data: [],
                 map: {},
-                roleTypeCountMap: {}
+                roleTypeCountMap: {},
+                error: null
             }
         case SET_PROFILE_ERROR:
             return {

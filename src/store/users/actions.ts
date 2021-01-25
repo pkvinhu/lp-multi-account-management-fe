@@ -57,3 +57,10 @@ export const setUserLoading = (): UserAction => {
     type: SET_USER_LOADING
   };
 };
+
+export const setUserError = (error): UserAction => {
+  return {
+    type: SET_USER_ERROR,
+    payload: error
+  };
+};

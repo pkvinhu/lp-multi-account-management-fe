@@ -43,3 +43,10 @@ export const setSkillsLoading = (): SkillAction => {
         type: SET_SKILLS_LOADING
     }
 }
+
+export const setSkillsError = (error): SkillAction => {
+  return {
+      type: SET_SKILLS_ERROR,
+      payload: error
+  }
+}
