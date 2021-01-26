@@ -15,6 +15,7 @@ import EnhancedTable from '../table/tableData/TableData';
 import AppToolbar from '../toolbar/AppToolbar';
 import DashboardLoading from './dashboardLoading/DashboardLoading';
 import AccountDropDown from './accountDropDown/AccountDropDown';
+import UtilityBar from '../utilitybar/UtilityBar';
 
 // styles
 import { useStyles } from './styles';
@@ -41,7 +42,6 @@ const Dashboard: FC = () => {
                 dispatch(deleteEntity(selectedAccount, view, String(entity.id)))
             } else {
                 let lastModified = Date.parse(entity.dateUpdated);
-                // console.log(lastModified)
                 dispatch(deleteEntity(selectedAccount, view, String(entity.id), lastModified))
             }
         })
@@ -71,6 +71,7 @@ const Dashboard: FC = () => {
                 {account && !loading && (<EnhancedTable handleDelete={handleDelete}/>)}
                 {account && loading && (<DashboardLoading />)}
             </div>
+            <UtilityBar />
         </div>
     )
 }

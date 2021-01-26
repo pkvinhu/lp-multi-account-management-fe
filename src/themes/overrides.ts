@@ -1,8 +1,49 @@
 import teal from "@material-ui/core/colors/teal";
 import orange from "@material-ui/core/colors/orange";
 import grey from "@material-ui/core/colors/grey";
+import blueGrey from "@material-ui/core/colors/blueGrey";
 
 export default {
+  MuiButton: {
+    root: {
+      hover: {
+        "&:hover": {
+          backgroundColor: "#b2dfdb !important"
+        }
+      }
+    }
+  },
+  MuiDrawer: {
+    paper: {
+      zIndex: 1000,
+      backgroundColor: orange[400]
+    }
+  },
+  MuiListItem: {
+    gutters: {
+      paddingLeft: 15,
+      paddingRight: 15
+    }
+  },
+  MuiListItemIcon: {
+    root: {
+      minWidth: 0,
+      borderRadius: "50%",
+      '&$selected': {
+        color: "white"
+      },
+      '&:hover': {
+        backgroundColor: "white",
+        border: ".5px solid " + blueGrey[900]
+      },
+      padding: 5
+    }
+  },
+  MuiSvgIcon: {
+    root: {
+      color: blueGrey[900],
+    }
+  },
   MuiTab: {
     root: {
       color: grey[500],
@@ -15,15 +56,6 @@ export default {
   MuiTabs: {
     indicator: {
       backgroundColor: orange[900]
-    }
-  },
-  MuiButton: {
-    root: {
-      hover: {
-        "&:hover": {
-          backgroundColor: "#b2dfdb !important"
-        }
-      }
     }
   },
   MuiTableCell: {
