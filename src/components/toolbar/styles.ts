@@ -1,9 +1,10 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core";
 
-export const useStyles = makeStyles((theme:Theme) => 
-    createStyles({
+export const useStyles = makeStyles((theme:Theme) => {
+    const { primary, secondary } = theme.palette;
+    return createStyles({
         appbar: {
-            borderBottom: "10px solid orange",
+            borderBottom: "10px solid " + primary.main,
         },
         actionsContainer: {
             display: "flex",
@@ -12,18 +13,17 @@ export const useStyles = makeStyles((theme:Theme) =>
             alignItems: "center"
         },
         button: {
-            backgroundColor: '#fad19c',
+            backgroundColor: primary.main,
+            color: secondary.dark,
             "&:hover": {
                 borderBottom: '4px solid black'
             }
         },
         toolbar: {
-            fontFamily: "'Merriweather', serif",
-            color: "black",
-            fontSize: '2em',
+            color: secondary.dark,
             backgroundColor: 'white',
             display: 'flex',
             justifyContent: "space-between"
         },
     })
-);
+});

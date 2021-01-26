@@ -80,7 +80,7 @@ const SearchPopper = () => {
 
   return (
     <div>
-      <Button onClick={handleClick}>
+      <Button className={classes.button} onClick={handleClick}>
         <Icon>sort</Icon>
       </Button>
       <Popper open={open} anchorEl={anchorEl} placement="left-start" className={classes.popper}>

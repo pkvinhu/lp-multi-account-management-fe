@@ -3,16 +3,13 @@ import { makeStyles, Theme, createStyles } from "@material-ui/core";
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      width: "100%",
-    },
-    cell: {
-      fontSize: "12px",
+      minWidth: 1400,
+      maxWidth: '100%'
     },
     paper: {
       width: "100%",
       margin: theme.spacing(15, "auto"),
     },
-    row: {},
     table: {
       minWidth: 750
     },

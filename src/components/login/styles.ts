@@ -16,7 +16,7 @@ export const useStyles = makeStyles((theme: Theme) =>
         justifyContent: 'space-between',
         borderRadius: '5px',
         "&:hover": {
-            backgroundColor: '#fad19c'
+            backgroundColor: theme.palette.primary.main
         }
     },
     login_container: {

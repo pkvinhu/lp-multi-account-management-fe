@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
 
 import EnhancedTableSubRow from "../tableSubRow/TableSubRow";
 
@@ -19,7 +20,7 @@ import { Data } from "../../../store/table/types";
 // import { DataDisplay } from "../../../store/table/types";
 
 // styles
-import { useStyles } from "../tableBody/styles";
+import { useStyles } from "./styles";
 
 // utils 
 import { filterType, humanOrBot, checkRowFromDeleteIconDisable, usePrevious } from "../../../util/components/helpers";
@@ -44,7 +45,7 @@ const EnhancedTableRow = ({ handleOpen, row, index }: EnhancedTableRowProps) => 
     const previousData = usePrevious(dataDisplay);
 
     useEffect(() => {
-        if(previousView !== view || previousPage !== page || previousData !== dataDisplay) {
+        if (previousView !== view || previousPage !== page || previousData !== dataDisplay) {
             setOpen(false);
         }
     })
@@ -56,30 +57,37 @@ const EnhancedTableRow = ({ handleOpen, row, index }: EnhancedTableRowProps) => 
                 onClick={() => dispatch(setSelected(index))}
                 tabIndex={-1}
                 key={index}
-                className={classes.row}
+                classes={{ root: classes.row }}
             >
                 <TableCell>
-                    <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
+                    <IconButton classes={{ root: classes.iconButton }} aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
                         {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                     </IconButton>
                 </TableCell>
                 {headCells.map((cell, i) => {
                     return (
                         <TableCell
-                            className={classes.cell}
                             align="right"
                             key={cell.id}
                         >
-                            {cell.id === "userTypeId" ? humanOrBot(row[cell.id]) : filterType(row[cell.id])}
+                            <Typography
+                                variant="body2"
+                                style={{
+                                    width: `${view === "users" ? '120px' : ""}`,
+                                    wordWrap: "break-word"
+                                }}>
+                                {cell.id === "userTypeId" ?
+                                    humanOrBot(row[cell.id]) :
+                                    filterType(row[cell.id])}
+                            </Typography>
                         </TableCell>
                     );
                 })}
                 <TableCell
-                    className={classes.cell}
                     align="right"
                     key={headCells.length}
                 >
-                    <IconButton onClick={(e) => handleOpen(row.id)} disabled={disabled}><DeleteIcon /></IconButton>
+                    <IconButton classes={{ root: classes.iconButton, disabled: classes.iconButtonDisabled }} onClick={(e) => handleOpen(row.id)} disabled={disabled}><DeleteIcon /></IconButton>
                 </TableCell>
             </TableRow>
             <EnhancedTableSubRow row={row} open={open} />

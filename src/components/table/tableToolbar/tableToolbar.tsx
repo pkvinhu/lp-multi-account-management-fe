@@ -20,6 +20,13 @@ import { useStyles } from "./styles";
 
 // util
 
+let tabs = [
+  { value: "users", label: "Users"},
+  { value: "skills", label: "Skills"},
+  { value: "profiles", label: "Profiles"},
+  { value: "agentGroups", label: "Agent Groups"},
+]
+
 const EnhancedTableToolbar = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -72,16 +79,14 @@ const EnhancedTableToolbar = () => {
       <Tabs
         value={table.view}
         onChange={handleChange}
-        className={classes.root}
       >
-        <Tab value="users" label="Users" />
-        <Tab value="skills" label="Skills" />
-        <Tab value="profiles" label="Profiles" />
-        <Tab value="agentGroups" label="Agent Groups" />
+        {tabs.map((t, i) => {
+          return (<Tab key={i} value={t.value} label={t.label} />)
+        })}
       </Tabs>
       <div className={classes.buttonContainer}>
         <SearchPopper />
-        <Button onClick={(e) => handleFilterReset(e, view)} >RESET</Button>
+        <Button className={classes.button} onClick={(e) => handleFilterReset(e, view)} >RESET</Button>
       </div>
     </Toolbar>
   );

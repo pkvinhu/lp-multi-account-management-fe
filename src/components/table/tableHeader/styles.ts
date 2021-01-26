@@ -1,3 +1,15 @@
-import { useStyles } from "../tableData/styles";
+import { makeStyles, Theme, createStyles } from "@material-ui/core";
 
-export { useStyles };
+export const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    header: {
+        backgroundColor: theme.palette.primary.light + " !important"
+    },
+    sortLabel: {
+      "&:hover": {
+        color: theme.palette.primary.dark
+      }
+    }
+  })
+);
+

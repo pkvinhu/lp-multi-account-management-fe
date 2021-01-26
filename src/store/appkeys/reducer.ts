@@ -8,7 +8,7 @@ import {
 
 const initialState: AppKeysState = {
   data: [],
-  error: "",
+  error: null,
   loading: false
 };
 
@@ -33,7 +33,8 @@ export default (
       return {
         ...state,
         loading: true,
-        data: []
+        data: [],
+        error: null
       };
     default:
       return state;

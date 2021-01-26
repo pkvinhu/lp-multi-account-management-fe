@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import AccountDropDown from '../dashboard/accountDropDown/AccountDropDown';
 
 // store
@@ -16,7 +17,7 @@ import actions from '../../store/allActions';
 import { useStyles } from './styles';
 import clsx from 'clsx';
 
-const AppToolbar: FC = () => {
+const AppToolbar = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const auth = useSelector((state: RootState) => state.auth.loggedIn);
@@ -24,10 +25,10 @@ const AppToolbar: FC = () => {
 
     return (
         <AppBar className={classes.appbar} position="fixed">
-            <Toolbar className={clsx(classes.toolbar)}>
-                LivePerson Account Management
+            <Toolbar className={classes.toolbar}>
+                <Typography variant="h3">LivePerson Account Management</Typography>
                     <div className={classes.actionsContainer}>
-                    {account ? <AccountDropDown /> : null}
+                    {account ? <AccountDropDown styles="darkDropDown"/> : null}
                     {auth && <Button className={clsx(classes.button)} onClick={() => dispatch(actions.logout())}>Logout</Button>}
                 </div>
             </Toolbar>

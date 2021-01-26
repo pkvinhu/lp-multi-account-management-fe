@@ -58,7 +58,7 @@ export default function EnhancedTableHead() {
   };
 
   return (
-    <TableHead>
+    <TableHead classes={{ root: classes.header }}>
       <TableRow>
         <TableCell />
         {headCells.map((headCell) => (
@@ -72,6 +72,7 @@ export default function EnhancedTableHead() {
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : "asc"}
               onClick={(e) => handleRequestSort(e, headCell.id)}
+              className={classes.sortLabel}
             >
               {headCell.label}
             </TableSortLabel>

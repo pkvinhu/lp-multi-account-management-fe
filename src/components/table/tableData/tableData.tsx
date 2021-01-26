@@ -69,7 +69,7 @@ const EnhancedTable = ({ handleDelete }: EnhancedTableProps) => {
   return (
     <div className={classes.root}>
       {table.loading ?
-        <DashboardLoading /> :
+        <DashboardLoading/> :
         (<Paper className={classes.paper}>
           <EnhancedTableToolbar />
           <TableContainer>

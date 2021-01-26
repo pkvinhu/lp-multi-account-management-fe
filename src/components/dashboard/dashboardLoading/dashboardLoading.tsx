@@ -16,9 +16,9 @@ import EnhancedTableToolbar from '../../table/tableToolbar/TableToolbar';
 import { useStyles } from "../styles";
 
 // util
-// import { wait } from '../../../util/components/sleeper';
+import { checkError } from '../../../util/components/helpers';
 
-const DashboardLoading: FC = () => {
+const DashboardLoading = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const state = useSelector((state: RootState) => state);
@@ -29,23 +29,61 @@ const DashboardLoading: FC = () => {
 
     useEffect(() => {
         Promise.resolve(() => console.log("...loading data"))
-            .then(async () => { if (!users.data.length) await dispatch(getUsers(account)) })
-            .then(async () => { if (!skills.data.length) await dispatch(getSkills(account)) })
-            .then(async () => { if (!profiles.data.length) await dispatch(getProfiles(account)) })
-            .then(async () => { if (!agentGroups.data.length) await dispatch(getAgentGroups(account)) })
-            .then(async () => { if (!appKeys.data.length) await dispatch(getAppKeys(account)) })
-            .then(async () => { if (!campaigns.data.length) await dispatch(getCampaigns(account)) })
+            .then(u)
+            .then(s)
+            .then(p)
+            .then(ag)
+            .then(c)
+            .then(ak)
             .catch(e => console.log(e))
     }, [])
 
-    const checkForData = (): boolean => {
-        let b = table.loading && !!users.data.length && !!skills.data.length && !!profiles.data.length && !!agentGroups.data.length && !!appKeys.data.length && !!campaigns.data.length;
-        return b;
+    const u = async () => { 
+        console.log(errorWrapper())
+        if (!users.data.length || !errorWrapper()) {
+            console.log("hit")
+            await dispatch(getUsers(account)) 
+        }
     }
+
+    const s = async () => { 
+        console.log(errorWrapper(), users.error)
+        if (!skills.data.length || !errorWrapper()) {
+            console.log("hit")
+            await dispatch(getSkills(account)) 
+        }
+    }
+
+    const p = async () => { 
+        console.log(errorWrapper(), skills.error)
+        if (!profiles.data.length || !errorWrapper()) await dispatch(getProfiles(account)) 
+    }
+
+    const ag = async () => { 
+        if (!agentGroups.data.length || !errorWrapper()) await dispatch(getAgentGroups(account)) 
+    }
+    
+    const c = async () => { 
+        if (!appKeys.data.length || !errorWrapper()) await dispatch(getAppKeys(account)) 
+    }
+
+    const ak = async () => { 
+        if (!campaigns.data.length || !errorWrapper()) await dispatch(getCampaigns(account)) 
+    }
+
+    // const chainError = (err) => {
+    //     return Promise.reject(err)
+    // }
+
+    const errorWrapper = (): boolean => {
+        return checkError(users.error, skills.error, profiles.error, agentGroups.error, campaigns.error, appKeys.error)
+    }
+
+    const checkForData: boolean = table.loading && !!users.data.length && !!skills.data.length && !!profiles.data.length && !!agentGroups.data.length && !!appKeys.data.length && !!campaigns.data.length;
 
     return (
         <Paper className={classes.paper}>
-            {checkForData() ?
+            {checkForData ?
                 dispatch(setTableLoading(false))
                 : null
             }

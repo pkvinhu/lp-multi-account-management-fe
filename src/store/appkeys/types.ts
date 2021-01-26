@@ -4,7 +4,7 @@ export const SET_APP_KEYS_LOADING = "SET_APP_KEYS_LOADING";
 
 export interface AppKeysState {
     data: AppKeys[];
-    error: string;
+    error: string | null;
     loading: boolean;
 }
 

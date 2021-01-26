@@ -35,7 +35,8 @@ export default (state = initialState, action: UserAction): UserState => {
       return {
         ...state,
         loading: true,
-        data: []
+        data: [],
+        error: null
       };
     default:
       return state;
