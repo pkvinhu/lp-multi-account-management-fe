@@ -28,7 +28,7 @@ export default {
   },
   MuiTableCell: {
     root: {
-      width: 100
+      width: 120
     }
   }
 };

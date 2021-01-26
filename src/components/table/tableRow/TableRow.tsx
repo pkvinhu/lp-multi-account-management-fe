@@ -70,7 +70,16 @@ const EnhancedTableRow = ({ handleOpen, row, index }: EnhancedTableRowProps) => 
                             align="right"
                             key={cell.id}
                         >
-                            <Typography variant="body2">{cell.id === "userTypeId" ? humanOrBot(row[cell.id]) : filterType(row[cell.id])}</Typography>
+                            <Typography
+                                variant="body2"
+                                style={{
+                                    width: `${view === "users" ? '120px' : ""}`,
+                                    wordWrap: "break-word"
+                                }}>
+                                {cell.id === "userTypeId" ?
+                                    humanOrBot(row[cell.id]) :
+                                    filterType(row[cell.id])}
+                            </Typography>
                         </TableCell>
                     );
                 })}
