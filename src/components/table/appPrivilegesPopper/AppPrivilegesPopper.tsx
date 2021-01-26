@@ -44,8 +44,8 @@ const AppPrivilegesPopper = ({ privileges }: AppPrivilegesPopperProps) => {
                     {privileges.map((p, i) => {
                         if (appKeyPrivileges[p.data]) {
                             return (
-                                <Typography color="secondary">
-                                    <Link className={classes.link} underline="hover" key={i} href={"https://developers.liveperson.com/" + appKeyPrivileges[p.data].docs_endpoint}>
+                                <Typography key={i} color="secondary">
+                                    <Link className={classes.link} underline="hover" href={"https://developers.liveperson.com/" + appKeyPrivileges[p.data].docs_endpoint}>
                                         {appKeyPrivileges[p.data].name}
                                     </Link>
                                 </Typography>
