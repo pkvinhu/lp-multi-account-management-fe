@@ -81,7 +81,7 @@ const EnhancedTableToolbar = () => {
         onChange={handleChange}
       >
         {tabs.map((t, i) => {
-          return (<Tab key={i} classes={{ root: classes.tab, selected: classes.tabSelected }} value={t.value} label={t.label} />)
+          return (<Tab key={i} value={t.value} label={t.label} />)
         })}
       </Tabs>
       <div className={classes.buttonContainer}>

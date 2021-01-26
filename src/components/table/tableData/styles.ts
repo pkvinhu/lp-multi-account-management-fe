@@ -3,7 +3,8 @@ import { makeStyles, Theme, createStyles } from "@material-ui/core";
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      width: "100%",
+      minWidth: 1400,
+      maxWidth: '100%'
     },
     paper: {
       width: "100%",

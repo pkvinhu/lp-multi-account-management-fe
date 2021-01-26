@@ -2,7 +2,6 @@ import teal from "@material-ui/core/colors/teal";
 import orange from "@material-ui/core/colors/orange";
 import grey from "@material-ui/core/colors/grey";
 
-
 export default {
   MuiTab: {
     root: {
@@ -25,6 +24,11 @@ export default {
           backgroundColor: "#b2dfdb !important"
         }
       }
-    },
+    }
+  },
+  MuiTableCell: {
+    root: {
+      width: 100
+    }
   }
 };

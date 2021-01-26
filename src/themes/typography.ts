@@ -1,3 +1,5 @@
+import { theme } from ".";
+
 export default {
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
     fontSize: 16,
@@ -24,7 +26,7 @@ export default {
         fontSize: "3rem",
         fontWeight: 400,
         letterSpacing: "0em",
-        lineHeight: 1.167
+        lineHeight: 1.167    
     },
     h4: {
         fontFamily: "'Merriweather', serif",

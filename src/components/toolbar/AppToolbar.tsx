@@ -25,8 +25,8 @@ const AppToolbar = () => {
 
     return (
         <AppBar className={classes.appbar} position="fixed">
-            <Toolbar className={clsx(classes.toolbar)}>
-                <Typography variant="h3" >LivePerson Account Management</Typography>
+            <Toolbar className={classes.toolbar}>
+                <Typography variant="h3">LivePerson Account Management</Typography>
                     <div className={classes.actionsContainer}>
                     {account ? <AccountDropDown styles="darkDropDown"/> : null}
                     {auth && <Button className={clsx(classes.button)} onClick={() => dispatch(actions.logout())}>Logout</Button>}
