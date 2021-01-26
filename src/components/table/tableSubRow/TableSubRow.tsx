@@ -8,6 +8,8 @@ import Collapse from "@material-ui/core/Collapse";
 import Box from "@material-ui/core/Box";
 import Chip from '@material-ui/core/Chip';
 
+import AppPrivilegesPopper from "../appPrivilegesPopper/AppPrivilegesPopper";
+
 // store
 import { RootState } from "../../../store";
 // import actions from "../../../store/allActions";
@@ -61,8 +63,10 @@ const EnhancedTableSubRow = ({ row, open }: EnhancedTableSubRowProps) => {
                                                             {each.appDescription && <div className={classes.flexPad}><Chip className={classes.chip2} label="Description" /><div className={classes.flexPad}>{each.appDescription}</div></div>}
                                                             <hr />
                                                             {subRowMap.appKeys.data.map((k, i) => {
+                                                                console.log(each, k)
                                                                 return (<div key={i} className={classes.flexPad}><Chip className={classes.chip2} label={k.label} /><div className={classes.flexPad}>{each[k.value]}</div></div>)
                                                             })}
+                                                            <div key={i} className={classes.flexPad}><AppPrivilegesPopper privileges={each.privileges}/></div>
                                                         </div>
                                                     )
                                                 }

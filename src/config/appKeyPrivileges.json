@@ -96,10 +96,12 @@
         "docs_endpoint": "/validate-engagement-api-validate-engagement.html"
     },
     "external-engagement-api-signed": {
-        "name": "IVR Deflection"
+        "name": "IVR Deflection",
+        "docs_endpoint": ""
     },
     "bstats.read.external": {
-        "name": "Brand Status Report"
+        "name": "Brand Status Report",
+        "docs_endpoint": ""
     },
     "ac.canned.response.ext.r": {
         "name": "Predefined Content / Engagement Config Read",

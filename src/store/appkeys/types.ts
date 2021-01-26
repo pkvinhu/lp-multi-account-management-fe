@@ -25,7 +25,7 @@ export interface AppKeys {
     external?: string;
 }
 
-interface Privilege {
+export interface Privilege {
     type: string;
     data: string;
 }
