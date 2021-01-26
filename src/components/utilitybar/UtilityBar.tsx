@@ -49,7 +49,7 @@ const UtilityBar = () => {
         <List className={classes.toolbar}>
           {menu.map((item, index) => (
             <ListItem className={classes.item} button key={index}>
-              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemIcon className={classes.icon}>{item.icon}</ListItemIcon>
             </ListItem>
           ))}
         </List>

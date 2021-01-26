@@ -40,9 +40,12 @@ export default {
     }
   },
   MuiSvgIcon: {
-    root: {
-      color: blueGrey[900],
-    }
+    // root: {
+    //   color: blueGrey[900],
+    // },
+    // '&$disabled': {
+    //   color: blueGrey[200]
+    // }
   },
   MuiTab: {
     root: {
