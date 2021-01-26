@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Popper from '@material-ui/core/Popper';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 import SearchFilter from "../searchFilter/SearchFilter";
 
@@ -31,6 +32,10 @@ const SearchPopper = () => {
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
   };
+
+  // const handleClickAway = () => {
+  //   setAnchorEl(null);
+  // };
 
   const handleFilterChange = (event) => {
     const { value } = event.target;
@@ -79,26 +84,27 @@ const SearchPopper = () => {
   const open = Boolean(anchorEl);
 
   return (
-    <div>
-      <Button className={classes.button} onClick={handleClick}>
-        <Icon>sort</Icon>
-      </Button>
-      <Popper open={open} anchorEl={anchorEl} placement="left-start" className={classes.popper}>
-        <SearchFilter
-          handleFilterChange={handleFilterChange}
-          handleSort={handleSort}
-          handleTagChange={handleTagChange}
-          values={
-            filterCategory && filterValue ?
-              (includeMap ?
-                getAutoCompleteValues(filterCategory, state[view].data, getMap()) :
-                getAutoCompleteValues(filterCategory, state[view].data)) :
-              []
-          }
-          categories={headCells}
-        />
-      </Popper>
-    </div>
+      <div>
+        <Button className={classes.button} onClick={handleClick}>
+          <Icon>sort</Icon>
+        </Button>
+        <Popper open={open} anchorEl={anchorEl} placement="left-start" className={classes.popper}>
+          <SearchFilter
+            handleFilterChange={handleFilterChange}
+            handleSort={handleSort}
+            handleTagChange={handleTagChange}
+            values={
+              filterCategory && filterValue ?
+                (includeMap ?
+                  getAutoCompleteValues(filterCategory, state[view].data, getMap()) :
+                  getAutoCompleteValues(filterCategory, state[view].data)) :
+                []
+            }
+            categories={headCells}
+          />
+        </Popper>
+
+      </div>
   );
 }
 export default SearchPopper;

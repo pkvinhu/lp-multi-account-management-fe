@@ -39,23 +39,18 @@ const DashboardLoading = () => {
     }, [])
 
     const u = async () => { 
-        console.log(errorWrapper())
         if (!users.data.length || !errorWrapper()) {
-            console.log("hit")
             await dispatch(getUsers(account)) 
         }
     }
 
     const s = async () => { 
-        console.log(errorWrapper(), users.error)
         if (!skills.data.length || !errorWrapper()) {
-            console.log("hit")
             await dispatch(getSkills(account)) 
         }
     }
 
     const p = async () => { 
-        console.log(errorWrapper(), skills.error)
         if (!profiles.data.length || !errorWrapper()) await dispatch(getProfiles(account)) 
     }
 
