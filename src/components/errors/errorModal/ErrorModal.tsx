@@ -8,6 +8,7 @@ import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
 import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 
 // store
 import { RootState } from "../../../store";
@@ -26,18 +27,13 @@ interface ErrorModalProps {
 
 const ErrorModal = ({ open, handleChange, handleClose }: ErrorModalProps) => {
     const classes = useStyles();
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
     const state = useSelector((state: RootState) => state);
-    const { table } = state;
-    const { selectAccount } = actions;
-
-    // useEffect(() => {
-    //     dispatch(selectAccount(""))
-    // }, [])
     
     const handleChangeAndClose = (event: any): void => {
         handleChange(event);
     }
+
     return (
         <Dialog
             open={open}
@@ -45,11 +41,13 @@ const ErrorModal = ({ open, handleChange, handleClose }: ErrorModalProps) => {
             aria-labelledby="simple-modal-title"
             aria-describedby="simple-modal-description"
         >
-            <MuiDialogTitle className={classes.title}>Bearer For Account Expired</MuiDialogTitle>
+            <MuiDialogTitle className={classes.title}><Typography variant="h5">Bearer For Account Expired</Typography></MuiDialogTitle>
             <MuiDialogContent dividers className={classes.content}>
+            <Typography variant="body2">
                 It looks like the bearer token for the account you are requesting information may have expired. 
                 Perhaps you attempted logging in with your API Agent credentials from a separate location. If you would like to refresh the token, please choose the option below. 
                 Otherwise, if you cancel out of this popup, we can take you back to the Welcome Page where you can select another account view.
+            </Typography>
             </MuiDialogContent>
             <MuiDialogActions className={classes.actions}>
                 <Button className={classes.secondaryButton} onClick={handleClose}>Cancel</Button>

@@ -4,7 +4,7 @@ export const useStyles = makeStyles((theme: Theme) => {
   const { secondary, primary } = theme.palette;
   return createStyles({
     cell: {
-      fontSize: "12px"
+      // fontSize: "12px"
     },
     iconButton: {
       color: secondary.dark + " !important",

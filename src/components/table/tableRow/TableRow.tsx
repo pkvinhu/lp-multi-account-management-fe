@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
 
 import EnhancedTableSubRow from "../tableSubRow/TableSubRow";
 
@@ -66,16 +67,14 @@ const EnhancedTableRow = ({ handleOpen, row, index }: EnhancedTableRowProps) => 
                 {headCells.map((cell, i) => {
                     return (
                         <TableCell
-                            classes={{ root: classes.cell }}
                             align="right"
                             key={cell.id}
                         >
-                            {cell.id === "userTypeId" ? humanOrBot(row[cell.id]) : filterType(row[cell.id])}
+                            <Typography variant="body2">{cell.id === "userTypeId" ? humanOrBot(row[cell.id]) : filterType(row[cell.id])}</Typography>
                         </TableCell>
                     );
                 })}
                 <TableCell
-                    classes={{ root: classes.cell }}
                     align="right"
                     key={headCells.length}
                 >

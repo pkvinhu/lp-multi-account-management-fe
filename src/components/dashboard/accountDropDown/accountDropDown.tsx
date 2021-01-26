@@ -41,7 +41,6 @@ const AccountDropDown = ({ styles }: AccountDropDownProps) => {
             dispatch(setFilterCategory(""));
             dispatch(setFilterValue([]))
         }
-
         if(errorWrapper()) {
             setModalStatus(true);
         }

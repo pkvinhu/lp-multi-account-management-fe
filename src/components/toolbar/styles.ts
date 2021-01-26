@@ -18,9 +18,6 @@ export const useStyles = makeStyles((theme:Theme) =>
             }
         },
         toolbar: {
-            fontFamily: "'Merriweather', serif",
-            color: "black",
-            fontSize: '2em',
             backgroundColor: 'white',
             display: 'flex',
             justifyContent: "space-between"

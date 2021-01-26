@@ -8,6 +8,7 @@ import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
 import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 
 // store
 import { RootState } from "../../../store";
@@ -44,17 +45,19 @@ const DeleteModal = ({ open, handleClose, handleDelete, id }: DeleteModalProps) 
             aria-labelledby="simple-modal-title"
             aria-describedby="simple-modal-description"
         >
-            <MuiDialogTitle className={classes.title}>Delete {capitalize(view)}</MuiDialogTitle>
+            <MuiDialogTitle className={classes.title} ><Typography variant="h5">Delete {capitalize(view)}</Typography></MuiDialogTitle>
             <MuiDialogContent dividers className={classes.content}>
-                Are you sure you want to delete {view} <b>{entity.fullName || entity.name}</b>?
-                This deletion is permanent and will not be able to be undone.
+                <Typography variant="body1">
+                    Are you sure you want to delete {view} <b>{entity.fullName || entity.name}</b>?
+                    This deletion is permanent and will not be able to be undone.
                 {(view === "users" && entity.skillIds.length) ? (
-                    <Fragment>
-                        <br />
-                        <br />
-                        <b>{capitalize(entity.fullName)}</b> is currently connected to {entity.skillIds.length} {entity.skillIds.length > 1 ? "skills" : "skill"}.
+                        <Fragment>
+                            <br />
+                            <br />
+                            <b>{capitalize(entity.fullName)}</b> is currently connected to {entity.skillIds.length} {entity.skillIds.length > 1 ? "skills" : "skill"}.
                 </Fragment>
-                ) : null}
+                    ) : null}
+                </Typography>
             </MuiDialogContent>
             <MuiDialogActions className={classes.actions}>
                 <Button className={classes.secondaryButton} onClick={handleClose}>Cancel</Button>

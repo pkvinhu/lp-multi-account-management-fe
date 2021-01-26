@@ -1,17 +1,17 @@
 import purple from "@material-ui/core/colors/purple";
-import amber from "@material-ui/core/colors/orange";
-import grey from "@material-ui/core/colors/blueGrey";
+import orange from "@material-ui/core/colors/orange";
+import blueGrey from "@material-ui/core/colors/blueGrey";
 
 export default {
   primary: {
-    main: amber[400],
-    light: amber[50],
-    dark: amber[900]
+    main: orange[300],
+    light: orange[50],
+    dark: orange[900]
   },
   secondary: {
-    main: grey[300],
-    light: grey[50],
-    dark: grey[800]
+    main: blueGrey[300],
+    light: blueGrey[50],
+    dark: blueGrey[800]
   },
   //   error: {
 
