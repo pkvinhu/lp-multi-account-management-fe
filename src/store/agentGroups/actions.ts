@@ -1,6 +1,6 @@
 import { RootState } from '..';
 import { ThunkAction } from 'redux-thunk';
-import { AgentGroupsAction, AgentGroup, GET_AGENTGROUPS, SET_AGENTGROUPS_ERROR, SET_AGENTGROUPS_LOADING } from './types';
+import { AgentGroupsAction, AgentGroup, GET_AGENTGROUPS, SET_AGENTGROUPS_ERROR, SET_AGENTGROUPS_LOADING, CLEAR_AGENTGROUPS_DATA } from './types';
 import axios from 'axios';
 
 export const getAgentGroups = (account: string|number): ThunkAction<void, RootState, null, AgentGroupsAction | any> => {
@@ -33,5 +33,11 @@ export const setAgentGroupsError = (error): AgentGroupsAction => {
     return {
         type: SET_AGENTGROUPS_ERROR,
         payload: error
+    }
+}
+
+export const clearAgentGroupsData = (): AgentGroupsAction => {
+    return {
+        type: CLEAR_AGENTGROUPS_DATA,
     }
 }

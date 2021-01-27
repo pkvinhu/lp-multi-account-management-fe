@@ -38,7 +38,7 @@ const AppPrivilegesPopper = ({ privileges }: AppPrivilegesPopperProps) => {
 
     return (
         <div>
-            <Chip className={classes.chip} onClick={handleClick} label="Toggle For Privileges"/>
+            <Chip className={classes.chip} onClick={handleClick} label="Toggle For Privileges" />
             <Popper open={open} anchorEl={anchorEl} placement="top-end">
                 <Paper className={classes.paper}>
                     {privileges.map((p, i) => {

@@ -1,6 +1,7 @@
 export const GET_APP_KEYS = "GET_APP_KEYS";
 export const SET_APP_KEYS_ERROR = "GET_APP_KEYS_ERROR";
 export const SET_APP_KEYS_LOADING = "SET_APP_KEYS_LOADING";
+export const CLEAR_APP_KEYS_DATA = "CLEAR_APP_KEYS_DATA"
 
 export interface AppKeysState {
     data: AppKeys[];
@@ -44,4 +45,8 @@ export interface SetAppKeysLoading {
     type: typeof SET_APP_KEYS_LOADING;
 }
 
-export type GetAppKeysAction = GetAppKeys | SetAppKeysError | SetAppKeysLoading;
+export interface ClearDataAction {
+    type: typeof CLEAR_APP_KEYS_DATA;
+}
+
+export type GetAppKeysAction = GetAppKeys | SetAppKeysError | SetAppKeysLoading | ClearDataAction;

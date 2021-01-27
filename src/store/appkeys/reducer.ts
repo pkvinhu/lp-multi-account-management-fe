@@ -3,7 +3,8 @@ import {
   GetAppKeysAction,
   GET_APP_KEYS,
   SET_APP_KEYS_ERROR,
-  SET_APP_KEYS_LOADING
+  SET_APP_KEYS_LOADING,
+  CLEAR_APP_KEYS_DATA
 } from "./types";
 
 const initialState: AppKeysState = {
@@ -35,6 +36,11 @@ export default (
         loading: true,
         data: [],
         error: null
+      };
+    case CLEAR_APP_KEYS_DATA:
+      return {
+        ...state,
+        data: []
       };
     default:
       return state;

@@ -3,7 +3,8 @@ import {
   UserAction,
   GET_USERS,
   SET_USER_ERROR,
-  SET_USER_LOADING
+  SET_USER_LOADING,
+  CLEAR_USER_DATA
 } from "./types";
 
 const initialState: UserState = {
@@ -38,6 +39,11 @@ export default (state = initialState, action: UserAction): UserState => {
         data: [],
         error: null
       };
+      case CLEAR_USER_DATA:
+          return {
+            ...state,
+            data: []
+          }
     default:
       return state;
   }

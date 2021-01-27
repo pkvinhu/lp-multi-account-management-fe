@@ -4,6 +4,7 @@ import { GenericError } from "../users/types";
 export const GET_AGENTGROUPS = "GET_AGENTGROUPS";
 export const SET_AGENTGROUPS_ERROR = "SET_AGENTGROUPS_ERROR";
 export const SET_AGENTGROUPS_LOADING = "SET_AGENTGROUPS_LOADING";
+export const CLEAR_AGENTGROUPS_DATA = "CLEAR_AGENTGROUPS_DATA"
 
 export interface AgentGroupsState {
     data: AgentGroup[];
@@ -34,4 +35,8 @@ interface SetErrorAction {
   payload: AgentGroupsError;
 }
 
-export type AgentGroupsAction = GetAgentGroupsAction | SetLoadingAction | SetErrorAction;
+interface ClearDataAction {
+  type: typeof CLEAR_AGENTGROUPS_DATA;
+}
+
+export type AgentGroupsAction = GetAgentGroupsAction | SetLoadingAction | SetErrorAction | ClearDataAction;

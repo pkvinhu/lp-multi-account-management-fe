@@ -5,6 +5,7 @@ import { any } from "prop-types";
 export const GET_PROFILES = "GET_PROFILES";
 export const SET_PROFILE_ERROR = "SET_PROFILE_ERROR";
 export const SET_PROFILE_LOADING = "SET_PROFILE_LOADING";
+export const CLEAR_PROFILE_DATA = "CLEAR_PROFILE_DATA";
 
 export interface ProfileState {
     data: Profile[];
@@ -51,4 +52,8 @@ interface SetErrorAction {
   payload: ProfilesError;
 }
 
-export type ProfileAction = GetProfilesAction | SetLoadingAction | SetErrorAction;
+interface ClearDataAction {
+  type: typeof CLEAR_PROFILE_DATA;
+}
+
+export type ProfileAction = GetProfilesAction | SetLoadingAction | SetErrorAction | ClearDataAction;

@@ -1,5 +1,6 @@
 // dependencies
 import React from 'react';
+import { Link, useLocation } from "react-router-dom";
 
 // components
 import Drawer from '@material-ui/core/Drawer';
@@ -15,30 +16,39 @@ import EqualizerIcon from '@material-ui/icons/Equalizer';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 
+// store
+import { RootState } from "../../store";
+import actions from "../../store/allActions";
+
 // styles
 import { useStyles } from './styles';
 
 const menu = [
-    {
-        text: 'Home',
-        icon: <HomeIcon />
-    },
-    {
-        text: 'Admin',
-        icon: <SupervisorAccountIcon />
-    },
-    {
-        text: 'Contact Center',
-        icon: <DashboardIcon />
-    },
-    {
-        text: 'Data Viz',
-        icon: <EqualizerIcon />
-    }
+  {
+    text: 'Home',
+    icon: <HomeIcon />,
+    link: '/home'
+  },
+  {
+    text: 'Admin',
+    icon: <SupervisorAccountIcon />,
+    link: '/admin'
+  },
+  {
+    text: 'Contact Center',
+    icon: <DashboardIcon />,
+    link: '/dashboard'
+  },
+  {
+    text: 'Data Viz',
+    icon: <EqualizerIcon />,
+    link: '/data'
+  }
 ]
 const UtilityBar = () => {
   const classes = useStyles();
-
+  const location = useLocation();
+  
   return (
     <div className={classes.root}>
       <Drawer
@@ -48,8 +58,10 @@ const UtilityBar = () => {
       >
         <List className={classes.toolbar}>
           {menu.map((item, index) => (
-            <ListItem className={classes.item} button key={index}>
-              <ListItemIcon className={classes.icon}>{item.icon}</ListItemIcon>
+            <ListItem disabled={location.pathname === item.link} classes={{ root: classes.item, disabled: classes.disabled }} button key={index}>
+              <Link to={item.link}>
+                <ListItemIcon className={location.pathname === item.link ? classes.iconActive : classes.icon} >{item.icon}</ListItemIcon>
+              </Link>
             </ListItem>
           ))}
         </List>

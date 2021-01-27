@@ -17,6 +17,7 @@ import { useStyles } from "../styles";
 
 // util
 import { checkError } from '../../../util/components/helpers';
+import { loadDataForAccount } from '../../../util/components/dispatches';
 
 const DashboardLoading = () => {
     const classes = useStyles();
@@ -25,50 +26,20 @@ const DashboardLoading = () => {
     const { users, skills, profiles, agentGroups, appKeys, campaigns, table } = state;
     const { setTableLoading } = actions;
     const account = useSelector((state: RootState) => state.accounts.selectedAccount)
-    const { getUsers, getSkills, getProfiles, getAgentGroups, getAppKeys, getCampaigns } = actions;
 
     useEffect(() => {
-        Promise.resolve(() => console.log("...loading data"))
-            .then(u)
-            .then(s)
-            .then(p)
-            .then(ag)
-            .then(c)
-            .then(ak)
-            .catch(e => console.log(e))
+        loadDataForAccount(
+            users.data.length,
+            skills.data.length,
+            profiles.data.length,
+            agentGroups.data.length,
+            appKeys.data.length,
+            campaigns.data.length,
+            errorWrapper,
+            dispatch,
+            account
+        )
     }, [])
-
-    const u = async () => { 
-        if (!users.data.length || !errorWrapper()) {
-            await dispatch(getUsers(account)) 
-        }
-    }
-
-    const s = async () => { 
-        if (!skills.data.length || !errorWrapper()) {
-            await dispatch(getSkills(account)) 
-        }
-    }
-
-    const p = async () => { 
-        if (!profiles.data.length || !errorWrapper()) await dispatch(getProfiles(account)) 
-    }
-
-    const ag = async () => { 
-        if (!agentGroups.data.length || !errorWrapper()) await dispatch(getAgentGroups(account)) 
-    }
-    
-    const c = async () => { 
-        if (!appKeys.data.length || !errorWrapper()) await dispatch(getAppKeys(account)) 
-    }
-
-    const ak = async () => { 
-        if (!campaigns.data.length || !errorWrapper()) await dispatch(getCampaigns(account)) 
-    }
-
-    // const chainError = (err) => {
-    //     return Promise.reject(err)
-    // }
 
     const errorWrapper = (): boolean => {
         return checkError(users.error, skills.error, profiles.error, agentGroups.error, campaigns.error, appKeys.error)

@@ -7,6 +7,7 @@ import Table from "@material-ui/core/Table";
 import TableContainer from "@material-ui/core/TableContainer";
 import TablePagination from "@material-ui/core/TablePagination";
 import Paper from "@material-ui/core/Paper";
+import Box from '@material-ui/core/Box';
 
 import EnhancedTableToolbar from "../tableToolbar/TableToolbar";
 import EnhancedTableHead from "../tableHeader/TableHeader";
@@ -67,7 +68,7 @@ const EnhancedTable = ({ handleDelete }: EnhancedTableProps) => {
   };
 
   return (
-    <div className={classes.root}>
+    <Box className={classes.root}>
       {table.loading ?
         <DashboardLoading/> :
         (<Paper className={classes.paper}>
@@ -95,7 +96,7 @@ const EnhancedTable = ({ handleDelete }: EnhancedTableProps) => {
         </Paper>
         )
       }
-    </div>
+    </Box>
   );
 };
 

@@ -30,6 +30,13 @@ export const useStyles = makeStyles((theme: Theme) =>
         alignItems: 'center',
         backgroundColor: 'rgb(253, 253, 253)',
         cursor: "pointer"
-      }
+      },
+    //   lpSvg: {
+    //     width: "250px",
+    //     height: "250px",
+    //     objectFit: "contain",
+    //     backgroundRepeat: "no-repeat",
+    //     backgroundImage: "url('./assets/lp-logo.svg')",
+    //   }
     })
 );

@@ -1,11 +1,15 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { CommunicationStayPrimaryLandscape } from "material-ui/svg-icons";
 
 export const useStyles = makeStyles((theme: Theme) => {
   const drawerWidth = "auto";
-  const { secondary } = theme.palette;
+  const { primary, secondary, success } = theme.palette;
   return createStyles({
     root: {
       display: "flex"
+    },
+    disabled: {
+      opacity: 1
     },
     drawer: {
       width: drawerWidth,
@@ -17,8 +21,15 @@ export const useStyles = makeStyles((theme: Theme) => {
     icon: {
       color: secondary.dark
     },
+    iconActive: {
+      color: primary.light,
+      backgroundColor: secondary.dark
+    },
     item: {
-      width: "auto"
+      width: "auto",
+      "&$disabled": {
+        opacity: .85
+      }
     },
     toolbar: {
       display: "flex",

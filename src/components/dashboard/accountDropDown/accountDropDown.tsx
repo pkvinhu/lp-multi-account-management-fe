@@ -1,6 +1,7 @@
 // dependencies
 import React, { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useHistory, Link } from 'react-router-dom';
 
 // components
 import FormControl from '@material-ui/core/FormControl';
@@ -19,6 +20,7 @@ import actions from "../../../store/allActions";
 
 // util
 import { usePrevious, checkError } from '../../../util/components/helpers';
+import { setDataLoadingForAccount, sweepErrors, clearAllDataFields } from '../../../util/components/dispatches';
 
 interface AccountDropDownProps {
     styles: string;
@@ -31,17 +33,19 @@ const AccountDropDown = ({ styles }: AccountDropDownProps) => {
     const state = useSelector((state: RootState) => state);
     const account = useSelector((state: RootState) => state.accounts.selectedAccount);
     const { table, users, skills, profiles, agentGroups, campaigns, appKeys } = state;
-    const { selectAccount, setUserLoading, setSkillsLoading, setProfileLoading, setAgentGroupsLoading, setAppKeysLoading, setCampaignLoading, setTableLoading, setFilterCategory, setFilterValue, setUserError, setSkillsError, setProfileError, setAgentGroupsError, setCampaignError, setAppKeysError } = actions;
-    const { view, dataDisplay } = table;
+    const { selectAccount, setFilterCategory, setFilterValue, setTableLoading } = actions;
+    const { view } = table;
     const previousView = usePrevious(view);
     const previousAccount = usePrevious(account);
-  
+    const location = useLocation();
+    const history = useHistory();
+
     useEffect(() => {
-        if(previousView !== view || previousAccount !== account) {
+        if (previousView !== view || previousAccount !== account) {
             dispatch(setFilterCategory(""));
             dispatch(setFilterValue([]))
         }
-        if(errorWrapper()) {
+        if (errorWrapper()) {
             setModalStatus(true);
         }
     })
@@ -51,61 +55,50 @@ const AccountDropDown = ({ styles }: AccountDropDownProps) => {
     }
 
     const handleClose = () => {
-        Promise.resolve(() => console.log("....clearing"))
-                .then(() => dispatch(selectAccount("")))
-                .then(() => dispatch(setUserError(null)))
-                .then(() => dispatch(setSkillsError(null)))
-                .then(() => dispatch(setProfileError(null)))
-                .then(() => dispatch(setAgentGroupsError(null)))
-                .then(() => dispatch(setAppKeysError(null)))
-                .then(() => dispatch(setCampaignError(null)))
-                .then(() => setModalStatus(false))
-                .catch((err) => console.log(err))
-        
+        sweepErrors(dispatch, history, setModalStatus);
     }
 
     const handleChange = (event) => {
         const { value } = event.target;
         let e = errorWrapper()
         let acc = e ? account : value;
-        dispatch(selectAccount(""))
         dispatch(setTableLoading(false))
+        dispatch(selectAccount(""))
         if (value !== account || e) {
             setModalStatus(false)
-            Promise.resolve(() => console.log("....clearing"))
-                .then(() => dispatch(selectAccount(acc)))
-                .then(() => dispatch(setUserLoading()))
-                .then(() => dispatch(setSkillsLoading()))
-                .then(() => dispatch(setProfileLoading()))
-                .then(() => dispatch(setAgentGroupsLoading()))
-                .then(() => dispatch(setAppKeysLoading()))
-                .then(() => dispatch(setCampaignLoading()))
-                .then(() => dispatch(setTableLoading(true)))
-                .catch((err) => console.log(err))
+            console.log(acc)
+            if (!acc) {
+                clearAllDataFields(dispatch, history)
+            } else {
+                setDataLoadingForAccount(acc, dispatch, location, history);
+            }
         }
     }
 
     return (
         <React.Fragment>
-        <FormControl className={classes.formControl}>
-            <InputLabel className={classes[styles]} id="demo-controlled-open-select-label">Account</InputLabel>
-            <Select
-                labelId="demo-controlled-open-select-label"
-                id="demo-controlled-open-select"
-                value={account}
-                onChange={handleChange}
-                classes={{ root: classes[styles], icon: classes[styles] }}
-                /*ref={textInput}*/
-            >
-                <MenuItem value="">
-                    <em>None</em>
-                </MenuItem>
-                {state.accounts.data.map((e, i) => {
-                    return <MenuItem value={e.accountId} key={e.accountId}><em>{`${e.accountId} - ${e.accountName}`}</em></MenuItem>
-                })}
-            </Select>
-        </FormControl>
-        {errorWrapper() && <ErrorModal open={modalOpen} handleChange={handleChange} handleClose={handleClose} />}
+            <FormControl className={classes.formControl}>
+                <InputLabel className={classes[styles]} id="demo-controlled-open-select-label">Account</InputLabel>
+                <Select
+                    labelId="demo-controlled-open-select-label"
+                    id="demo-controlled-open-select"
+                    value={account}
+                    onChange={handleChange}
+                    classes={{ root: classes[styles], icon: classes[styles] }}
+                >
+                    <MenuItem value="">
+                        <em>None</em>
+                    </MenuItem>
+                    {state.accounts.data.map((e, i) => {
+                        return (
+                            // <Link to={"/dashboard/" + e.accountId} className={classes.link}>
+                                <MenuItem value={e.accountId} key={e.accountId}><em>{`${e.accountId} - ${e.accountName}`}</em></MenuItem>
+                            // </Link>
+                        )
+                    })}
+                </Select>
+            </FormControl>
+            {errorWrapper() && <ErrorModal open={modalOpen} handleChange={handleChange} handleClose={handleClose} />}
         </React.Fragment>
     )
 }

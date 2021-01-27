@@ -1,6 +1,7 @@
 // dependencies
-import React, { FC } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useLocation } from "react-router-dom";
 
 // components
 import AppBar from '@material-ui/core/AppBar';
@@ -20,15 +21,19 @@ import clsx from 'clsx';
 const AppToolbar = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const state = useSelector((state: RootState) => state);
     const auth = useSelector((state: RootState) => state.auth.loggedIn);
+    const accounts = useSelector((state: RootState) => state.accounts.data);
     const account = useSelector((state: RootState) => state.accounts.selectedAccount);
-
+    const { selectAccount } = actions;
+    const location = useLocation();
+    
     return (
         <AppBar className={classes.appbar} position="fixed">
             <Toolbar className={classes.toolbar}>
                 <Typography variant="h3">LivePerson Account Management</Typography>
                     <div className={classes.actionsContainer}>
-                    {account ? <AccountDropDown styles="darkDropDown"/> : null}
+                    {location.pathname !== "/" && location.pathname !== "/home" ? <AccountDropDown styles="darkDropDown"/> : null}
                     {auth && <Button className={clsx(classes.button)} onClick={() => dispatch(actions.logout())}>Logout</Button>}
                 </div>
             </Toolbar>

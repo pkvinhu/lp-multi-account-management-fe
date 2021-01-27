@@ -3,7 +3,8 @@ import {
   SET_CAMPAIGN_ERROR,
   SET_CAMPAIGN_LOADING,
   GetCampaignAction,
-  Campaign
+  Campaign,
+  CLEAR_CAMPAIGN_DATA
 } from "./types";
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "..";
@@ -52,3 +53,9 @@ export const setCampaignError = (error): GetCampaignAction => ({
   type: SET_CAMPAIGN_ERROR,
   payload: error
 })
+
+export const clearCampaignData = (): GetCampaignAction => {
+  return {
+    type: CLEAR_CAMPAIGN_DATA,
+  };
+};

@@ -1,6 +1,6 @@
 import { RootState } from '..';
 import { ThunkAction } from 'redux-thunk';
-import { Profile, ProfileAction, GET_PROFILES, SET_PROFILE_ERROR, SET_PROFILE_LOADING } from './types';
+import { Profile, ProfileAction, GET_PROFILES, SET_PROFILE_ERROR, SET_PROFILE_LOADING, CLEAR_PROFILE_DATA } from './types';
 import axios from 'axios';
 
 export const getProfiles = (account: string|number): ThunkAction<void, RootState, null, ProfileAction | any> => {
@@ -40,3 +40,9 @@ export const setProfileError = (error): ProfileAction => {
         payload: error
     }
 }
+
+export const clearProfileData = (): ProfileAction => {
+    return {
+      type: CLEAR_PROFILE_DATA,
+    };
+  };
