@@ -1,7 +1,7 @@
 // dependencies
-import React, { FC, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useHistory, Link } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 
 // components
 import FormControl from '@material-ui/core/FormControl';
@@ -33,7 +33,7 @@ const AccountDropDown = ({ styles }: AccountDropDownProps) => {
     const state = useSelector((state: RootState) => state);
     const account = useSelector((state: RootState) => state.accounts.selectedAccount);
     const { table, users, skills, profiles, agentGroups, campaigns, appKeys } = state;
-    const { selectAccount, setFilterCategory, setFilterValue, setTableLoading } = actions;
+    const { selectAccount, setFilterCategory, setFilterValue, setTableLoading, getAccounts } = actions;
     const { view } = table;
     const previousView = usePrevious(view);
     const previousAccount = usePrevious(account);
@@ -66,10 +66,10 @@ const AccountDropDown = ({ styles }: AccountDropDownProps) => {
         dispatch(selectAccount(""))
         if (value !== account || e) {
             setModalStatus(false)
-            console.log(acc)
             if (!acc) {
                 clearAllDataFields(dispatch, history)
             } else {
+                history.push(`/dashboard/${acc}`)
                 setDataLoadingForAccount(acc, dispatch, location, history);
             }
         }
@@ -91,9 +91,7 @@ const AccountDropDown = ({ styles }: AccountDropDownProps) => {
                     </MenuItem>
                     {state.accounts.data.map((e, i) => {
                         return (
-                            // <Link to={"/dashboard/" + e.accountId} className={classes.link}>
-                                <MenuItem value={e.accountId} key={e.accountId}><em>{`${e.accountId} - ${e.accountName}`}</em></MenuItem>
-                            // </Link>
+                            <MenuItem value={e.accountId} key={e.accountId}><em>{`${e.accountId} - ${e.accountName}`}</em></MenuItem>
                         )
                     })}
                 </Select>

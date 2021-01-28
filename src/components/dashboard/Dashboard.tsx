@@ -1,5 +1,5 @@
 // dependencies
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useHistory, useParams } from 'react-router-dom';
 
@@ -14,8 +14,8 @@ import DashboardLoading from './dashboardLoading/DashboardLoading';
 
 // styles
 import { useStyles } from './styles';
-import { loadDataForAccount, setDataLoadingForAccount } from '../../util/components/dispatches';
-import { checkError } from '../../util/components/helpers';
+import { setDataLoadingForAccount } from '../../util/components/dispatches';
+import { checkError, usePrevious } from '../../util/components/helpers';
 
 const Dashboard: FC = () => {
     const classes = useStyles();
@@ -25,39 +25,33 @@ const Dashboard: FC = () => {
     const { accounts, table, users, skills, profiles, agentGroups, appKeys, campaigns } = state;
     const { view, loading } = table;
     const { selectedAccount } = accounts;
-    const { setTableLoading, deleteEntity, selectAccount, getAccounts } = actions;
+    const { setTableLoading, deleteEntity } = actions;
     const location = useLocation();
     const history = useHistory();
     const { accountId, id } = useParams();
+    // const previousAccount = usePrevious(account)
+    // const mounted = useRef(false);
 
     useEffect(() => {
-        if (!accounts.data.length) {
-            Promise.resolve(dispatch(getAccounts()))
-                .then(() => {
-                    let acc = accountId ? accountId : accounts.data[0].accountId;
-                    dispatch(setTableLoading(true))
-                    setDataLoadingForAccount(acc, dispatch, location, history)
-                })
-                .catch(e => console.log(e))
-        }
-        else if (accounts.data.length) {
+        // if(mounted.current) {
+        //     console.log("mounted")
+        // }
+        // if (!mounted.current) {
+        if (accounts.data.length && account !== accountId) {
+            console.log(accountId, account)
             if (accountId) {
-                dispatch(setTableLoading(true))
                 setDataLoadingForAccount(accountId, dispatch, location, history)
             }
-            else if (!account) {
-                dispatch(setTableLoading(true))
+            else if (account) {
+                setDataLoadingForAccount(account, dispatch, location, history)
+            }
+
+            else if (accounts.data[0].accountId !== account) {
                 setDataLoadingForAccount(accounts.data[0].accountId, dispatch, location, history)
             }
         }
-
+    // }
     }, [])
-
-    const checkForData: boolean = !!users.data.length && !!skills.data.length && !!profiles.data.length && !!agentGroups.data.length && !!appKeys.data.length && !!campaigns.data.length;
-
-    const errorWrapper = (): boolean => {
-        return checkError(users.error, skills.error, profiles.error, agentGroups.error, campaigns.error, appKeys.error)
-    }
 
     const handleDelete = (event, entity: any) => {
         const act = getLoadingAction(view);

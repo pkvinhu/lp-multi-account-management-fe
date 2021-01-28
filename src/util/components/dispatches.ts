@@ -71,11 +71,7 @@ export const setDataLoadingForAccount = (acc, dispatch, location, history) => {
     .then(() => dispatch(setAppKeysLoading()))
     .then(() => dispatch(setCampaignLoading()))
     .then(() => dispatch(setTableLoading(true)))
-    .then(() => {
-      if (location.pathname !== "/dashboard") {
-        history.push("/dashboard");
-      }
-    })
+    // .then(() => history.push(`/dashboard/${acc}`))
     .catch(err => console.log(err));
 };
 

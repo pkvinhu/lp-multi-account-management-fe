@@ -11,7 +11,8 @@ import {
   SET_PAGE,
   SET_ROWS_PER_PAGE,
   SET_FILTER_CATEGORY,
-  SET_FILTER_VALUE
+  SET_FILTER_VALUE,
+  CLEAR_TABLE_DATA
 } from "./types";
 
 const initialState: TableState = {
@@ -106,6 +107,11 @@ export default (state = initialState, action: GetTableAction): TableState => {
         dataDisplay: [],
         error: false
       };
+    case CLEAR_TABLE_DATA:
+      return {
+        ...state,
+        dataDisplay: []
+      }
     default:
       return state;
   }

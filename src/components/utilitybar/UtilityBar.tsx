@@ -1,5 +1,6 @@
 // dependencies
 import React from 'react';
+import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 
 // components
@@ -47,8 +48,11 @@ const menu = [
 ]
 const UtilityBar = () => {
   const classes = useStyles();
+  const accounts = useSelector((state: RootState) => state.accounts.data)
+  const account = useSelector((state: RootState) => state.accounts.selectedAccount)
   const location = useLocation();
-  
+  const acc = account ? account : accounts[0].accountId;
+
   return (
     <div className={classes.root}>
       <Drawer
@@ -58,9 +62,9 @@ const UtilityBar = () => {
       >
         <List className={classes.toolbar}>
           {menu.map((item, index) => (
-            <ListItem disabled={location.pathname === item.link} classes={{ root: classes.item, disabled: classes.disabled }} button key={index}>
-              <Link to={item.link}>
-                <ListItemIcon className={location.pathname === item.link ? classes.iconActive : classes.icon} >{item.icon}</ListItemIcon>
+            <ListItem disabled={location.pathname.startsWith(item.link)} classes={{ root: classes.item, disabled: classes.disabled }} button key={index}>
+              <Link to={item.text === "Contact Center" ? `${item.link}/${acc}` : item.link}>
+                <ListItemIcon className={location.pathname.startsWith(item.link) ? classes.iconActive : classes.icon} >{item.icon}</ListItemIcon>
               </Link>
             </ListItem>
           ))}
