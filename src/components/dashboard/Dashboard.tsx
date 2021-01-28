@@ -1,6 +1,7 @@
 // dependencies
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useHistory, useParams } from 'react-router-dom';
 
 // store
 import { RootState } from '../../store';
@@ -8,70 +9,72 @@ import actions from '../../store/allActions';
 import { getLoadingAction } from '../../util/components/getActions';
 
 // components
-import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
-import Typography from '@material-ui/core/Typography';
-
 import EnhancedTable from '../table/tableData/TableData';
-import AppToolbar from '../toolbar/AppToolbar';
 import DashboardLoading from './dashboardLoading/DashboardLoading';
-import AccountDropDown from './accountDropDown/AccountDropDown';
 
 // styles
 import { useStyles } from './styles';
+import { setDataLoadingForAccount } from '../../util/components/dispatches';
+import { checkError, usePrevious } from '../../util/components/helpers';
 
 const Dashboard: FC = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const state = useSelector((state: RootState) => state);
     const account = useSelector((state: RootState) => state.accounts.selectedAccount)
-    const { accounts, table, users, skills, profiles, agentGroups, campaigns, appKeys } = state;
+    const { accounts, table, users, skills, profiles, agentGroups, appKeys, campaigns } = state;
     const { view, loading } = table;
     const { selectedAccount } = accounts;
     const { setTableLoading, deleteEntity } = actions;
+    const location = useLocation();
+    const history = useHistory();
+    const { accountId, id } = useParams();
+    // const previousAccount = usePrevious(account)
+    // const mounted = useRef(false);
 
     useEffect(() => {
-        dispatch(actions.getAccounts())
+        // if(mounted.current) {
+        //     console.log("mounted")
+        // }
+        // if (!mounted.current) {
+        if (accounts.data.length && account !== accountId) {
+            console.log(accountId, account)
+            if (accountId) {
+                setDataLoadingForAccount(accountId, dispatch, location, history)
+            }
+            else if (account) {
+                setDataLoadingForAccount(account, dispatch, location, history)
+            }
+
+            else if (accounts.data[0].accountId !== account) {
+                setDataLoadingForAccount(accounts.data[0].accountId, dispatch, location, history)
+            }
+        }
+    // }
     }, [])
 
     const handleDelete = (event, entity: any) => {
         const act = getLoadingAction(view);
         Promise.resolve(() => console.log("...handle delete"))
-        .then(() => {
-            if(view !== "profiles") {
-                dispatch(deleteEntity(selectedAccount, view, String(entity.id)))
-            } else {
-                let lastModified = Date.parse(entity.dateUpdated);
-                // console.log(lastModified)
-                dispatch(deleteEntity(selectedAccount, view, String(entity.id), lastModified))
-            }
-        })
-        .then(() => dispatch(act()))
-        .then(() => dispatch(setTableLoading(true)))
-        .catch(e => console.log(e)) 
+            .then(() => {
+                if (view !== "profiles") {
+                    dispatch(deleteEntity(selectedAccount, view, String(entity.id)))
+                } else {
+                    let lastModified = Date.parse(entity.dateUpdated);
+                    dispatch(deleteEntity(selectedAccount, view, String(entity.id), lastModified))
+                }
+            })
+            .then(() => dispatch(act()))
+            .then(() => dispatch(setTableLoading(true)))
+            .catch(e => console.log(e))
     }
 
     return (
-        <div className={classes.root}>
-            <AppToolbar />
-            <div className={classes.inside}>
-                {!account
-                    && (
-                    <div className={classes.paperIntro}>
-                        <div className={classes.welcomeText}>
-                        <Typography variant="h3">Welcome to the LivePerson Account Management Tool!</Typography>
-                        <br/>
-                        <Typography variant="h5" >In this tool, we organize all your users, skills, profiles, and agent groups data from multiple accounts</Typography>
-                        <Typography variant="h5" >and we chart it out so you can access all your accounts from one location.</Typography>
-                        <Typography variant="h5" >To begin, please select an account below. <InsertEmoticonIcon/></Typography>
-                        <AccountDropDown styles="lightDropDown" />
-                        </div>
-                        </div>
-                    )
-                }
-                {account && !loading && (<EnhancedTable handleDelete={handleDelete}/>)}
-                {account && loading && (<DashboardLoading />)}
-            </div>
+        <div >
+            {account && !loading && (<EnhancedTable handleDelete={handleDelete} />)}
+            {account && loading && (<DashboardLoading />)}
         </div>
+
     )
 }
 

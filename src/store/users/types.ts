@@ -3,6 +3,7 @@ import { UserDataDisplay } from "../table/types";
 export const GET_USERS = "GET_USERS";
 export const SET_USER_LOADING = "SET_USER_LOADING";
 export const SET_USER_ERROR = "SET_USER_ERROR";
+export const CLEAR_USER_DATA = "CLEAR_USER_DATA";
 
 export interface UserState {
   data: User[];
@@ -78,4 +79,8 @@ interface SetErrorAction {
   payload: UsersError;
 }
 
-export type UserAction = GetUsersAction | SetLoadingAction | SetErrorAction;
+interface ClearDataAction {
+  type: typeof CLEAR_USER_DATA;
+}
+
+export type UserAction = GetUsersAction | SetLoadingAction | SetErrorAction | ClearDataAction;

@@ -5,7 +5,8 @@ import {
   SkillAction,
   SET_SKILLS_LOADING,
   GET_SKILLS,
-  SET_SKILLS_ERROR
+  SET_SKILLS_ERROR,
+  CLEAR_SKILLS_DATA
 } from "./types";
 import axios from "axios";
 
@@ -50,3 +51,9 @@ export const setSkillsError = (error): SkillAction => {
       payload: error
   }
 }
+
+export const clearSkillsData = (): SkillAction => {
+  return {
+    type: CLEAR_SKILLS_DATA,
+  };
+};

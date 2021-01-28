@@ -25,7 +25,8 @@ import {
   SetFilterCategory,
   SET_FILTER_CATEGORY,
   SetFilterValue,
-  SET_FILTER_VALUE
+  SET_FILTER_VALUE,
+  CLEAR_TABLE_DATA
 } from "./types";
 import {
   getHeadCellsForUsers,
@@ -165,3 +166,5 @@ export const setTableLoading = (bool: boolean): SetTableLoading => ({
   type: SET_TABLE_LOADING,
   payload: bool
 });
+
+export const clearTableData = (): GetTableAction => ({ type: CLEAR_TABLE_DATA });

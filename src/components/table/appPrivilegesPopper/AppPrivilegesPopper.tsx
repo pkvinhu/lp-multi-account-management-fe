@@ -38,14 +38,14 @@ const AppPrivilegesPopper = ({ privileges }: AppPrivilegesPopperProps) => {
 
     return (
         <div>
-            <Chip className={classes.chip} onClick={handleClick} label="Toggle For Privileges"/>
+            <Chip className={classes.chip} onClick={handleClick} label="Toggle For Privileges" />
             <Popper open={open} anchorEl={anchorEl} placement="top-end">
                 <Paper className={classes.paper}>
                     {privileges.map((p, i) => {
                         if (appKeyPrivileges[p.data]) {
                             return (
                                 <Typography key={i} color="secondary">
-                                    <Link className={classes.link} underline="hover" href={"https://developers.liveperson.com/" + appKeyPrivileges[p.data].docs_endpoint}>
+                                    <Link className={classes.link} underline="hover" target="_blank" rel="noopener noreferrer" href={"https://developers.liveperson.com/" + appKeyPrivileges[p.data].docs_endpoint}>
                                         {appKeyPrivileges[p.data].name}
                                     </Link>
                                 </Typography>

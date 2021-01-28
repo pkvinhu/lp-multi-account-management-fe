@@ -1,11 +1,12 @@
-import { makeStyles, Theme, createStyles } from "@material-ui/core";
+import { makeStyles, Theme, createStyles, ListItemSecondaryAction } from "@material-ui/core";
 
-export const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
+export const useStyles = makeStyles((theme: Theme) => {
+  const { primary, secondary } = theme.palette;
+  return createStyles({
     darkDropDown: {
-      color: theme.palette.secondary.dark,
+      color: secondary.dark,
       icon: {
-        color: theme.palette.secondary.dark
+        color: secondary.dark
       }
     },
     formControl: {
@@ -14,10 +15,14 @@ export const useStyles = makeStyles((theme: Theme) =>
       margin: "0px 30px"
     },
     lightDropDown: {
-      color: theme.palette.secondary.light,
+      color: secondary.light,
       icon: {
-        color: theme.palette.secondary.light
+        color: secondary.light
       }
+    },
+    link: {
+      textDecoration: "none",
+      color: secondary.dark
     }
   })
-);
+});

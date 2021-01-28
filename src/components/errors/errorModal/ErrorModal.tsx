@@ -30,10 +30,6 @@ const ErrorModal = ({ open, handleChange, handleClose }: ErrorModalProps) => {
     // const dispatch = useDispatch()
     const state = useSelector((state: RootState) => state);
     
-    const handleChangeAndClose = (event: any): void => {
-        handleChange(event);
-    }
-
     return (
         <Dialog
             open={open}
@@ -51,7 +47,7 @@ const ErrorModal = ({ open, handleChange, handleClose }: ErrorModalProps) => {
             </MuiDialogContent>
             <MuiDialogActions className={classes.actions}>
                 <Button className={classes.secondaryButton} onClick={handleClose}>Cancel</Button>
-                <Button className={classes.primaryButton} onClick={(e) => handleChangeAndClose(e)}>Refresh Token</Button>
+                <Button className={classes.primaryButton} onClick={(e) => handleChange(e)}>Refresh Token</Button>
             </MuiDialogActions>
         </Dialog>
     )

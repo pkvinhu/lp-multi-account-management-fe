@@ -4,7 +4,10 @@ export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       minWidth: 1400,
-      maxWidth: '100%'
+      maxWidth: '100%',
+      maxHeight: "80%",
+      paddingTop: 15,
+      paddingBottom: 15
     },
     paper: {
       width: "100%",

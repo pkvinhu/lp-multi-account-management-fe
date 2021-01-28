@@ -1,6 +1,7 @@
 export const GET_CAMPAIGNS = "GET_CAMPAIGNS";
 export const SET_CAMPAIGN_ERROR = "SET_CAMPAIGN_ERROR";
 export const SET_CAMPAIGN_LOADING = "SET_CAMPAIGN_LOADING";
+export const CLEAR_CAMPAIGN_DATA = "CLEAR_CAMPAIGN_DATA";
 
 export interface CampaignsState {
     data: Campaign[];
@@ -98,4 +99,8 @@ export interface SetCampaignLoading {
     type: typeof SET_CAMPAIGN_LOADING;
 }
 
-export type GetCampaignAction = GetCampaigns | SetCampaignError | SetCampaignLoading;
+export interface ClearDataAction {
+    type: typeof CLEAR_CAMPAIGN_DATA;
+}
+
+export type GetCampaignAction = GetCampaigns | SetCampaignError | SetCampaignLoading | ClearDataAction;

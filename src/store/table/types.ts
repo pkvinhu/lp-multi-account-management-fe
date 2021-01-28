@@ -15,6 +15,7 @@ export const SET_PAGE = "SET_PAGE";
 export const DELETE_ENTITY = "DELETE_ENTITY";
 export const SET_FILTER_CATEGORY = "SET_FILTER_CATEGORY";
 export const SET_FILTER_VALUE = "SET_FILTER_VALUE";
+export const CLEAR_TABLE_DATA = "CLEAR_TABLE_DATA";
 
 export type Order = "asc" | "desc";
 export type View = "users" | "profiles" | "skills" | "agentGroups";
@@ -199,6 +200,10 @@ export interface DeleteEntity {
   payload: string;
 }
 
+interface ClearDataAction {
+  type: typeof CLEAR_TABLE_DATA;
+}
+
 export type GetTableAction =
   | SetView
   | SetDisplayData
@@ -210,7 +215,8 @@ export type GetTableAction =
   | SetFilterCategory
   | SetFilterValue
   | SetTableError
-  | SetTableLoading;
+  | SetTableLoading
+  | ClearDataAction;
 
 export type DataDisplay =
   | UserDataDisplay

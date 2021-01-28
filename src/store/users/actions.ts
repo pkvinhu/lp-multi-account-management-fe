@@ -5,7 +5,8 @@ import {
   UserAction,
   SET_USER_LOADING,
   GET_USERS,
-  SET_USER_ERROR
+  SET_USER_ERROR,
+  CLEAR_USER_DATA
 } from "./types";
 import axios from "axios";
 
@@ -62,5 +63,11 @@ export const setUserError = (error): UserAction => {
   return {
     type: SET_USER_ERROR,
     payload: error
+  };
+};
+
+export const clearUserData = (): UserAction => {
+  return {
+    type: CLEAR_USER_DATA,
   };
 };
