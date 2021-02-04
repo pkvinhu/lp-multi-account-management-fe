@@ -9,6 +9,9 @@ export const useStyles = makeStyles((theme: Theme) =>
       paddingTop: 15,
       paddingBottom: 15
     },
+    // load: {
+    //   padding: theme.spacing(3)
+    // },
     paper: {
       width: "100%",
       margin: theme.spacing(15, "auto"),

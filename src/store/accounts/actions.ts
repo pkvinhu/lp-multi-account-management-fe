@@ -12,7 +12,9 @@ export const getAccounts = (): ThunkAction<
   return async dispatch => {
     try {
       let res: any = await axios.get("http://localhost:1337/api/accounts");
+      let res2: any = await axios.get("http://localhost:1337/api/accounts/all");
       console.log("THIS IS MY RES: :", res);
+      console.log("THIS IS MY RES: :", res2);
       let data: Accounts = res.data;
       dispatch({
         type: GET_ACCOUNTS,

@@ -32,7 +32,7 @@ const AccountDropDown = ({ styles }: AccountDropDownProps) => {
     const [modalOpen, setModalStatus] = useState(false);
     const state = useSelector((state: RootState) => state);
     const account = useSelector((state: RootState) => state.accounts.selectedAccount);
-    const { table, users, skills, profiles, agentGroups, campaigns, appKeys } = state;
+    const { table, users, skills, profiles, agentGroups, campaigns, appKeys, accounts } = state;
     const { selectAccount, setFilterCategory, setFilterValue, setTableLoading, getAccounts } = actions;
     const { view } = table;
     const previousView = usePrevious(view);
@@ -41,6 +41,7 @@ const AccountDropDown = ({ styles }: AccountDropDownProps) => {
     const history = useHistory();
 
     useEffect(() => {
+        if(!accounts.data) dispatch(getAccounts())
         if (previousView !== view || previousAccount !== account) {
             dispatch(setFilterCategory(""));
             dispatch(setFilterValue([]))
@@ -89,7 +90,7 @@ const AccountDropDown = ({ styles }: AccountDropDownProps) => {
                     <MenuItem value="">
                         <em>None</em>
                     </MenuItem>
-                    {state.accounts.data.map((e, i) => {
+                    {accounts.data.map((e, i) => {
                         return (
                             <MenuItem value={e.accountId} key={e.accountId}><em>{`${e.accountId} - ${e.accountName}`}</em></MenuItem>
                         )

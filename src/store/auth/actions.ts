@@ -40,7 +40,7 @@ export const logout = (): ThunkAction<
         type: CHECK_AUTH,
         payload: false
       });
-      window.location.href = "/";
+      window.location.href = "/login";
     } catch (e) {
       dispatch({
         type: SET_AUTH_ERROR,

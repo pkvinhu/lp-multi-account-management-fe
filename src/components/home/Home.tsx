@@ -16,12 +16,18 @@ import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
 
 // styles
 import { useStyles } from './styles';
+import { getAccounts } from '../../store/accounts/actions';
 
 const Home: FC = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const state = useSelector((state: RootState) => state);
     const account = useSelector((state: RootState) => state.accounts.selectedAccount)
+    const accounts = useSelector((state: RootState) => state.accounts.data)
+
+    useEffect(() => {
+        if(!accounts.length) dispatch(getAccounts())
+    }, [])
 
     return (
         <div className={classes.paperIntro}>

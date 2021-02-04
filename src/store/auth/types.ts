@@ -4,6 +4,7 @@ export const SET_AUTH_ERROR = "SET_AUTH_ERROR";
 export interface Auth {
     loggedIn: boolean;
     error: string;
+    loading: boolean;
 }
 
 export interface CheckAuthAction {

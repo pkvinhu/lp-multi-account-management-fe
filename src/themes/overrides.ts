@@ -39,14 +39,6 @@ export default {
       padding: 5
     }
   },
-  MuiSvgIcon: {
-    // root: {
-    //   color: blueGrey[900],
-    // },
-    // '&$disabled': {
-    //   color: blueGrey[200]
-    // }
-  },
   MuiTab: {
     root: {
       color: grey[500],
@@ -63,7 +55,8 @@ export default {
   },
   MuiTableCell: {
     root: {
-      width: 120
+      maxWidth: 120,
+      minWidth: 50
     }
   }
 };

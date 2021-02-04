@@ -1,6 +1,6 @@
 // dependencies
-import React from 'react';
-import { useSelector } from "react-redux";
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 
 // components
@@ -48,10 +48,13 @@ const menu = [
 ]
 const UtilityBar = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const location = useLocation();
   const accounts = useSelector((state: RootState) => state.accounts.data)
   const account = useSelector((state: RootState) => state.accounts.selectedAccount)
-  const location = useLocation();
-  const acc = account ? account : accounts[0].accountId;
+  const { getAccounts } = actions;
+
+  const acc = account ? account : accounts.length ? accounts[0].accountId : "";P
 
   return (
     <div className={classes.root}>

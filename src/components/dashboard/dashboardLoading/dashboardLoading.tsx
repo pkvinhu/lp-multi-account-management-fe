@@ -9,6 +9,7 @@ import actions from "../../../store/allActions";
 // components
 import Paper from '@material-ui/core/Paper';
 import LinearProgress from '@material-ui/core/LinearProgress'
+import Skeleton from '@material-ui/lab/Skeleton';
 
 import EnhancedTableToolbar from '../../table/tableToolbar/TableToolbar';
 
@@ -55,6 +56,11 @@ const DashboardLoading = () => {
             }
             <EnhancedTableToolbar />
             <LinearProgress />
+            <div className={classes.load}>
+                {[...Array(10)].map((n, i) => {
+                    return (<Skeleton className={classes.load} animation="wave" width={1400} height={25}/>)
+                })}
+            </div>
         </Paper>
     )
 }
