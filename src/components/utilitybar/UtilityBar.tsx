@@ -54,7 +54,7 @@ const UtilityBar = () => {
   const account = useSelector((state: RootState) => state.accounts.selectedAccount)
   const { getAccounts } = actions;
 
-  const acc = account ? account : accounts.length ? accounts[0].accountId : "";P
+  const acc = account ? account : accounts.length ? accounts[0].accountId : "";
 
   return (
     <div className={classes.root}>

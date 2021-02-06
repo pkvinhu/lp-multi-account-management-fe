@@ -3,7 +3,7 @@ import React, { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 // components
-import { Login, Dashboard, UserForm, AppToolbar, UtilityBar, Home } from "./components";
+import { Login, Dashboard, UserForm, AppToolbar, UtilityBar, Home, AdminDash } from "./components";
 import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
 
 // store
@@ -95,8 +95,8 @@ const App: FC = () => {
                 <PrivateRoute path="/dashboard/:accountId/user/:userId" component={UserForm} />
               </React.Fragment>
             }
-            {/* <PrivateRoute path="/admin" component={Admin}>
-            <PrivateRoute path="/data" component={Data}/> */}
+            <PrivateRoute path="/admin" component={AdminDash}/>
+            {/* <PrivateRoute path="/data" component={Data}/> */}
           </div>
           {/* <Route render={() => <Redirect to={auth?"/home":"/login"} />} /> */}
         </div>

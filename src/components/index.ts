@@ -17,5 +17,6 @@ import Home from "./home/Home";
 import ErrorModal from "./errors/errorModal/ErrorModal";
 import DashboardLoading from "./dashboard/dashboardLoading/DashboardLoading";
 import AccountDropDown from "./dashboard/accountDropDown/AccountDropDown";
+import AdminDash from "./admin/AdminDash"
 
-export { Login, Dashboard, UserForm, UtilityBar, AppToolbar, Home };
+export { Login, Dashboard, UserForm, UtilityBar, AppToolbar, Home, AdminDash };
