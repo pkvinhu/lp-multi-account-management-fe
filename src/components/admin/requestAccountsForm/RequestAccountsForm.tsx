@@ -30,7 +30,7 @@ const RequestAccountsForm = ({ title, description }: RequestAccountsFormProps) =
 
     return (
         <div>
-             <Typography variant="h3">{title}</Typography>
+            <Typography variant="h3">{title}</Typography>
             <Typography variant="body1">{description}</Typography>
             <FormControl>
 
