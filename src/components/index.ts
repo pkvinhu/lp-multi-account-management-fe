@@ -17,6 +17,22 @@ import Home from "./home/Home";
 import ErrorModal from "./errors/errorModal/ErrorModal";
 import DashboardLoading from "./dashboard/dashboardLoading/DashboardLoading";
 import AccountDropDown from "./dashboard/accountDropDown/AccountDropDown";
-import AdminDash from "./admin/AdminDash"
+import AdminDash from "./admin/adminDash/AdminDash";
+import AddAccountForm from "./admin/addAccountForm/AddAccountForm";
+import AddDatabaseUserForm from "./admin/addDatabaseUserForm/AddDatabaseUserForm";
+import DeleteAccountForm from "./admin/deleteAccountForm/DeleteAccountForm";
+import RequestAccountsForm from "./admin/requestAccountsForm/RequestAccountsForm";
 
-export { Login, Dashboard, UserForm, UtilityBar, AppToolbar, Home, AdminDash };
+export {
+  Login,
+  Dashboard,
+  UserForm,
+  UtilityBar,
+  AppToolbar,
+  Home,
+  AdminDash,
+  AddAccountForm,
+  AddDatabaseUserForm,
+  DeleteAccountForm,
+  RequestAccountsForm
+};
