@@ -6,6 +6,7 @@ export interface Accounts {
   data: Account[];
   selectedAccount: string;
   error: string;
+  loading: boolean;
 }
 
 export interface Account {

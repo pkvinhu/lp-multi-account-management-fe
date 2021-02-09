@@ -28,6 +28,9 @@ export const useStyles = makeStyles((theme: Theme) =>
     chip: {
       margin: 2
     },
+    load: {
+      padding: theme.spacing(3)
+    },
     noLabel: {
       marginTop: theme.spacing(3)
     },

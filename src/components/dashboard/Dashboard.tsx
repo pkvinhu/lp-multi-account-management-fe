@@ -24,34 +24,26 @@ const Dashboard: FC = () => {
     const account = useSelector((state: RootState) => state.accounts.selectedAccount)
     const { accounts, table, users, skills, profiles, agentGroups, appKeys, campaigns } = state;
     const { view, loading } = table;
-    const { selectedAccount } = accounts;
+    const { selectedAccount, data } = accounts;
     const { setTableLoading, deleteEntity } = actions;
     const location = useLocation();
     const history = useHistory();
     const { accountId, id } = useParams();
-    // const previousAccount = usePrevious(account)
-    // const mounted = useRef(false);
 
     useEffect(() => {
-        // if(mounted.current) {
-        //     console.log("mounted")
-        // }
-        // if (!mounted.current) {
         if (accounts.data.length && account !== accountId) {
-            console.log(accountId, account)
+            // console.log(accountId, account)
             if (accountId) {
                 setDataLoadingForAccount(accountId, dispatch, location, history)
             }
             else if (account) {
                 setDataLoadingForAccount(account, dispatch, location, history)
             }
-
             else if (accounts.data[0].accountId !== account) {
                 setDataLoadingForAccount(accounts.data[0].accountId, dispatch, location, history)
             }
         }
-    // }
-    }, [])
+    }, [accounts.data, accountId])
 
     const handleDelete = (event, entity: any) => {
         const act = getLoadingAction(view);
@@ -68,6 +60,8 @@ const Dashboard: FC = () => {
             .then(() => dispatch(setTableLoading(true)))
             .catch(e => console.log(e))
     }
+
+    if(accounts.loading) return (<div></div>)
 
     return (
         <div >

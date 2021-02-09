@@ -23,17 +23,24 @@ const AppToolbar = () => {
     const dispatch = useDispatch();
     const state = useSelector((state: RootState) => state);
     const auth = useSelector((state: RootState) => state.auth.loggedIn);
-    const accounts = useSelector((state: RootState) => state.accounts.data);
+    const { loading, data, error } = useSelector((state: RootState) => state.accounts);
     const account = useSelector((state: RootState) => state.accounts.selectedAccount);
-    const { selectAccount } = actions;
+    const { selectAccount, getAccounts } = actions;
     const location = useLocation();
+
+    useEffect(() => {
+        // console.log("Toolbar: ", auth, data)
+        if(location.pathname !== "/" && location.pathname !== "/home" && loading) dispatch(getAccounts())
+    }, [])
     
     return (
         <AppBar className={classes.appbar} position="fixed">
             <Toolbar className={classes.toolbar}>
                 <Typography variant="h3">LivePerson Account Management</Typography>
                     <div className={classes.actionsContainer}>
-                    {location.pathname !== "/" && location.pathname !== "/home" ? <AccountDropDown styles="darkDropDown"/> : null}
+                        {/* {loading && <div></div>}
+                        {error && <div></div>} */}
+                    {location.pathname !== "/" && location.pathname !== "/home" && !loading && !error ? <AccountDropDown styles="darkDropDown"/> : null}
                     {auth && <Button className={clsx(classes.button)} onClick={() => dispatch(actions.logout())}>Logout</Button>}
                 </div>
             </Toolbar>

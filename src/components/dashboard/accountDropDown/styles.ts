@@ -1,4 +1,4 @@
-import { makeStyles, Theme, createStyles, ListItemSecondaryAction } from "@material-ui/core";
+import { makeStyles, Theme, createStyles } from "@material-ui/core";
 
 export const useStyles = makeStyles((theme: Theme) => {
   const { primary, secondary } = theme.palette;
