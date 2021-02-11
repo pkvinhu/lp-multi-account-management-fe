@@ -1,7 +1,6 @@
 // dependencies
 import React, { FC, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
 // components
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -35,9 +34,19 @@ const EnhancedTableBody = ({ handleDelete }) => {
     setModalStatus(true);
   };
   const handleClose = () => setModalStatus(false);
-  
+
+  //Amneet
+  const [newForm, setNewOrEdit] = useState(false);
   return (
     <TableBody>
+      <button
+        onClick={() => {
+          setNewOrEdit(!newForm);
+          console.log(newForm);
+        }}
+      >
+        new
+      </button>
       {!table.loading &&
         dataDisplay
           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -48,6 +57,8 @@ const EnhancedTableBody = ({ handleDelete }) => {
                 handleOpen={handleOpen}
                 row={row}
                 index={index}
+                setNewOrEdit={setNewOrEdit}
+                newForm={newForm}
               />
             );
           })}

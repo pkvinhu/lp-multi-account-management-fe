@@ -81,5 +81,5 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-const classes = useStyles();
-export { classes };
+
+export { useStyles };
