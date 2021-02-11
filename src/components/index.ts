@@ -1,6 +1,6 @@
 import Login from "./login/Login";
 import Dashboard from "./dashboard/Dashboard";
-import UserForm from "./forms/user/UserForm";
+import UserForm from "./forms/UserForm";
 import UtilityBar from "./utilitybar/UtilityBar";
 import AppToolbar from "./toolbar/AppToolbar";
 import AppPrivilegesPopper from "./table/appPrivilegesPopper/AppPrivilegesPopper";
@@ -34,5 +34,5 @@ export {
   AddAccountForm,
   AddDatabaseUserForm,
   DeleteAccountForm,
-  RequestAccountsForm
+  RequestAccountsForm,
 };
