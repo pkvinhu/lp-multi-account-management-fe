@@ -18,10 +18,7 @@ import ErrorModal from "./errors/errorModal/ErrorModal";
 import DashboardLoading from "./dashboard/dashboardLoading/DashboardLoading";
 import AccountDropDown from "./dashboard/accountDropDown/AccountDropDown";
 import AdminDash from "./admin/adminDash/AdminDash";
-import AddAccountForm from "./admin/addAccountForm/AddAccountForm";
-import AddDatabaseUserForm from "./admin/addDatabaseUserForm/AddDatabaseUserForm";
-import DeleteAccountForm from "./admin/deleteAccountForm/DeleteAccountForm";
-import RequestAccountsForm from "./admin/requestAccountsForm/RequestAccountsForm";
+import AdminForm from "./admin/adminForm/AdminForm"
 
 export {
   Login,
@@ -31,8 +28,5 @@ export {
   AppToolbar,
   Home,
   AdminDash,
-  AddAccountForm,
-  AddDatabaseUserForm,
-  DeleteAccountForm,
-  RequestAccountsForm,
+  AdminForm
 };
