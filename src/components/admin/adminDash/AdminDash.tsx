@@ -14,10 +14,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 
-import AddAccountForm from '../addAccountForm/AddAccountForm';
-import AddDatabaseUserForm from '../addDatabaseUserForm/AddDatabaseUserForm';
-import RequestAccountsForm from '../requestAccountsForm/RequestAccountsForm';
-import DeleteAccountForm from '../deleteAccountForm/DeleteAccountForm';
+import AdminForm from '../adminForm/AdminForm';
 
 // styles
 import { useStyles } from './styles';
@@ -25,10 +22,14 @@ import { useStyles } from './styles';
 // config
 import { adminFormData } from "../../../config/adminFormData.js";
 
+// utils
+import { usePrevious } from "../../../util/components/helpers";
+
 let tabs = [
     { value: "add-account", label: "Add Account", access: "user" },
     { value: "delete-account", label: "Delete Account", access: "user" },
     { value: "add-user", label: "Add User", access: "superuser" },
+    { value: "all-users", label: "All Users", access: "superuser" },
     { value: "request-accounts", label: "Request Accounts", access: "lpa" },
 ]
 
@@ -36,14 +37,48 @@ const AdminDashboard: FC = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [ view, setView] = useState("add-account");
+    const [ lpId, setId ] = useState("")
+    const [ brandName, setBrand ] = useState("")
+    const [ loginName, setLogin ] = useState("")
+    const [ password, setPassword ] = useState("")
+    const [ isSuperUser, setSuperUser ] = useState(false)
     const state = useSelector((state: RootState) => state);
     const { } = actions;
     const location = useLocation();
     const history = useHistory();
+    const previousView = usePrevious(view);
+
+    let formFields = {
+        lpId,
+        brandName,
+        loginName,
+        password,
+        isSuperUser
+    }
+
+    let changeHandlers = {
+        setId, setBrand, setLogin, setPassword, setSuperUser
+    }
 
     const handleChange = (e: any, value: string) => {
         console.log(value)
-        setView(value)
+        if(value !== view) {
+            setView(value)
+            resetForm()
+        }
+    }
+
+    const handleFieldChange = (e: any, fn: any) => {
+        console.log(e.target.value)
+        fn(e.target.value)
+    }
+
+    const resetForm = () => {
+        setId("");
+        setBrand("");
+        setLogin("");
+        setPassword("");
+        setSuperUser(false);
     }
     // const handleClick = async (event: any) => {
     //     event.preventDefault();
@@ -76,10 +111,7 @@ const AdminDashboard: FC = () => {
                     </Tabs>
                 </Toolbar>
                 <Paper className={classes.formBody}>
-                    {view === "add-account" && (<AddAccountForm title={adminFormData[view].title} description={adminFormData[view].description} />)}
-                    {view === "delete-account" && (<DeleteAccountForm title={adminFormData[view].title} description={adminFormData[view].description} />)}
-                    {view === "add-user" && (<AddDatabaseUserForm title={adminFormData[view].title} description={adminFormData[view].description} />)}
-                    {view === "request-accounts" && (<RequestAccountsForm title={adminFormData[view].title} description={adminFormData[view].description} />)}
+                    {adminFormData[view] && <AdminForm {...adminFormData[view].props} handleChange={handleFieldChange} formFields={formFields} changeHandlerMap={changeHandlers}/>}
                 </Paper>
                 {/* <button onClick={handleClick} >Add Users</button> */}
             </Paper>

@@ -21,8 +21,7 @@ export const useStyles = makeStyles((theme: Theme) => {
       paddingBottom: 15
     },
     tabs: {
-      backgroundColor: secondary.light + " !important",
-      borderRadius: 10
+      backgroundColor: secondary.light + " !important"
     },
     toolbar: {
       display: "flex",
