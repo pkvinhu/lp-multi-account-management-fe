@@ -20,7 +20,7 @@ import AdminForm from '../adminForm/AdminForm';
 import { useStyles } from './styles';
 
 // config
-import { adminFormData } from "../../../config/adminFormData.js";
+import adminFormData from "../../../config/adminFormData.json";
 
 // utils
 import { usePrevious } from "../../../util/components/helpers";
