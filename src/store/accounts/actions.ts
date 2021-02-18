@@ -8,6 +8,7 @@ import {
   CATCH_ERROR,
 } from "./types";
 import axios from "axios";
+import { getCookie } from "../../util/components/helpers";
 
 export const getAccounts = (): ThunkAction<
   void,
@@ -17,9 +18,9 @@ export const getAccounts = (): ThunkAction<
 > => {
   return async (dispatch) => {
     try {
-      let res: any = await axios.get("http://localhost:1337/api/accounts/static-all");
-      let res2: any = await axios.get("http://localhost:1337/api/accounts");
-      console.log("THIS IS MY RES: :", res);
+      // let res: any = await axios.get("http://localhost:1337/api/accounts/static-all");
+      let res2: any = await axios.get("http://localhost:1337/api/accounts", { headers: { Authorization: `Bearer ${getCookie("jwt")}`}, withCredentials: true });
+      // console.log("THIS IS MY RES: :", res);
       console.log("THIS IS MY RES: :", res2);
       let data: Accounts = res2.data.map((acc, ind) => {
         return { accountName: acc.brandName, accountId: acc.lpId }

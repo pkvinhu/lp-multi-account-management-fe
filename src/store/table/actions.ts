@@ -41,6 +41,7 @@ import {
 import axios from "axios";
 import { RootState } from "..";
 import { ThunkAction } from "redux-thunk";
+import { getCookie } from "../../util/components/helpers";
 
 export const setDataDisplay = (
   view: View,
@@ -79,15 +80,34 @@ export const setDataDisplay = (
       payload.headCells = getHeadCellsForUsers();
       break;
     case "profiles":
-      payload.data = getDisplayForProfiles(data, order, orderBy, filterCategory, filterValue);
+      payload.data = getDisplayForProfiles(
+        data,
+        order,
+        orderBy,
+        filterCategory,
+        filterValue
+      );
       payload.headCells = getHeadCellsForProfiles();
       break;
     case "skills":
-      payload.data = getDisplayForSkills(data, skillsMap, order, orderBy, filterCategory, filterValue);
+      payload.data = getDisplayForSkills(
+        data,
+        skillsMap,
+        order,
+        orderBy,
+        filterCategory,
+        filterValue
+      );
       payload.headCells = getHeadCellsForSkills();
       break;
     case "agentGroups":
-      payload.data = getDisplayForAgentGroups(data, order, orderBy, filterCategory, filterValue);
+      payload.data = getDisplayForAgentGroups(
+        data,
+        order,
+        orderBy,
+        filterCategory,
+        filterValue
+      );
       payload.headCells = getHeadCellsForAgentGroups();
       break;
   }
@@ -110,7 +130,11 @@ export const deleteEntity = (
       const res = await axios.delete(
         `http://localhost:1337/api/${view}/${account}/${entityId}${
           lastModified ? `/${lastModified}` : ""
-        }`
+        }`,
+        {
+          headers: { Authorization: `Bearer ${getCookie("jwt")}` },
+          withCredentials: true
+        }
       );
       console.log(res);
     } catch (err) {
@@ -153,12 +177,12 @@ export const setRowsPerPage = (rows: number): SetRowsPerPage => ({
 export const setFilterCategory = (category: string): SetFilterCategory => ({
   type: SET_FILTER_CATEGORY,
   payload: category
-})
+});
 
 export const setFilterValue = (value: string[]): SetFilterValue => ({
   type: SET_FILTER_VALUE,
   payload: value
-})
+});
 
 export const setTableError = (): SetTableError => ({ type: SET_TABLE_ERROR });
 
@@ -167,4 +191,6 @@ export const setTableLoading = (bool: boolean): SetTableLoading => ({
   payload: bool
 });
 
-export const clearTableData = (): GetTableAction => ({ type: CLEAR_TABLE_DATA });
+export const clearTableData = (): GetTableAction => ({
+  type: CLEAR_TABLE_DATA
+});

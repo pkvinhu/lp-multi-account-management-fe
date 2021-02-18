@@ -8,6 +8,7 @@ import {
 import { RootState } from "..";
 import { ThunkAction } from "redux-thunk";
 import axios from "axios";
+import { getCookie } from "../../util/components/helpers";
 
 export const getAppKeys = (
   accountId: string | number
@@ -15,7 +16,11 @@ export const getAppKeys = (
   return async dispatch => {
     try {
       let res = await axios.get(
-        `http://localhost:1337/api/appKeys/${accountId}`
+        `http://localhost:1337/api/appKeys/${accountId}`,
+        {
+          headers: { Authorization: `Bearer ${getCookie("jwt")}` },
+          withCredentials: true
+        }
       );
       let data = res.data;
       dispatch({
@@ -47,6 +52,6 @@ export const setAppKeysError = error => {
 
 export const clearAppKeysData = (): GetAppKeysAction => {
   return {
-    type: CLEAR_APP_KEYS_DATA,
+    type: CLEAR_APP_KEYS_DATA
   };
 };

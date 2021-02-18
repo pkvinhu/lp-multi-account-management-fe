@@ -2,6 +2,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, useHistory } from 'react-router-dom';
+import parse from 'html-react-parser';
 
 // components
 import FormControl from '@material-ui/core/FormControl';
@@ -46,11 +47,15 @@ const AdminForm = ({ title, description, handleChange, textFields = [], uploadCs
     const history = useHistory();
     console.log(description)
 
+    const createMarkup = () => {
+        return { __html: `<div>${description}</div>`}
+    }
+
     return (
         <div>
             <Typography variant="h4">{title}</Typography>
             <br />
-            <Typography variant="body1">{description}</Typography>
+            <Typography variant="body1" dangerouslySetInnerHTML={createMarkup()}></Typography>
             <FormControl className={classes.formControl}>
                 <div className={classes.form}>
                     {textFields.length ? textFields.map((field, ind) => {

@@ -24,9 +24,10 @@ const Home: FC = () => {
     const state = useSelector((state: RootState) => state);
     const account = useSelector((state: RootState) => state.accounts.selectedAccount)
     const accounts = useSelector((state: RootState) => state.accounts.data)
+    const auth = useSelector((state: RootState) => state.auth.loggedIn)
 
     useEffect(() => {
-        if(!accounts.length) dispatch(getAccounts())
+        if(auth && !accounts.length) dispatch(getAccounts())
     }, [])
 
     return (
