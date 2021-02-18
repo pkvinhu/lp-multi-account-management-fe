@@ -18,6 +18,7 @@ import agentGroupsReducer from './agentGroups/reducer';
 import tableReducer from './table/reducer';
 import appKeysReducer from './appkeys/reducer';
 import campaignsReducer from './campaigns/reducer';
+import adminReducer from './admin/reducer';
 
 const rootReducer = combineReducers({
     accounts: accountsReducer,
@@ -28,7 +29,8 @@ const rootReducer = combineReducers({
     table: tableReducer,
     appKeys: appKeysReducer,
     campaigns: campaignsReducer,
-    auth: authReducer
+    auth: authReducer,
+    admin: adminReducer
 });
 
 const configureStore = (preloadedState: any) => {
