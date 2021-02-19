@@ -17,14 +17,16 @@ export interface AccountRequestEntity {
     requestingUser: RequestingUser;
 }
 
-interface RequestedAccountsInfoList {
+export interface RequestedAccountsInfoList {
     account: AccountInfo;
     apiAgent: AgentInfo;
 }
 
-interface RequestingUser {
+export interface RequestingUser {
     loginName: string;
     email: string;
+    isSuperUser?: boolean;
+    isLPA?: boolean;
 }
 
 interface AccountInfo {

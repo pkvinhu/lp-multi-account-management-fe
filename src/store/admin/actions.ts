@@ -7,21 +7,23 @@ import {
   SET_LOAD_PROGRESS,
   SET_MESSAGE,
   SET_TOTAL_REQUESTS,
-  RESET_STATE
+  RESET_STATE,
+  RequestedAccountsInfoList,
+  RequestingUser
 } from "./types";
 import axios from "axios";
 import { getCookie } from "../../util/components/helpers";
 import { verifyAgent } from "../../util/store/admin";
 
 export const checkApiAgentExistence = (
-  account,
-  apiAgent,
-  adminId
+  requestedAccount: RequestedAccountsInfoList,
+  adminId: string
 ): ThunkAction<void, RootState, null, AdminAction | any> => {
   return async dispatch => {
+    const { account, apiAgent } = requestedAccount
     try {
       const res: any = await axios.get(
-        `http://localhost:1337/api/users/${account}`,
+        `http://localhost:1337/api/users/${account.lpId}`,
         {
           headers: { Authorization: `Bearer ${getCookie("jwt")}` },
           withCredentials: true
@@ -50,16 +52,15 @@ export const checkApiAgentExistence = (
 };
 
 export const addApiAgent = (
-  account,
-  apiAgent
+  requestedAccount: RequestedAccountsInfoList
 ): ThunkAction<void, RootState, null, AdminAction | any> => {
   return async dispatch => {
     try {
       const res: any = await axios.post(
-        `http://localhost:1337/api/admin/${account}/add-agent`,
+        `http://localhost:1337/api/admin/add-agent`,
         {
           headers: { Authorization: `Bearer ${getCookie("jwt")}` },
-          payload: { apiAgent },
+          payload: { requestedAccount },
           withCredentials: true
         }
       );
@@ -78,16 +79,15 @@ export const addApiAgent = (
 };
 
 export const deleteApiAgent = (
-  account,
-  apiAgent
+  requestedAccount: RequestedAccountsInfoList
 ): ThunkAction<void, RootState, null, AdminAction | any> => {
   return async dispatch => {
     try {
       const res: any = await axios.post(
-        `http://localhost:1337/api/admin/${account}/delete-agent`,
+        `http://localhost:1337/api/admin/delete-agent`,
         {
           headers: { Authorization: `Bearer ${getCookie("jwt")}` },
-          payload: { account, apiAgent },
+          payload: { requestedAccount },
           withCredentials: true
         }
       );
@@ -106,7 +106,7 @@ export const deleteApiAgent = (
 };
 
 export const addUser = (
-  user
+  user: RequestingUser
 ): ThunkAction<void, RootState, null, AdminAction | any> => {
   return async dispatch => {
     try {
@@ -133,7 +133,7 @@ export const addUser = (
 };
 
 export const deleteUser = (
-  user
+  user: RequestingUser
 ): ThunkAction<void, RootState, null, AdminAction | any> => {
   return async dispatch => {
     try {
