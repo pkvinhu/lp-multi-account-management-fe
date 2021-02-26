@@ -107,7 +107,7 @@ The login is built with Liveperson SSO. It redirects to the authorization url se
 The landing page welcomes the user to the application and offers a basic description(A tour feature may eventually be added to help new users navigate as it scales). It invites user to select an account to view data. Accounts are only preloaded as they've been added to the user's permissions.
 
 3. **Admin** <br/>
-The admin section gives user ability to edit their data access within this application. There are three tiers of users: Standard Users, Super Users, and LPA Users.<br/><br/>
+The admin section gives user ability to edit their data access within this application. There are three tiers of users: Standard Users, Super Users, and LPA Users.<br/>
 - `standard users` can add/delete individual accounts to their own view. To add individual accounts, the user must make sure the API Agent has already been manually added as a user within requested account. A verification check is performed to check this before information can be saved to the database. If standard users want to perform a bulk add/delete, they have to upload a csv and submit it as a request to an LPA user. 
 - `super users` have all standard user permissions plus the ability to grant a new user access to this application
 - `lpa users` have full access to all permissions, including the ability to bulk add and bulk delete on behalf of other users by uploading a csv in designated structure
