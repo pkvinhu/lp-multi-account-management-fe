@@ -6,15 +6,35 @@
       "img": "",
       "uploadCsv": true,
       "textFields": [
-        { "name": "lpId", "label": "Account Id", "handleChangeFn": "setId", "type": "input"
+        {
+          "name": "lpId",
+          "label": "Account Id",
+          "handleChangeFn": "setId",
+          "type": "input"
         },
-        { "name": "brandName", "label": "Brand Name", "handleChangeFn": "setBrand", "type": "input"
+        {
+          "name": "brandName",
+          "label": "Brand Name",
+          "handleChangeFn": "setBrand",
+          "type": "input"
         },
-        { "name": "loginName", "label": "Login Name", "handleChangeFn": "setLogin", "type": "input"
+        {
+          "name": "loginName",
+          "label": "Login Name",
+          "handleChangeFn": "setLogin",
+          "type": "input"
         },
-        { "name": "password", "label": "Password", "handleChangeFn": "setPassword", "type": "input"
+        {
+          "name": "password",
+          "label": "Password",
+          "handleChangeFn": "setPassword",
+          "type": "input"
         }
-      ]
+      ],
+      "submitHandlers": {
+        "single": "handleAddAccount",
+        "bulk": ""
+      }
     }
   },
   "delete-account": {
@@ -24,15 +44,35 @@
       "img": "",
       "uploadCsv": true,
       "textFields": [
-        { "name": "lpId", "label": "Account Id", "handleChangeFn": "setId", "type": "input"
+        {
+          "name": "lpId",
+          "label": "Account Id",
+          "handleChangeFn": "setId",
+          "type": "input"
         },
-        { "name": "brandName", "label": "Brand Name", "handleChangeFn": "setBrand", "type": "input"
+        {
+          "name": "brandName",
+          "label": "Brand Name",
+          "handleChangeFn": "setBrand",
+          "type": "input"
         },
-        { "name": "loginName", "label": "Login Name", "handleChangeFn": "setLogin", "type": "input"
+        {
+          "name": "loginName",
+          "label": "Login Name",
+          "handleChangeFn": "setLogin",
+          "type": "input"
         },
-        { "name": "password", "label": "Password", "handleChangeFn": "setPassword", "type": "input"
+        {
+          "name": "password",
+          "label": "Password",
+          "handleChangeFn": "setPassword",
+          "type": "input"
         }
-      ]
+      ],
+      "submitHandlers": {
+        "single": "handleDeleteAccount",
+        "bulk": ""
+      }
     }
   },
   "add-user": {
@@ -42,13 +82,29 @@
       "img": "",
       "uploadCsv": true,
       "textFields": [
-        { "name": "loginName", "label": "Login Name", "handleChangeFn": "setLogin", "type": "input"
+        {
+          "name": "loginName",
+          "label": "Login Name",
+          "handleChangeFn": "setLogin",
+          "type": "input"
         },
-        { "name": "password", "label": "Password", "handleChangeFn": "setPassword", "type": "input"
+        {
+          "name": "password",
+          "label": "Password",
+          "handleChangeFn": "setPassword",
+          "type": "input"
         },
-        { "name": "isSuperUser", "label": "Superuser?", "handleChangeFn": "setSuperUser", "type": "checkbox"
+        {
+          "name": "isSuperUser",
+          "label": "Superuser?",
+          "handleChangeFn": "setSuperUser",
+          "type": "checkbox"
         }
-      ]
+      ],
+      "submitHandlers": {
+        "single": "handleAddAccount",
+        "bulk": ""
+      }
     }
   },
   "all-users": {
@@ -57,7 +113,11 @@
       "description": "A superuser view of all users.",
       "img": "",
       "uploadCsv": false,
-      "textFields": []
+      "textFields": [],
+      "submitHandlers": {
+        "single": "",
+        "bulk": ""
+      }
     }
   },
   "bulk-add": {
@@ -66,7 +126,11 @@
       "description": "This is a bulk add feature unique to this tool. Upload a CSV from your computer that meets the requirements as shown in the screenshot below. Input the requested user's login and email information and click create.",
       "img": "",
       "uploadCsv": true,
-      "textFields": []
+      "textFields": [],
+      "submitHandlers": {
+        "single": "",
+        "bulk": ""
+      }
     }
   }
 }

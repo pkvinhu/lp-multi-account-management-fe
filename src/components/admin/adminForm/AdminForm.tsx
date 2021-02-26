@@ -21,6 +21,11 @@ interface TextField {
     type: string;
 }
 
+interface SubmitObj {
+    single: string;
+    bulk: string;
+}
+
 interface FormFields {
     loginName: string;
     password: string;
@@ -34,12 +39,14 @@ interface AdminFormProps {
     description: string;
     handleChange: (e: any, fn: any) => void;
     textFields?: TextField[];
+    submitHandlers: SubmitObj;
     uploadCsv?: boolean;
     formFields: FormFields;
     changeHandlerMap: any;
+    submitHandlerMap: any;
 }
 
-const AdminForm = ({ title, description, handleChange, textFields = [], uploadCsv = false, formFields, changeHandlerMap }: AdminFormProps) => {
+const AdminForm = ({ title, description, handleChange, textFields = [], submitHandlers, uploadCsv = false, formFields, changeHandlerMap, submitHandlerMap }: AdminFormProps) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     // const state = useSelector((state: RootState) => state);
@@ -74,7 +81,7 @@ const AdminForm = ({ title, description, handleChange, textFields = [], uploadCs
                             </React.Fragment>
                         )
                     }) : null}
-                    {textFields.length ? <Button className={classes.button}>Submit</Button> : null}
+                    {textFields.length ? <Button className={classes.button} onClick={submitHandlerMap[submitHandlers.single]}>Submit</Button> : null}
                 </div>
             </FormControl>
         </div>
