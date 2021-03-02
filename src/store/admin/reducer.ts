@@ -28,7 +28,8 @@ export default (state = initialState, action: AdminAction): AdminState => {
         case SET_MESSAGE:
             return {
                 ...state,
-                message: action.payload
+                message: action.payload,
+                error: ""
             }
         case RESET_STATE:
             return initialState;

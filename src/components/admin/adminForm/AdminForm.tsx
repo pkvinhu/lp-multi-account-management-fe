@@ -1,6 +1,6 @@
 // dependencies
 import React, { FC, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useHistory } from 'react-router-dom';
 import parse from 'html-react-parser';
 
@@ -10,9 +10,13 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
+import Alert from '@material-ui/lab/Alert';
 
 // styles
 import { useStyles } from './styles';
+
+// store
+import { RootState } from "../../../store";
 
 interface TextField {
     name: string;
@@ -49,7 +53,8 @@ interface AdminFormProps {
 const AdminForm = ({ title, description, handleChange, textFields = [], submitHandlers, uploadCsv = false, formFields, changeHandlerMap, submitHandlerMap }: AdminFormProps) => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    // const state = useSelector((state: RootState) => state);
+    const state = useSelector((state: RootState) => state);
+    const { admin } = state;
     const location = useLocation();
     const history = useHistory();
     console.log(description)
@@ -64,6 +69,8 @@ const AdminForm = ({ title, description, handleChange, textFields = [], submitHa
             <br />
             <Typography variant="body1" dangerouslySetInnerHTML={createMarkup()}></Typography>
             <FormControl className={classes.formControl}>
+                {admin.error && <Alert severity="error">{admin.error}</Alert>}
+                {admin.message && <Alert severity="success">{admin.message}</Alert>}
                 <div className={classes.form}>
                     {textFields.length ? textFields.map((field, ind) => {
                         const { name, label, handleChangeFn, type } = field;

@@ -45,7 +45,7 @@ const AdminDashboard: FC = () => {
     const [errors, setErrors] = useState([] as any);
     const state = useSelector((state: RootState) => state);
     const { admin } = state;
-    const { addApiAgent, checkApiAgentExistence, deleteApiAgent, getAccounts } = actions;
+    const { addApiAgent, checkApiAgentExistence, deleteApiAgent, getAccounts, selectAccount, resetState } = actions;
     const location = useLocation();
     const history = useHistory();
     const previousView = usePrevious(view);
@@ -65,6 +65,7 @@ const AdminDashboard: FC = () => {
     const handleChange = (e: any, value: string) => {
         console.log(value)
         if (value !== view) {
+            dispatch(resetState())
             setView(value)
             resetForm()
         }
@@ -89,10 +90,19 @@ const AdminDashboard: FC = () => {
         const apiAgent = { username: loginName, password }
         const requested = { account, apiAgent }
         try {
-            await dispatch(checkApiAgentExistence(requested));
-            await dispatch(addApiAgent(requested))
-            await dispatch(getAccounts())
-            resetForm()
+            let data = await dispatch(checkApiAgentExistence(requested))
+            console.log(admin)
+            if (!data.error) {
+                data = await dispatch(addApiAgent(requested))
+            }
+
+            if (!data.error) {
+                await dispatch(getAccounts())
+                // resetForm()
+                history.push(`/dashboard/${lpId}`)
+            }
+            console.log(errors)
+
         }
         catch (error) {
             setErrors([...errors, admin.error]);
@@ -105,9 +115,13 @@ const AdminDashboard: FC = () => {
         const apiAgent = { username: loginName, password }
         const requested = { account, apiAgent }
         try {
-            await dispatch(deleteApiAgent(requested))
-            await dispatch(getAccounts())
-            resetForm()
+            let data = await dispatch(deleteApiAgent(requested))
+            console.log(data)
+            if (!data.error) {
+                await dispatch(getAccounts())
+                await dispatch(selectAccount(""))
+                resetForm()
+            }
         }
         catch (error) {
             setErrors([...errors, admin.error]);
@@ -118,19 +132,6 @@ const AdminDashboard: FC = () => {
         handleAddAccount,
         handleDeleteAccount
     }
-    // const handleClick = async (event: any) => {
-    //     event.preventDefault();
-    //         // url: 'http://localhost:1337/api/accounts'
-    //         // method: 'post',
-    //         // data: {
-    //         //     password: string,
-    //         //     accounts: [{
-    //         //             account: { lpId: string, brand: string },
-    //         //             apiAgent: { username: string, password: string }
-    //         //         }]
-    //         //     requestingUser: { loginName: string, email: string }
-    //         // }
-    // }
 
     return (
         <Box className={classes.root}>
@@ -151,7 +152,6 @@ const AdminDashboard: FC = () => {
                 <Paper className={classes.formBody}>
                     {adminFormData[view] && <AdminForm {...adminFormData[view].props} handleChange={handleFieldChange} formFields={formFields} changeHandlerMap={changeHandlers} submitHandlerMap={submitHandlers} />}
                 </Paper>
-                {/* <button onClick={handleClick} >Add Users</button> */}
             </Paper>
         </Box>
     )

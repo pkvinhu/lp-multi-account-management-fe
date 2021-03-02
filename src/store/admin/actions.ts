@@ -13,12 +13,11 @@ import {
 } from "./types";
 import axios from "axios";
 import { getCookie } from "../../util/components/helpers";
-import { verifyAgent } from "../../util/store/admin";
 
 export const checkApiAgentExistence = (
   requestedAccount: RequestedAccountsInfoList,
   // accountId: string | number
-): ThunkAction<void, RootState, null, AdminAction | any> => {
+): ThunkAction<void, RootState, null, AdminAction | any> | any => {
   return async dispatch => {
     const { account, apiAgent } = requestedAccount
     try {
@@ -31,29 +30,33 @@ export const checkApiAgentExistence = (
         }
       );
       const data: any = res.data;
+      console.log(data)
       if (data.message) {
         dispatch({
           type: SET_MESSAGE,
           payload: data.message
         });
+        return { ...data, error: ""};
       } else {
         dispatch({
           type: SET_ERROR,
-          payload: data.error
+          payload: "Agent does not exist!"
         });
+        return { error: "Agent does not exist!" }
       }
     } catch (e) {
       dispatch({
         type: SET_ERROR,
-        payload: e.message
+        payload: e.response.data
       });
+      return { error: e.response.data }
     }
   };
 };
 
 export const addApiAgent = (
   requestedAccount: RequestedAccountsInfoList
-): ThunkAction<void, RootState, null, AdminAction | any> => {
+): ThunkAction<void, RootState, null, AdminAction | any> | any => {
   return async dispatch => {
     try {
       const res: any = await axios.post(
@@ -65,22 +68,25 @@ export const addApiAgent = (
         }
       );
       const data: any = res.data;
+      // console.log(data)
       dispatch({
         type: SET_MESSAGE,
         payload: data.message
       });
+      return data;
     } catch (e) {
       dispatch({
         type: SET_ERROR,
-        payload: e.message
+        payload: e.response.data
       });
+      return { error: e.response.data }
     }
   };
 };
 
 export const deleteApiAgent = (
   requestedAccount: RequestedAccountsInfoList
-): ThunkAction<void, RootState, null, AdminAction | any> => {
+): ThunkAction<void, RootState, null, AdminAction | any> | any => {
   return async dispatch => {
     try {
       const res: any = await axios.post(
@@ -96,11 +102,14 @@ export const deleteApiAgent = (
         type: SET_MESSAGE,
         payload: data.message
       });
+      return data;
     } catch (e) {
       dispatch({
         type: SET_ERROR,
-        payload: e.message
+        payload: e.response.data
       });
+      console.log(e.response)
+      return { error: e.response.data }
     }
   };
 };
