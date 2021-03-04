@@ -1,43 +1,74 @@
-import React, { FC, useEffect } from 'react';
+// dependencies
+import React, { FC, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useHistory, useParams } from 'react-router-dom';
+
+// store
 import { RootState } from '../../store';
 import actions from '../../store/allActions';
-import EnhancedTable from '../table/tableData/tableData';
-import { View } from '../../store/table/types';
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
-import LinearProgress from '@material-ui/core/LinearProgress'
+import { getLoadingAction } from '../../util/components/getActions';
+
+// components
+import EnhancedTable from '../table/tableData/TableData';
+import DashboardLoading from './dashboardLoading/DashboardLoading';
+
+// styles
 import { useStyles } from './styles';
-import EnhancedTableToolbar from '../table/tableToolbar/tableToolbar';
+import { setDataLoadingForAccount } from '../../util/components/dispatches';
+import { checkError, usePrevious } from '../../util/components/helpers';
 
 const Dashboard: FC = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const state = useSelector((state: RootState) => state);
-    // const { accounts, users, skills, profiles, agentGroups } = state;
-    const dataDisplay = ((state: RootState) => state.table.dataDisplay);
+    const account = useSelector((state: RootState) => state.accounts.selectedAccount)
+    const { accounts, table, users, skills, profiles, agentGroups, appKeys, campaigns } = state;
+    const { view, loading } = table;
+    const { selectedAccount, data } = accounts;
+    const { setTableLoading, deleteEntity } = actions;
+    const location = useLocation();
+    const history = useHistory();
+    const { accountId, id } = useParams();
 
     useEffect(() => {
-        Promise.resolve(() => dispatch(actions.getAccounts()))
-            .then(() => dispatch(actions.getUsers()))
-            .then(() => dispatch(actions.getSkills()))
-            .then(() => dispatch(actions.getProfiles()))
-            .then(() => dispatch(actions.getAgentGroups()))
-            .catch(err => console.log(err))
-    }, [])
+        if (accounts.data.length && account !== accountId) {
+            // console.log(accountId, account)
+            if (accountId) {
+                setDataLoadingForAccount(accountId, dispatch, location, history)
+            }
+            else if (account) {
+                setDataLoadingForAccount(account, dispatch, location, history)
+            }
+            else if (accounts.data[0].accountId !== account) {
+                setDataLoadingForAccount(accounts.data[0].accountId, dispatch, location, history)
+            }
+        }
+    }, [accounts.data, accountId])
 
-    const checkForData = (view: View): boolean => {
-        let b = !!state[view].data.length && !!dataDisplay.length;
-        return b;
+    const handleDelete = (event, entity: any) => {
+        const act = getLoadingAction(view);
+        Promise.resolve(() => console.log("...handle delete"))
+            .then(() => {
+                if (view !== "profiles") {
+                    dispatch(deleteEntity(selectedAccount, view, String(entity.id)))
+                } else {
+                    let lastModified = Date.parse(entity.dateUpdated);
+                    dispatch(deleteEntity(selectedAccount, view, String(entity.id), lastModified))
+                }
+            })
+            .then(() => dispatch(act()))
+            .then(() => dispatch(setTableLoading(true)))
+            .catch(e => console.log(e))
     }
 
+    if(accounts.loading) return (<div></div>)
+
     return (
-        <div className={classes.root}>
-            <div className={classes.inside}>
-                {checkForData(state.table.view) ? <EnhancedTable /> : (<Paper className={classes.paper}><EnhancedTableToolbar /><LinearProgress /></Paper>)}
-                <Button onClick={() => dispatch(actions.logout())}>Logout</Button>
-            </div>
+        <div >
+            {account && !loading && (<EnhancedTable handleDelete={handleDelete} />)}
+            {account && loading && (<DashboardLoading />)}
         </div>
+
     )
 }
 

@@ -1,13 +1,16 @@
 import { ProfileDataDisplay } from "../table/types";
 import { GenericError } from "../users/types";
+import { any } from "prop-types";
 
 export const GET_PROFILES = "GET_PROFILES";
 export const SET_PROFILE_ERROR = "SET_PROFILE_ERROR";
 export const SET_PROFILE_LOADING = "SET_PROFILE_LOADING";
+export const CLEAR_PROFILE_DATA = "CLEAR_PROFILE_DATA";
 
 export interface ProfileState {
     data: Profile[];
-    map: any;
+    map: {};
+    roleTypeCountMap: {};
     error: ProfilesError | null;
     loading: boolean;
 }
@@ -27,11 +30,17 @@ interface Package {
   featuredKeys?: string[];
 }
 
+interface ProfilePayload { 
+  data: Profile[]; 
+  map: any; 
+  roleTypeCountMap: any; 
+}
+
 export interface ProfilesError extends GenericError {}
 
 export interface GetProfilesAction {
   type: typeof GET_PROFILES;
-  payload: { data: Profile[], map: any };
+  payload: ProfilePayload;
 }
 
 interface SetLoadingAction {
@@ -43,4 +52,8 @@ interface SetErrorAction {
   payload: ProfilesError;
 }
 
-export type ProfileAction = GetProfilesAction | SetLoadingAction | SetErrorAction;
+interface ClearDataAction {
+  type: typeof CLEAR_PROFILE_DATA;
+}
+
+export type ProfileAction = GetProfilesAction | SetLoadingAction | SetErrorAction | ClearDataAction;

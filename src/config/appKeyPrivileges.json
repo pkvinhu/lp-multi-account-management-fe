@@ -1,0 +1,146 @@
+{
+    "api.user.login": {
+        "name": "User Login",
+        "docs_endpoint": "/login-service-api-overview.html"
+    },
+    "data-access": {
+        "name": "Data Access",
+        "docs_endpoint": "/data-access-api-overview.html"
+    },
+    "interaction.history.api.external": {
+        "name": "Interaction History",
+        "docs_endpoint": "/messaging-interactions-api-overview.html"
+    },
+    "rp.agent.view": {
+        "name": "RP Agent",
+        "docs_endpoint": "/operational-realtime-api-overview.html"
+    },
+    "rtbf.read.external": {
+        "name": "Data Deletion Read",
+        "docs_endpoint": "/personal-data-deletion-api-overview.html"
+    },
+    "rtbf.write.external": {
+        "name": "Data Deletion Write",
+        "docs_endpoint": "/personal-data-deletion-api-overview.html"
+    },
+    "messaging.key.metrics.read.external": {
+        "name": "Key Messaging Metrics",
+        "docs_endpoint": "/key-messaging-metrics-api-overview.html"
+    },
+    "ac.users.users.read.external": {
+        "name": "Users API Read",
+        "docs_endpoint": "/users-api-overview.html"
+    },
+    "ac.users.users.write.external": {
+        "name": "Users API Write",
+        "docs_endpoint": "/users-api-overview.html"
+    },
+    "ac.users.skills.read.external": {
+        "name": "Skills API Read",
+        "docs_endpoint": "/skills-api-overview.html"
+    },
+    "ac.users.skills.write.external": {
+        "name": "Skills API Write",
+        "docs_endpoint": "/skills-api-overview.html"
+    },
+    "ac.users.agentGroups.read.external": {
+        "name": "Agent Groups API Read",
+        "docs_endpoint": "/agent-groups-api-overview.html"
+    },
+    "ac.users.agentGroups.write.external": {
+        "name": "Agent Groups API Write",
+        "docs_endpoint": "/agent-groups-api-overview.html"
+    },
+    "ac.users.profiles.read.external": {
+        "name": "Profiles API Read",
+        "docs_endpoint": "/profiles-api-overview.html"
+    },
+    "ac.users.profiles.write.external": {
+        "name": "Profiles API Write",
+        "docs_endpoint": "/profiles-api-overview.html"
+    },
+    "ac.lob.read.external": {
+        "name": "Lines Of Business API Read",
+        "docs_endpoint": "/lobs-api-overview.html"
+    },
+    "ac.lob.write.external": {
+        "name": "Lines Of Business API Write",
+        "docs_endpoint": "/lobs-api-overview.html"
+    },
+    "workdays.read.external": {
+        "name": "Working Hours Read",
+        "doc_endpoint": "/workdays-api-overview.html"
+    },
+    "workdays.write.external": {
+        "name": "Working Hours Write",
+        "doc_endpoint": "/workdays-api-overview.html"
+    },
+    "skill.level.workdays.write.external": {
+        "name": "Skill Working Hours Write",
+        "docs_endpoint": "/shift-status-api-overview.html"
+    },
+    "ac.audit.read.external": {
+        "name": "Audit Trail API Read",
+        "docs_endpoint": "/audit-trail-api-introduction.html"
+    },
+    "ac.audit.export.external": {
+        "name": "Audit Trail API Export",
+        "docs_endpoint": "/audit-trail-api-introduction.html"
+    },
+    "visit-rest-api-signed": {
+        "name": "Visitor Information / Engagement Attributes",
+        "docs_endpoint": "/visit-information-api-overview.html"
+    },
+    "engagement-control-signed": {
+        "name": "Validate Engagement",
+        "docs_endpoint": "/validate-engagement-api-validate-engagement.html"
+    },
+    "external-engagement-api-signed": {
+        "name": "IVR Deflection",
+        "docs_endpoint": ""
+    },
+    "bstats.read.external": {
+        "name": "Brand Status Report",
+        "docs_endpoint": ""
+    },
+    "ac.canned.response.ext.r": {
+        "name": "Predefined Content / Engagement Config Read",
+        "docs_endpoint": "/predefined-content-api-overview.html"
+    },
+    "ac.canned.response.ext.w": {
+        "name": "Predefined Content / Engagement Config Write",
+        "docs_endpoint": "/predefined-content-api-overview.html"
+    },
+    "ac.auto.message.ext.r": {
+        "name": "Automatic Messages Read",
+        "docs_endpoint": "/automatic-messages-api-overview.html"
+    },
+    "ac.auto.message.ext.w": {
+        "name": "Automatic Messages Write",
+        "docs_endpoint": "/automatic-messages-api-overview.html"
+    },
+    "ac.categories.read.external": {
+        "name": "Predefined Categories Read",
+        "docs_endpoint": "/predefined-categories-api-introduction.html"
+    },
+    "ac.categories.write.external": {
+        "name": "Predefined Categories Write",
+        "docs_endpoint": "/predefined-categories-api-introduction.html"
+    },
+    "ac.messaging.auto.message.ext.r": {
+        "name": "Unified Automatic Messages Read",
+        "docs_endpoint": "/unified-automatic-messages-api-overview.html"
+    },
+    "ac.messaging.auto.message.ext.w": {
+        "name": "Unified Automatic Messages Write",
+        "docs_endpoint": "/unified-automatic-messages-api-overview.html"
+    },
+    "ac.multiple.agent.status.read.external": {
+        "name": "Agent Status Reason API Read",
+        "docs_endpoint": "/agent-status-reason-api-overview.html"
+    },
+    "ac.multiple.agent.status.write.external": {
+        "name": "Agent Status Reason API Write",
+        "docs_endpoint": "/agent-status-reason-api-overview.html"
+    }
+}

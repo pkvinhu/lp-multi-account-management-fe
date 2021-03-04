@@ -1,0 +1,25 @@
+{
+    "users": {
+        "appKeys": true,
+        "short": ["nickname", "employeeId", "isEnabled", "dateCreated", "dateUpdated"]
+    },
+    "skills": {
+        "description": true,
+        "short": ["maxWaitTime", "fallbackWhenAllAgentsAreAway", "dateUpdated"]
+    },
+    "profiles": {
+        "description": true,
+        "short": ["dateUpdated"]
+    },
+    "agentGroups": {
+        "short": ["isEnabled", "dateUpdated"]
+    },
+    "appKeys": {
+        "data": [
+            { "value": "keyId", "label": "Key" },
+            { "value": "appSecret", "label": "Secret" },
+            { "value": "token", "label": "Token" },
+            { "value": "tokenSecret", "label": "Token Secret" }
+        ]
+    }
+}

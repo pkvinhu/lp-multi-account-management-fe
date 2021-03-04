@@ -3,14 +3,20 @@ export const SELECT_ACCOUNT = "SELECT_ACCOUNT";
 export const CATCH_ERROR = "CATCH_ERROR";
 
 export interface Accounts {
-  data: string[];
+  data: Account[];
   selectedAccount: string;
-  error: string;  
+  error: string;
+  loading: boolean;
+}
+
+export interface Account {
+  accountId: string;
+  accountName: string;
 }
 
 interface GetAccountsAction {
-    type: typeof GET_ACCOUNTS;
-    payload: string[];
+  type: typeof GET_ACCOUNTS;
+  payload: Account[];
 }
 
 interface SelectAccountAction {
@@ -23,5 +29,7 @@ interface CatchError {
   payload: string;
 }
 
-export type AccountsAction = GetAccountsAction | CatchError | SelectAccountAction;
-
+export type AccountsAction =
+  | GetAccountsAction
+  | CatchError
+  | SelectAccountAction;

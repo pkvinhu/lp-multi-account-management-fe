@@ -1,0 +1,136 @@
+{
+  "add-account": {
+    "props": {
+      "title": "Adding Accounts",
+      "description": "Two options are offered in order to add accounts:\n1. You can add a single account to your view if the API Agent associated to that account has already been created. Before successfully completing this addition, we will check that the agent exists.\n2. Upload a CSV that includes the fields as shown in the screenshot below if you prefer to add multiple accounts at once. The bulk add feature is not permitted for single users and will be approved and completed within 48 hours if no validations errors exist with the requested information.\nto guarantee uniqueness of login names, it is recommended to prefix your name to the login name. (ex: John Doe-API Agent)",
+      "img": "",
+      "uploadCsv": true,
+      "textFields": [
+        {
+          "name": "lpId",
+          "label": "Account Id",
+          "handleChangeFn": "setId",
+          "type": "input"
+        },
+        {
+          "name": "brandName",
+          "label": "Brand Name",
+          "handleChangeFn": "setBrand",
+          "type": "input"
+        },
+        {
+          "name": "loginName",
+          "label": "Login Name",
+          "handleChangeFn": "setLogin",
+          "type": "input"
+        },
+        {
+          "name": "password",
+          "label": "Password",
+          "handleChangeFn": "setPassword",
+          "type": "input"
+        }
+      ],
+      "submitHandlers": {
+        "single": "handleAddAccount",
+        "bulk": ""
+      }
+    }
+  },
+  "delete-account": {
+    "props": {
+      "title": "Delete Accounts",
+      "description": "You are able to delete any number of accounts from your view. If you also want to delete the corresponding agent from the account being deleted, you'll have to request this deletion by uploading a csv in the following format.",
+      "img": "",
+      "uploadCsv": true,
+      "textFields": [
+        {
+          "name": "lpId",
+          "label": "Account Id",
+          "handleChangeFn": "setId",
+          "type": "input"
+        },
+        {
+          "name": "brandName",
+          "label": "Brand Name",
+          "handleChangeFn": "setBrand",
+          "type": "input"
+        },
+        {
+          "name": "loginName",
+          "label": "Login Name",
+          "handleChangeFn": "setLogin",
+          "type": "input"
+        },
+        {
+          "name": "password",
+          "label": "Password",
+          "handleChangeFn": "setPassword",
+          "type": "input"
+        }
+      ],
+      "submitHandlers": {
+        "single": "handleDeleteAccount",
+        "bulk": ""
+      }
+    }
+  },
+  "add-user": {
+    "props": {
+      "title": "Adding a User",
+      "description": "When you add a user, it is equivalent to signing them up for an account to use the Account Management Tool. Since this tool authenticates through LivePerson's SSO system, the login name and the email has to match the one they use to log on to LP Conversational Cloud. You can select whether or not they are a super user or a regular user. Only super users are permitted to add other users to grant them rights to use the tool.",
+      "img": "",
+      "uploadCsv": true,
+      "textFields": [
+        {
+          "name": "loginName",
+          "label": "Login Name",
+          "handleChangeFn": "setLogin",
+          "type": "input"
+        },
+        {
+          "name": "email",
+          "label": "Email",
+          "handleChangeFn": "setEmail",
+          "type": "input"
+        },
+        {
+          "name": "isSuperUser",
+          "label": "Superuser?",
+          "handleChangeFn": "setSuperUser",
+          "type": "checkbox"
+        }
+      ],
+      "submitHandlers": {
+        "single": "handleAddUser",
+        "bulk": ""
+      }
+    }
+  },
+  "all-users": {
+    "props": {
+      "title": "All Users",
+      "description": "A superuser view of all users.",
+      "img": "",
+      "uploadCsv": false,
+      "textFields": [],
+      "submitHandlers": {
+        "single": "",
+        "bulk": ""
+      }
+    }
+  },
+  "bulk-add": {
+    "props": {
+      "title": "*LPA Access Only* Bulk add accounts to a requesting user's view",
+      "description": "This is a bulk add feature unique to this tool. Upload a CSV from your computer that meets the requirements as shown in the screenshot below. Input the requested user's login and email information and click create.",
+      "img": "",
+      "uploadCsv": true,
+      "textFields": [],
+      "submitHandlers": {
+        "single": "",
+        "bulk": ""
+      }
+    }
+  }
+}

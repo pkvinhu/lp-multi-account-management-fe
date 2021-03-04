@@ -3,9 +3,12 @@ import { UserDataDisplay } from "../table/types";
 export const GET_USERS = "GET_USERS";
 export const SET_USER_LOADING = "SET_USER_LOADING";
 export const SET_USER_ERROR = "SET_USER_ERROR";
+export const CLEAR_USER_DATA = "CLEAR_USER_DATA";
 
 export interface UserState {
   data: User[];
+  skillsToUsersMap: {};
+  profilesToUsersMap: {};
   loading: boolean;
   error: UsersError | null;
 }
@@ -36,7 +39,7 @@ export interface User extends UserDataDisplay {
   backgndImgUri?: string;
   pnCertName?: string;
   lastPwdChangeDate?: Date;
-  userTypeId?: number;
+  // userTypeId: number;
   allowedAppKeys?: string;
   resetMfaSecret?: boolean;
 }
@@ -58,7 +61,13 @@ export interface UsersError extends GenericError {
 
 export interface GetUsersAction {
   type: typeof GET_USERS;
-  payload: User[];
+  payload: UsersDataPayload;
+}
+
+export interface UsersDataPayload {
+  data: User[];
+  skillsToUsersMap: any;
+  profilesToUsersMap: any;
 }
 
 interface SetLoadingAction {
@@ -70,4 +79,8 @@ interface SetErrorAction {
   payload: UsersError;
 }
 
-export type UserAction = GetUsersAction | SetLoadingAction | SetErrorAction;
+interface ClearDataAction {
+  type: typeof CLEAR_USER_DATA;
+}
+
+export type UserAction = GetUsersAction | SetLoadingAction | SetErrorAction | ClearDataAction;

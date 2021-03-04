@@ -1,21 +1,13 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme, createStyles } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
-    appbar: {
-        borderBottom: "10px solid orange",
-    },
-    toolbar: {
-        fontFamily: "'Merriweather', serif",
-        color: "black",
-        fontSize: '2em',
-        backgroundColor: 'white'
-    },
+export const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
     left_arrow: {
         fontSize: '2rem',
         color: 'black'
     },
     login_button: {
-        width: '85px',
+        width: 'auto',
         fontFamily: "'Merriweather', serif",
         color: "black",
         fontSize: '1.1em',
@@ -24,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'space-between',
         borderRadius: '5px',
         "&:hover": {
-            backgroundColor: '#fad19c'
+            backgroundColor: theme.palette.primary.main
         }
     },
     login_container: {
@@ -38,7 +30,13 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         backgroundColor: 'rgb(253, 253, 253)',
         cursor: "pointer"
-      }
-}));
-
-export default useStyles;
+      },
+    //   lpSvg: {
+    //     width: "250px",
+    //     height: "250px",
+    //     objectFit: "contain",
+    //     backgroundRepeat: "no-repeat",
+    //     backgroundImage: "url('./assets/lp-logo.svg')",
+    //   }
+    })
+);

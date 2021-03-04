@@ -1,151 +1,102 @@
+// dependencies
 import React, { FC, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+// components
 import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
-import TableRow from "@material-ui/core/TableRow";
 import TablePagination from "@material-ui/core/TablePagination";
 import Paper from "@material-ui/core/Paper";
-import { useStyles } from "./styles";
-import { useSelector, useDispatch } from "react-redux";
+import Box from '@material-ui/core/Box';
+
+import EnhancedTableToolbar from "../tableToolbar/TableToolbar";
+import EnhancedTableHead from "../tableHeader/TableHeader";
+import EnhancedTableBody from "../tableBody/TableBody";
+import DashboardLoading from "../../dashboard/dashboardLoading/DashboardLoading";
+
+// store
 import { RootState } from "../../../store";
 import actions from "../../../store/allActions";
-import EnhancedTableToolbar from "../tableToolbar/tableToolbar";
-import EnhancedTableHead from "../tableHeader/tableHeader";
 
-const EnhancedTable: FC = () => {
+// styles
+import { useStyles } from "./styles";
+
+interface EnhancedTableProps {
+  handleDelete: (event: any, entityId: string) => void;
+}
+
+const EnhancedTable = ({ handleDelete }: EnhancedTableProps) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state);
-  const { table, users, skills, profiles, agentGroups } = state;
-  const { dataDisplay, order, orderBy, rowCount, headCells } = table;
-
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const { setOrder, setOrderBy, setSelected, setDataDisplay } = actions;
+  const { table, users, skills, profiles, agentGroups, appKeys } = state;
+  const { page, rowsPerPage, rowCount, dataDisplay, filterCategory, filterValue } = table;
+  const { setPage, setRowsPerPage, setDataDisplay } = actions;
 
   useEffect(() => {
-    dispatch(
-      setDataDisplay(
-        "users",
-        users.data,
-        "asc",
-        "id",
-        skills.map,
-        profiles.map,
-        agentGroups.map
-      )
-    );
+    Promise.resolve(() => console.log("...loading table data"))
+      .then(async () => {
+        let isUser = table.view === "users"
+        await dispatch(setPage(0));
+        await dispatch(
+          setDataDisplay(
+            table.view || "users",
+            state[table.view].data || users.data,
+            "asc",
+            "id",
+            filterCategory,
+            filterValue,
+            isUser ? skills.map : null,
+            isUser ? profiles.map : null,
+            isUser ? agentGroups.map : null,
+            isUser ? appKeys : null
+          )
+        )
+      })
+      .catch(e => console.log(e))
   }, []);
 
-  const handleRequestSort = (
-    event: React.MouseEvent<unknown>,
-    property: string
-  ) => {
-    const isAsc = orderBy === property && order === "asc";
-    if (table.view === "users") {
-      dispatch(
-        setDataDisplay(
-          table.view,
-          users.data,
-          isAsc ? "desc" : "asc",
-          property,
-          skills.map,
-          profiles.map,
-          agentGroups.map
-        )
-      );
-    } else {
-      dispatch(
-        setDataDisplay(
-          table.view,
-          state[table.view].data,
-          isAsc ? "desc" : "asc",
-          property,
-          skills.map
-        )
-      );
-    }
-  };
-
   const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
+    dispatch(setPage(newPage));
   };
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+    dispatch(setRowsPerPage(parseInt(event.target.value, 10)));
+    dispatch(setPage(0));
   };
 
-  //   const isSelected = (name: string) => selected.indexOf(name) !== -1;
-
-  const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, rowCount - page * rowsPerPage);
-
   return (
-    <div className={classes.root}>
-      <Paper className={classes.paper}>
-        <EnhancedTableToolbar />
-        <TableContainer>
-          <Table
-            className={classes.table}
-            aria-labelledby="Contact Center Management"
-            size="medium"
-            aria-label="enhanced table"
-          >
-            <EnhancedTableHead onRequestSort={handleRequestSort} />
-            <TableBody>
-              {dataDisplay
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  return (
-                    <TableRow
-                      hover
-                      onClick={() => dispatch(actions.setSelected(index))}
-                      tabIndex={-1}
-                      key={index}
-                      className={classes.row}
-                    >
-                      {headCells.map((cell, i) => {
-                        return (
-                          <TableCell
-                            className={classes.cell}
-                            align="right"
-                            key={cell.id}
-                          >
-                            {Array.isArray(row[cell.id])
-                              ? row[cell.id].join(", ")
-                              : row[cell.id]}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  );
-                })}
-              {emptyRows > 0 && (
-                <TableRow
-                  className={classes.row}
-                  style={{ height: 33 * emptyRows }}
-                >
-                  <TableCell className={classes.cell} colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={rowCount}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
-      </Paper>
-    </div>
+    <Box className={classes.root}>
+      {table.loading ?
+        <DashboardLoading/> :
+        (<Paper className={classes.paper}>
+          <EnhancedTableToolbar />
+          <TableContainer>
+            <Table
+              className={classes.table}
+              aria-labelledby="Contact Center Management"
+              size="medium"
+              aria-label="enhanced table"
+            >
+              <EnhancedTableHead />
+              <EnhancedTableBody handleDelete={handleDelete} />
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={rowCount}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+          />
+        </Paper>
+        )
+      }
+    </Box>
   );
 };
 

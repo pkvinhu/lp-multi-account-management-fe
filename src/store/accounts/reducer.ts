@@ -3,7 +3,8 @@ import { GET_ACCOUNTS, Accounts, SELECT_ACCOUNT, AccountsAction, CATCH_ERROR } f
 const initialState: Accounts = {
     data: [],
     selectedAccount: "",
-    error: ""
+    error: "",
+    loading: true
 }
 
 export default (state = initialState, action: AccountsAction): Accounts => {
@@ -11,7 +12,8 @@ export default (state = initialState, action: AccountsAction): Accounts => {
         case GET_ACCOUNTS:
             return {
                 ...state,
-                data: action.payload
+                data: action.payload,
+                loading: false
             }
         case SELECT_ACCOUNT:
             return {
@@ -21,7 +23,8 @@ export default (state = initialState, action: AccountsAction): Accounts => {
         case CATCH_ERROR:
             return {
                 ...state,
-                error: action.payload
+                error: action.payload,
+                loading: false
             }
         default:
             return state;

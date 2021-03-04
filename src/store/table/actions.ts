@@ -17,7 +17,16 @@ import {
   SetOrder,
   SetOrderBy,
   SetTableError,
-  SetTableLoading
+  SetTableLoading,
+  SetPage,
+  SET_PAGE,
+  SetRowsPerPage,
+  SET_ROWS_PER_PAGE,
+  SetFilterCategory,
+  SET_FILTER_CATEGORY,
+  SetFilterValue,
+  SET_FILTER_VALUE,
+  CLEAR_TABLE_DATA
 } from "./types";
 import {
   getHeadCellsForUsers,
@@ -28,16 +37,23 @@ import {
   getDisplayForProfiles,
   getDisplayForSkills,
   getDisplayForAgentGroups
-} from "../util/tableHelpers";
+} from "../../util/store/tableHelpers";
+import axios from "axios";
+import { RootState } from "..";
+import { ThunkAction } from "redux-thunk";
+import { getCookie } from "../../util/components/helpers";
 
 export const setDataDisplay = (
   view: View,
   data: Data | any,
   order: Order,
   orderBy: string,
+  filterCategory: string,
+  filterValue: string[],
   skillsMap?: any,
   profilesMap?: any,
-  agentGroupsMap?: any
+  agentGroupsMap?: any,
+  appKeys?: any
 ): GetTableAction => {
   let payload: DataDisplayState = {
     data: [],
@@ -47,22 +63,51 @@ export const setDataDisplay = (
     order,
     orderBy
   };
-  console.log(view)
   switch (view) {
     case "users":
-      payload.data = getDisplayForUsers(skillsMap, profilesMap, agentGroupsMap, data, view, order, orderBy);
+      payload.data = getDisplayForUsers(
+        skillsMap,
+        profilesMap,
+        agentGroupsMap,
+        data,
+        order,
+        orderBy,
+        appKeys,
+        filterCategory,
+        filterValue
+      );
+
       payload.headCells = getHeadCellsForUsers();
       break;
     case "profiles":
-      payload.data = getDisplayForProfiles(data, view, order, orderBy);
+      payload.data = getDisplayForProfiles(
+        data,
+        order,
+        orderBy,
+        filterCategory,
+        filterValue
+      );
       payload.headCells = getHeadCellsForProfiles();
       break;
     case "skills":
-      payload.data = getDisplayForSkills(data, skillsMap, view, order, orderBy);
+      payload.data = getDisplayForSkills(
+        data,
+        skillsMap,
+        order,
+        orderBy,
+        filterCategory,
+        filterValue
+      );
       payload.headCells = getHeadCellsForSkills();
       break;
     case "agentGroups":
-      payload.data = getDisplayForAgentGroups(data, view, order, orderBy);
+      payload.data = getDisplayForAgentGroups(
+        data,
+        order,
+        orderBy,
+        filterCategory,
+        filterValue
+      );
       payload.headCells = getHeadCellsForAgentGroups();
       break;
   }
@@ -73,40 +118,79 @@ export const setDataDisplay = (
   };
 };
 
-export const setView = (view: View): SetView => {
-  return {
-    type: SET_VIEW,
-    payload: view
+export const deleteEntity = (
+  account: string,
+  view: View,
+  entityId: string,
+  lastModified?: string | number
+): ThunkAction<void, RootState, null, GetTableAction | any> => {
+  return async dispatch => {
+    try {
+      console.log("FROM STORE ACTION DELETE: ", view, account, entityId);
+      const res = await axios.delete(
+        `http://localhost:1337/api/${view}/${account}/${entityId}${
+          lastModified ? `/${lastModified}` : ""
+        }`,
+        {
+          headers: { Authorization: `Bearer ${getCookie("jwt")}` },
+          withCredentials: true
+        }
+      );
+      console.log(res);
+    } catch (err) {
+      dispatch({ type: SET_TABLE_ERROR });
+    }
+    return;
   };
 };
 
-export const setSelected = (selectedIndex: number): SetSelected => {
-  return {
-    type: SET_SELECTED,
-    payload: selectedIndex
-  };
-};
+export const setView = (view: View): SetView => ({
+  type: SET_VIEW,
+  payload: view
+});
 
-export const setOrder = (order: Order): SetOrder => {
-  console.log("hit setorder:", order)
-  return {
-    type: SET_ORDER,
-    payload: order
-  };
-};
+export const setSelected = (selectedIndex: number): SetSelected => ({
+  type: SET_SELECTED,
+  payload: selectedIndex
+});
 
-export const setOrderBy = (field: keyof DataDisplay): SetOrderBy => {
-  console.log("hit setorderby:", field)
-  return {
-    type: SET_ORDER_BY,
-    payload: field
-  };
-};
+export const setOrder = (order: Order): SetOrder => ({
+  type: SET_ORDER,
+  payload: order
+});
 
-export const setTableError = (): SetTableError => {
-  return { type: SET_TABLE_ERROR };
-};
+export const setOrderBy = (field: keyof DataDisplay): SetOrderBy => ({
+  type: SET_ORDER_BY,
+  payload: field
+});
 
-export const setTableLoading = (): SetTableLoading => {
-  return { type: SET_TABLE_LOADING };
-};
+export const setPage = (page: number): SetPage => ({
+  type: SET_PAGE,
+  payload: page
+});
+
+export const setRowsPerPage = (rows: number): SetRowsPerPage => ({
+  type: SET_ROWS_PER_PAGE,
+  payload: rows
+});
+
+export const setFilterCategory = (category: string): SetFilterCategory => ({
+  type: SET_FILTER_CATEGORY,
+  payload: category
+});
+
+export const setFilterValue = (value: string[]): SetFilterValue => ({
+  type: SET_FILTER_VALUE,
+  payload: value
+});
+
+export const setTableError = (): SetTableError => ({ type: SET_TABLE_ERROR });
+
+export const setTableLoading = (bool: boolean): SetTableLoading => ({
+  type: SET_TABLE_LOADING,
+  payload: bool
+});
+
+export const clearTableData = (): GetTableAction => ({
+  type: CLEAR_TABLE_DATA
+});

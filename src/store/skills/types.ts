@@ -1,9 +1,10 @@
-import { SkillDataDisplay } from "../table/types";
+import { SkillDataDisplay, Data } from "../table/types";
 import { GenericError } from "../users/types";
 
 export const GET_SKILLS = "GET_SKILLS";
 export const SET_SKILLS_ERROR = "SET_SKILLS_ERROR";
 export const SET_SKILLS_LOADING = "SET_SKILLS_LOADING";
+export const CLEAR_SKILLS_DATA = "CLEAR_SKILLS_DATA";
 
 export interface SkillsState {
   data: Skill[];
@@ -65,4 +66,8 @@ export interface CreateSkillPayload extends Skill {
     type: typeof SET_SKILLS_LOADING;
   }
 
-  export type SkillAction = GetSkillsAction | SetSkillsError | SetSkillsLoading;
+  interface ClearDataAction {
+    type: typeof CLEAR_SKILLS_DATA;
+  }
+
+  export type SkillAction = GetSkillsAction | SetSkillsError | SetSkillsLoading | ClearDataAction;
