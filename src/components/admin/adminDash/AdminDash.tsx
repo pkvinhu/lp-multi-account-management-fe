@@ -36,14 +36,17 @@ let tabs = [
 const AdminDashboard: FC = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const [ view, setView] = useState("add-account");
-    const [ lpId, setId ] = useState("")
-    const [ brandName, setBrand ] = useState("")
-    const [ loginName, setLogin ] = useState("")
-    const [ password, setPassword ] = useState("")
-    const [ isSuperUser, setSuperUser ] = useState(false)
+    const [view, setView] = useState("add-account");
+    const [lpId, setId] = useState("")
+    const [brandName, setBrand] = useState("")
+    const [loginName, setLogin] = useState("")
+    const [password, setPassword] = useState("")
+    const [email, setEmail] = useState("")
+    const [isSuperUser, setSuperUser] = useState(false)
+    const [errors, setErrors] = useState([] as any);
     const state = useSelector((state: RootState) => state);
-    const { } = actions;
+    const { admin } = state;
+    const { addApiAgent, checkApiAgentExistence, deleteApiAgent, getAccounts, selectAccount, resetState, setTotalRequests, setLoadProgress, addUser } = actions;
     const location = useLocation();
     const history = useHistory();
     const previousView = usePrevious(view);
@@ -53,16 +56,18 @@ const AdminDashboard: FC = () => {
         brandName,
         loginName,
         password,
+        email,
         isSuperUser
     }
 
     let changeHandlers = {
-        setId, setBrand, setLogin, setPassword, setSuperUser
+        setId, setBrand, setLogin, setPassword, setEmail, setSuperUser
     }
 
     const handleChange = (e: any, value: string) => {
         console.log(value)
-        if(value !== view) {
+        if (value !== view) {
+            dispatch(resetState())
             setView(value)
             resetForm()
         }
@@ -79,20 +84,75 @@ const AdminDashboard: FC = () => {
         setLogin("");
         setPassword("");
         setSuperUser(false);
+        // dispatch(resetState())
     }
-    // const handleClick = async (event: any) => {
-    //     event.preventDefault();
-    //         // url: 'http://localhost:1337/api/accounts'
-    //         // method: 'post',
-    //         // data: {
-    //         //     password: string,
-    //         //     accounts: [{
-    //         //             account: { lpId: string, brand: string },
-    //         //             apiAgent: { username: string, password: string }
-    //         //         }]
-    //         //     requestingUser: { loginName: string, email: string }
-    //         // }
-    // }
+
+    const handleAddAccount = async () => {
+        await dispatch(setTotalRequests(2))
+        const account = { lpId, brand: brandName };
+        const apiAgent = { username: loginName, password }
+        const requested = { account, apiAgent }
+        try {
+            let data = await dispatch(checkApiAgentExistence(requested))
+            await dispatch(setLoadProgress())
+            if (!data.error) {
+                data = await dispatch(addApiAgent(requested))
+                await dispatch(setLoadProgress())
+            }
+            if (!data.error) {
+                await dispatch(getAccounts())
+                // history.push(`/dashboard/${lpId}`)
+            }
+        }
+        catch (error) {
+            setErrors([...errors, admin.error]);
+        }
+        clearNotifications();
+    }
+
+    const handleDeleteAccount = async () => {
+        dispatch(setTotalRequests(1))
+        const account = { lpId, brand: brandName };
+        const apiAgent = { username: loginName, password }
+        const requested = { account, apiAgent }
+        try {
+            let data = await dispatch(deleteApiAgent(requested))
+            dispatch(setLoadProgress())
+            console.log(data)
+            if (!data.error) {
+                await dispatch(getAccounts())
+                await dispatch(selectAccount(""))
+                resetForm()
+            }
+        }
+        catch (error) {
+            setErrors([...errors, admin.error]);
+        }
+        clearNotifications();
+    }
+
+    const handleAddUser = async () => {
+        dispatch(setTotalRequests(1))
+        const requestingUser = { loginName, email, isSuperUser }
+        try {
+            let data = await dispatch(addUser(requestingUser));
+        } catch (error) {
+            setErrors([...errors, admin.error]);
+        }
+        clearNotifications();
+    }
+
+    const clearNotifications = () => {
+        setTimeout(() => {
+            dispatch(resetState())
+        }, 4000)
+    }
+
+    let submitHandlers = {
+        handleAddAccount,
+        handleDeleteAccount,
+        handleAddUser
+    }
 
     return (
         <Box className={classes.root}>
@@ -111,9 +171,8 @@ const AdminDashboard: FC = () => {
                     </Tabs>
                 </Toolbar>
                 <Paper className={classes.formBody}>
-                    {adminFormData[view] && <AdminForm {...adminFormData[view].props} handleChange={handleFieldChange} formFields={formFields} changeHandlerMap={changeHandlers}/>}
+                    {adminFormData[view] && <AdminForm {...adminFormData[view].props} handleChange={handleFieldChange} formFields={formFields} changeHandlerMap={changeHandlers} submitHandlerMap={submitHandlers} />}
                 </Paper>
-                {/* <button onClick={handleClick} >Add Users</button> */}
             </Paper>
         </Box>
     )

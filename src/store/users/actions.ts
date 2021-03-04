@@ -9,6 +9,7 @@ import {
   CLEAR_USER_DATA
 } from "./types";
 import axios from "axios";
+import { getCookie } from "../../util/components/helpers";
 
 export const getUsers = (
   account: string | number
@@ -16,7 +17,11 @@ export const getUsers = (
   return async dispatch => {
     try {
       let res: any = await axios.get(
-        `http://localhost:1337/api/users/${account}`
+        `http://localhost:1337/api/users/${account}`,
+        {
+          headers: { Authorization: `Bearer ${getCookie("jwt")}` },
+          withCredentials: true
+        }
       );
       let data: User[] = res.data;
       let skillsToUsersMap = {};
@@ -68,6 +73,6 @@ export const setUserError = (error): UserAction => {
 
 export const clearUserData = (): UserAction => {
   return {
-    type: CLEAR_USER_DATA,
+    type: CLEAR_USER_DATA
   };
 };

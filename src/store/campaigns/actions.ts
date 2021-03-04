@@ -9,6 +9,7 @@ import {
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "..";
 import axios from "axios";
+import { getCookie } from "../../util/components/helpers";
 
 export const getCampaigns = (
   account: number | string
@@ -16,7 +17,11 @@ export const getCampaigns = (
   return async dispatch => {
     try {
       const res: any = await axios.get(
-        `http://localhost:1337/api/campaigns/${account}`
+        `http://localhost:1337/api/campaigns/${account}`,
+        {
+          headers: { Authorization: `Bearer ${getCookie("jwt")}` },
+          withCredentials: true
+        }
       );
       let data: Campaign[] = res.data;
       let skillsConnectedToCampaignsMap = {};
@@ -46,16 +51,16 @@ export const getCampaigns = (
 };
 
 export const setCampaignLoading = (): GetCampaignAction => ({
-    type: SET_CAMPAIGN_LOADING,
-})
+  type: SET_CAMPAIGN_LOADING
+});
 
 export const setCampaignError = (error): GetCampaignAction => ({
   type: SET_CAMPAIGN_ERROR,
   payload: error
-})
+});
 
 export const clearCampaignData = (): GetCampaignAction => {
   return {
-    type: CLEAR_CAMPAIGN_DATA,
+    type: CLEAR_CAMPAIGN_DATA
   };
 };

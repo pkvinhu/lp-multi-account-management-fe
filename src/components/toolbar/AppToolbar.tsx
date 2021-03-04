@@ -30,7 +30,7 @@ const AppToolbar = () => {
 
     useEffect(() => {
         // console.log("Toolbar: ", auth, data)
-        if(location.pathname !== "/" && location.pathname !== "/home" && loading) dispatch(getAccounts())
+        if(auth && location.pathname !== "/" && location.pathname !== "/home" && loading) dispatch(getAccounts())
     }, [])
     
     return (
