@@ -84,7 +84,6 @@ const AdminDashboard: FC = () => {
         setLogin("");
         setPassword("");
         setSuperUser(false);
-        // dispatch(resetState())
     }
 
     const handleAddAccount = async () => {
@@ -101,7 +100,6 @@ const AdminDashboard: FC = () => {
             }
             if (!data.error) {
                 await dispatch(getAccounts())
-                // history.push(`/dashboard/${lpId}`)
             }
         }
         catch (error) {
