@@ -41,11 +41,12 @@ const AdminDashboard: FC = () => {
     const [brandName, setBrand] = useState("")
     const [loginName, setLogin] = useState("")
     const [password, setPassword] = useState("")
+    const [email, setEmail] = useState("")
     const [isSuperUser, setSuperUser] = useState(false)
     const [errors, setErrors] = useState([] as any);
     const state = useSelector((state: RootState) => state);
     const { admin } = state;
-    const { addApiAgent, checkApiAgentExistence, deleteApiAgent, getAccounts, selectAccount, resetState } = actions;
+    const { addApiAgent, checkApiAgentExistence, deleteApiAgent, getAccounts, selectAccount, resetState, setTotalRequests, setLoadProgress, addUser } = actions;
     const location = useLocation();
     const history = useHistory();
     const previousView = usePrevious(view);
@@ -55,11 +56,12 @@ const AdminDashboard: FC = () => {
         brandName,
         loginName,
         password,
+        email,
         isSuperUser
     }
 
     let changeHandlers = {
-        setId, setBrand, setLogin, setPassword, setSuperUser
+        setId, setBrand, setLogin, setPassword, setEmail, setSuperUser
     }
 
     const handleChange = (e: any, value: string) => {
@@ -82,40 +84,40 @@ const AdminDashboard: FC = () => {
         setLogin("");
         setPassword("");
         setSuperUser(false);
+        // dispatch(resetState())
     }
 
     const handleAddAccount = async () => {
-        // const adminId = profiles.data.filter((e, i) => e.roleTypeId === 1);
+        await dispatch(setTotalRequests(2))
         const account = { lpId, brand: brandName };
         const apiAgent = { username: loginName, password }
         const requested = { account, apiAgent }
         try {
             let data = await dispatch(checkApiAgentExistence(requested))
-            console.log(admin)
+            await dispatch(setLoadProgress())
             if (!data.error) {
                 data = await dispatch(addApiAgent(requested))
+                await dispatch(setLoadProgress())
             }
-
             if (!data.error) {
                 await dispatch(getAccounts())
-                // resetForm()
-                history.push(`/dashboard/${lpId}`)
+                // history.push(`/dashboard/${lpId}`)
             }
-            console.log(errors)
-
         }
         catch (error) {
             setErrors([...errors, admin.error]);
         }
+        clearNotifications();
     }
 
     const handleDeleteAccount = async () => {
-        // const adminId = profiles.data.filter((e, i) => e.roleTypeId === 1);
+        dispatch(setTotalRequests(1))
         const account = { lpId, brand: brandName };
         const apiAgent = { username: loginName, password }
         const requested = { account, apiAgent }
         try {
             let data = await dispatch(deleteApiAgent(requested))
+            dispatch(setLoadProgress())
             console.log(data)
             if (!data.error) {
                 await dispatch(getAccounts())
@@ -126,11 +128,30 @@ const AdminDashboard: FC = () => {
         catch (error) {
             setErrors([...errors, admin.error]);
         }
+        clearNotifications();
+    }
+
+    const handleAddUser = async () => {
+        dispatch(setTotalRequests(1))
+        const requestingUser = { loginName, email, isSuperUser }
+        try {
+            let data = await dispatch(addUser(requestingUser));
+        } catch (error) {
+            setErrors([...errors, admin.error]);
+        }
+        clearNotifications();
+    }
+
+    const clearNotifications = () => {
+        setTimeout(() => {
+            dispatch(resetState())
+        }, 4000)
     }
 
     let submitHandlers = {
         handleAddAccount,
-        handleDeleteAccount
+        handleDeleteAccount,
+        handleAddUser
     }
 
     return (

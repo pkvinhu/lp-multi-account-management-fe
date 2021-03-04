@@ -11,12 +11,14 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
 import Alert from '@material-ui/lab/Alert';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 // styles
 import { useStyles } from './styles';
 
 // store
 import { RootState } from "../../../store";
+import { Box } from '@material-ui/core';
 
 interface TextField {
     name: string;
@@ -60,8 +62,10 @@ const AdminForm = ({ title, description, handleChange, textFields = [], submitHa
     console.log(description)
 
     const createMarkup = () => {
-        return { __html: `<div>${description}</div>`}
+        return { __html: `<div>${description}</div>` }
     }
+
+    let loadProgress = admin.loadProgress / admin.totalRequests * 100;
 
     return (
         <div>
@@ -69,6 +73,15 @@ const AdminForm = ({ title, description, handleChange, textFields = [], submitHa
             <br />
             <Typography variant="body1" dangerouslySetInnerHTML={createMarkup()}></Typography>
             <FormControl className={classes.formControl}>
+                {admin.totalRequests ? (
+                    < Box display="flex" alignItems="center">
+                        <Box width="100%" mr={1}>
+                            <LinearProgress variant="determinate" value={loadProgress} />
+                        </Box>
+                        <Box minWidth={35}>
+                            <Typography variant="body2" color="textSecondary">{`${loadProgress}%`}</Typography>
+                        </Box>
+                    </Box>) : null}
                 {admin.error && <Alert severity="error">{admin.error}</Alert>}
                 {admin.message && <Alert severity="success">{admin.message}</Alert>}
                 <div className={classes.form}>
@@ -91,7 +104,7 @@ const AdminForm = ({ title, description, handleChange, textFields = [], submitHa
                     {textFields.length ? <Button className={classes.button} onClick={submitHandlerMap[submitHandlers.single]}>Submit</Button> : null}
                 </div>
             </FormControl>
-        </div>
+        </div >
     )
 }
 

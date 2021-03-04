@@ -89,9 +89,9 @@
           "type": "input"
         },
         {
-          "name": "password",
-          "label": "Password",
-          "handleChangeFn": "setPassword",
+          "name": "email",
+          "label": "Email",
+          "handleChangeFn": "setEmail",
           "type": "input"
         },
         {
@@ -102,7 +102,7 @@
         }
       ],
       "submitHandlers": {
-        "single": "handleAddAccount",
+        "single": "handleAddUser",
         "bulk": ""
       }
     }

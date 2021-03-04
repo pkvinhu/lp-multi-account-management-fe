@@ -116,7 +116,7 @@ export const deleteApiAgent = (
 
 export const addUser = (
   requestingUser: RequestingUser
-): ThunkAction<void, RootState, null, AdminAction | any> => {
+): ThunkAction<void, RootState, null, AdminAction | any> | any => {
   return async dispatch => {
     try {
       const res: any = await axios.post(
@@ -132,11 +132,13 @@ export const addUser = (
         type: SET_MESSAGE,
         payload: data.message
       });
+      return data;
     } catch (e) {
       dispatch({
         type: SET_ERROR,
         payload: e.message
       });
+      return { error: e.response.data }
     }
   };
 };

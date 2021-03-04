@@ -17,7 +17,7 @@ export default (state = initialState, action: AdminAction): AdminState => {
         case SET_LOAD_PROGRESS:
             return {
                 ...state,
-                loadProgress: state.loadProgress++
+                loadProgress: state.loadProgress+1
             }
         case SET_ERROR:
             return {
